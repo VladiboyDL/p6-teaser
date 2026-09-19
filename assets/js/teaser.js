@@ -137,8 +137,10 @@
       done.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' });
     };
 
-    /* What the sales inbox receives. Keys are readable Slovak labels in a fixed order, values stay Slovak
-       whatever language the visitor used, and the consent moment is recorded with the message. */
+    /* What the sales inbox receives. Keys are readable labels in a fixed order, values stay Slovak whatever
+       language the visitor used, and the consent moment is recorded with the message.
+       Keys are plain ASCII on purpose: Web3Forms decodes multipart field NAMES as Latin-1 and turned
+       "Správa" into "SprÃ¡va" (values are decoded correctly). */
     var collect = function () {
       var raw = new FormData(form);
       var name = (form.meno.value.trim() + ' ' + form.priezvisko.value.trim()).trim();
@@ -152,17 +154,17 @@
       put('Meno', form.meno.value);
       put('Priezvisko', form.priezvisko.value);
       put('email', form.email.value);                 // lower-case on purpose: form services read it as the reply address
-      put('Telefón', form.telefon.value);
+      put('Telefon', form.telefon.value);
       put('Typ bytu', raw.getAll('typ_bytu').join(', '));
-      put('Účel', raw.get('ucel'));
+      put('Byt na', raw.get('ucel'));
       put('Zdroj', form.zdroj.value);
-      put('Správa', form.sprava.value);
-      put('Súhlas s kontaktovaním', form.suhlas_kontakt.checked ? 'áno' : 'nie');
-      put('Súhlas s novinkami e-mailom', form.suhlas_newsletter.checked ? 'áno' : 'nie');
-      put('Čas udelenia súhlasu', new Date().toLocaleString('sk-SK', { timeZone: 'Europe/Bratislava' }) + ' (Bratislava)');
+      put('Odkaz', form.sprava.value);
+      put('GDPR kontakt', form.suhlas_kontakt.checked ? 'áno' : 'nie');
+      put('GDPR newsletter', form.suhlas_newsletter.checked ? 'áno' : 'nie');
+      put('Kedy', new Date().toLocaleString('sk-SK', { timeZone: 'Europe/Bratislava' }) + ' (Bratislava)');
       var lang = document.documentElement.lang || 'sk';
-      put('Jazyk stránky', LANGS[lang] || lang);
-      put('Stránka', location.href.split('#')[0]);
+      put('Jazyk', LANGS[lang] || lang);
+      put('URL', location.href.split('#')[0]);
       // campaign attribution, when the visitor arrived from an ad
       var qs = new URLSearchParams(location.search);
       ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) { put(k, qs.get(k)); });
