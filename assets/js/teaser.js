@@ -137,22 +137,35 @@
       done.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' });
     };
 
+    /* What the sales inbox receives. Keys are readable Slovak labels in a fixed order, values stay Slovak
+       whatever language the visitor used, and the consent moment is recorded with the message. */
     var collect = function () {
-      var data = new FormData(form);
-      var types = data.getAll('typ_bytu');
-      data.delete('typ_bytu');
-      data.set('typ_bytu', types.join(', '));
-      data.delete('web');
-      if (!data.has('suhlas_newsletter')) data.set('suhlas_newsletter', 'nie');
-      data.set('subject', 'P6: nový záujemca z teaser stránky');
-      data.set('_subject', 'P6: nový záujemca z teaser stránky');
-      data.set('stranka', location.href.split('#')[0]);
-      data.set('jazyk', document.documentElement.lang || 'sk');
+      var raw = new FormData(form);
+      var name = (form.meno.value.trim() + ' ' + form.priezvisko.value.trim()).trim();
+      var LANGS = { sk: 'slovenčina', en: 'angličtina', de: 'nemčina', uk: 'ukrajinčina' };
+      var data = new FormData();
+      var put = function (k, v) { if (v !== null && v !== undefined && String(v).trim() !== '') data.append(k, String(v).trim()); };
+
+      put('subject', 'P6: nový záujemca – ' + name);
+      put('from_name', 'P6 web · registrácia záujemcu');
+      put('replyto', form.email.value);
+      put('Meno', form.meno.value);
+      put('Priezvisko', form.priezvisko.value);
+      put('email', form.email.value);                 // lower-case on purpose: form services read it as the reply address
+      put('Telefón', form.telefon.value);
+      put('Typ bytu', raw.getAll('typ_bytu').join(', '));
+      put('Účel', raw.get('ucel'));
+      put('Zdroj', form.zdroj.value);
+      put('Správa', form.sprava.value);
+      put('Súhlas s kontaktovaním', form.suhlas_kontakt.checked ? 'áno' : 'nie');
+      put('Súhlas s novinkami e-mailom', form.suhlas_newsletter.checked ? 'áno' : 'nie');
+      put('Čas udelenia súhlasu', new Date().toLocaleString('sk-SK', { timeZone: 'Europe/Bratislava' }) + ' (Bratislava)');
+      var lang = document.documentElement.lang || 'sk';
+      put('Jazyk stránky', LANGS[lang] || lang);
+      put('Stránka', location.href.split('#')[0]);
       // campaign attribution, when the visitor arrived from an ad
       var qs = new URLSearchParams(location.search);
-      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) {
-        if (qs.get(k)) data.set(k, qs.get(k));
-      });
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) { put(k, qs.get(k)); });
       return data;
     };
 
@@ -172,7 +185,7 @@
       if (!endpoint) {
         // no backend configured yet: hand the message to the visitor's mail client
         var lines = [];
-        data.forEach(function (v, k) { if (k.charAt(0) !== '_' && k !== 'subject' && v) lines.push(k + ': ' + v); });
+        data.forEach(function (v, k) { if (['subject', 'from_name', 'replyto'].indexOf(k) < 0) lines.push(k + ': ' + v); });
         location.href = 'mailto:' + form.getAttribute('data-mailto') +
           '?subject=' + encodeURIComponent(data.get('subject')) +
           '&body=' + encodeURIComponent(lines.join('\n'));
