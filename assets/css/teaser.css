@@ -219,8 +219,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .frame img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
 .frame:hover img { transform: scale(1.03); }
 .frame figcaption { position: absolute; left: 14px; bottom: 12px; padding: 6px 10px; font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: var(--text-inv); background: rgba(20, 18, 15, .55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 2px; }
-.split__media { aspect-ratio: 16 / 11; }
-@media (min-width: 900px) { .split__media { margin-right: calc(-1 * var(--gut)); border-radius: var(--r-md) 0 0 var(--r-md); aspect-ratio: 16 / 12; } }
+/* the façade render is square: keep the frame close to it so the building is not cropped */
+.split__media { aspect-ratio: 5 / 4; }
+.split__media img { object-position: 50% 46%; }
+@media (min-width: 900px) { .split__media { margin-right: calc(-1 * var(--gut)); border-radius: var(--r-md) 0 0 var(--r-md); aspect-ratio: 1 / .94; } }
 @media (min-width: 1560px) { .split__media { margin-right: 0; border-radius: var(--r-md); } }
 
 .figs { display: grid; grid-template-columns: repeat(2, 1fr); margin: clamp(48px, 7vw, 96px) 0 0; border-top: 1px solid var(--line); }
@@ -243,32 +245,43 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .dist span { font-size: .95rem; color: var(--text-inv-muted); }
 
 .map { margin: 0; }
-.map svg { width: 100%; aspect-ratio: 720 / 560; border-radius: var(--r-md); background: radial-gradient(120% 100% at 55% 42%, #2A251F 0%, #1B1815 70%); border: 1px solid var(--line-inv); }
+.map svg { width: 100%; aspect-ratio: 720 / 560; border-radius: var(--r-md); background: #1B1815; border: 1px solid var(--line-inv); }
 @media (max-width: 640px) { .map svg { aspect-ratio: 6 / 7; } .map__far { display: none; } }
-.map figcaption { margin-top: 14px; font-size: .78rem; color: var(--text-inv-muted); }
-.map__river { fill: none; stroke: rgba(196, 171, 137, .17); stroke-width: 74; stroke-linecap: round; }
-.map__water { font: 500 12px var(--f-ui); letter-spacing: .5em; fill: rgba(196, 171, 137, .62); }
-.map__roads path { fill: none; stroke: rgba(247, 244, 239, .17); stroke-width: 11; stroke-linecap: round; stroke-linejoin: round; }
-.map__roads path.thin { stroke-width: 5; stroke: rgba(247, 244, 239, .1); }
-.map__street text { font: 500 9.5px var(--f-ui); letter-spacing: .22em; fill: rgba(247, 244, 239, .5); }
-.map__area { font: 400 11px var(--f-ui); letter-spacing: .34em; fill: rgba(247, 244, 239, .3); }
-.map__rings circle { fill: none; stroke: var(--copper-2); stroke-width: 1; stroke-dasharray: 3 6; opacity: .75; transform-box: fill-box; transform-origin: center; }
-.map__ring-label { font: 500 9.5px var(--f-ui); letter-spacing: .22em; fill: var(--copper-2); paint-order: stroke; stroke: #211D19; stroke-width: 6px; stroke-linejoin: round; }
-.map__poi circle { fill: var(--paper); stroke: rgba(247, 244, 239, .25); stroke-width: 6; }
-.map__poi text { font: 500 13px var(--f-ui); fill: var(--text-inv); paint-order: stroke; stroke: #1E1B17; stroke-width: 5px; stroke-linejoin: round; }
-.map__edge text { font: 500 11px var(--f-ui); letter-spacing: .06em; fill: var(--text-inv-muted); }
-.map__p6 .pulse { fill: none; stroke: var(--copper-2); stroke-width: 1.5; transform-box: fill-box; transform-origin: center; animation: map-pulse 2.8s var(--ease) infinite; }
-.map__p6 use { fill: var(--paper); }
-.map__p6 .zone { transform-box: fill-box; transform-origin: center; animation: zone-breathe 5s ease-in-out infinite; }
-@keyframes zone-breathe { 0%, 100% { transform: scale(.92); } 50% { transform: scale(1.06); } }
-@keyframes map-pulse { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(2.6); opacity: 0; } }
+.map figcaption { margin-top: 14px; font-size: .78rem; line-height: 1.55; color: var(--text-inv-muted); }
+.map__credit { white-space: nowrap; opacity: .8; }
+.map__credit a { color: inherit; text-underline-offset: 3px; }
 
-/* map draws in once visible */
-.js .map .map__rings circle { transform: scale(.2); opacity: 0; transition: transform 1.5s var(--ease), opacity .8s; }
-.js .map .map__poi, .js .map .map__ring-label, .js .map .map__edge { opacity: 0; transition: opacity .7s ease; transition-delay: calc(.5s + var(--i, 6) * 70ms); }
-.js .map.is-in .map__rings circle { transform: none; opacity: .75; }
-.js .map.is-in .map__rings circle:nth-child(2) { transition-delay: .18s; }
-.js .map.is-in .map__poi, .js .map.is-in .map__ring-label, .js .map.is-in .map__edge { opacity: 1; }
+/* labels sit on a real street map, so every one carries a dark halo to stay legible over the lines */
+.map__water { font: 500 12px var(--f-ui); letter-spacing: .5em; fill: rgba(196, 171, 137, .7); }
+.map__street text { font: 500 8.5px var(--f-ui); letter-spacing: .2em; fill: rgba(247, 244, 239, .6); paint-order: stroke; stroke: #1B1815; stroke-width: 3.5px; stroke-linejoin: round; }
+.map__area { font: 400 11px var(--f-ui); letter-spacing: .34em; fill: rgba(247, 244, 239, .32); }
+.map__ring-label { font: 500 9.5px var(--f-ui); letter-spacing: .22em; fill: var(--copper-2); paint-order: stroke; stroke: #1B1815; stroke-width: 6px; stroke-linejoin: round; }
+.map__poi circle { fill: var(--paper); stroke: rgba(247, 244, 239, .28); stroke-width: 6; transform-box: fill-box; transform-origin: center; }
+.map__poi text { font: 500 13px var(--f-ui); fill: var(--text-inv); paint-order: stroke; stroke: #1B1815; stroke-width: 5px; stroke-linejoin: round; }
+.map__edge text { font: 500 10.5px var(--f-ui); letter-spacing: .06em; fill: var(--text-inv-muted); paint-order: stroke; stroke: #1B1815; stroke-width: 4px; stroke-linejoin: round; }
+@media (max-width: 640px) { .map__poi text { font-size: 15px; } .map__street text { font-size: 10px; } .map__ring-label { font-size: 11px; } .map__edge text { font-size: 12px; } }
+
+/* radar: three fixed walking rings, and a wave that travels out to the 15-minute ring every few seconds */
+.radar__ring { fill: none; stroke: var(--copper-2); stroke-width: 1; stroke-dasharray: 3 6; opacity: .8; }
+.radar__ring--outer { stroke-dasharray: none; opacity: .55; }
+.radar__wave { fill: none; stroke: var(--copper-2); stroke-width: 1.6; vector-effect: non-scaling-stroke; transform-box: fill-box; transform-origin: center; transform: scale(0); opacity: 0; animation: radar-wave 4.8s cubic-bezier(.2, .6, .35, 1) infinite; }
+.radar__wave--2 { animation-delay: 2.4s; }
+@keyframes radar-wave { 0% { transform: scale(.06); opacity: 0; } 8% { opacity: .95; } 70% { opacity: .3; } 100% { transform: scale(1); opacity: 0; } }
+/* a place "answers" as the wave reaches it: --d is its distance as a share of the outer ring */
+.map__poi[style*="--d"] circle { animation: poi-ping 4.8s linear infinite; animation-delay: calc(var(--d) * 2.6s); }
+@keyframes poi-ping { 0%, 14%, 100% { transform: none; fill: var(--paper); } 5% { transform: scale(1.7); fill: var(--copper-2); } }
+.map__p6 use { fill: var(--paper); }
+.map__p6 .zone { transform-box: fill-box; transform-origin: center; animation: zone-breathe 4.8s ease-in-out infinite; }
+@keyframes zone-breathe { 0%, 100% { transform: scale(.9); } 12% { transform: scale(1.12); } 50% { transform: scale(.96); } }
+
+/* the map draws in once visible */
+.js .map .radar__ring { transform-box: fill-box; transform-origin: center; transform: scale(.15); opacity: 0; transition: transform 1.5s var(--ease), opacity .9s; }
+.js .map .radar__ring:nth-of-type(4) { transition-delay: .1s; } .js .map .radar__ring:nth-of-type(5) { transition-delay: .2s; }
+.js .map .radar__reach { opacity: 0; transition: opacity 1.6s ease .3s; }
+.js .map .map__poi, .js .map .map__ring-label, .js .map .map__edge, .js .map .map__street, .js .map .map__area, .js .map .map__water { opacity: 0; transition: opacity .7s ease; transition-delay: calc(.5s + var(--i, 6) * 70ms); }
+.js .map.is-in .radar__ring { transform: none; opacity: .8; }
+.js .map.is-in .radar__ring--outer { opacity: .55; }
+.js .map.is-in .radar__reach, .js .map.is-in .map__poi, .js .map.is-in .map__ring-label, .js .map.is-in .map__edge, .js .map.is-in .map__street, .js .map.is-in .map__area, .js .map.is-in .map__water { opacity: 1; }
 
 /* --- výhody ---------------------------------------------------------------------- */
 .perks { display: grid; grid-template-columns: 1fr; border-top: 1px solid rgba(20, 18, 15, .2); }
