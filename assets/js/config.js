@@ -10,7 +10,7 @@ window.P6_CONFIG = {
     icdph:    '',                       // IČ DPH (nepovinné)
     register: '',                       // napr. 'Obchodný register Mestského súdu Bratislava III, oddiel Sro, vložka č. 000000/B'
     email:    'info@prievozska6.sk',    // kontakt pre osobné údaje aj všeobecné otázky
-    phone:    '+421 900 000 000',
+    phone:    '',                       // telefón; kým je prázdny, v dokumentoch sa riadok nezobrazuje. Pred ostrým spustením doplniť (§ 4 zákona č. 22/2004 Z. z. ho vyžaduje)
     dpo:      '',                       // zodpovedná osoba (DPO), ak je určená: meno alebo e-mail; inak nechať prázdne
     seller:   '',                       // výhradný predajca / realitná kancelária, ak predaj zabezpečuje tretia strana
     retentionYears: 3,                  // ako dlho sa uchovávajú kontakty záujemcov od udelenia súhlasu
