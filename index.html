@@ -334,10 +334,10 @@
       </div>
 
       <div class="reg__card reveal">
-        <!-- data-endpoint: URL služby na príjem formulára (Formspree, Web3Forms, vlastné API).
-             data-access-key: nepovinný kľúč (Web3Forms). Bez endpointu sa formulár odošle cez e-mailového klienta.
+        <!-- Formulár prijíma Web3Forms a doručuje ho na info@bytyp6.sk. Access key je verejný (alias e-mailovej adresy), nie tajomstvo.
+             Bez data-endpoint by sa formulár odoslal cez e-mailového klienta návštevníka.
              Hodnoty polí (value) ostávajú po slovensky vo všetkých jazykoch, aby mal predaj jednotné dáta. -->
-        <form class="form" data-form data-endpoint="" data-access-key="" data-mailto="info@bytyp6.sk" novalidate>
+        <form class="form" data-form data-endpoint="https://api.web3forms.com/submit" data-access-key="7fe2237a-781c-434a-8681-004cfc526785" data-mailto="info@bytyp6.sk" novalidate>
           <div class="form__row">
             <label class="field"><span data-i18n="f.first">Meno</span>
               <input type="text" name="meno" autocomplete="given-name" required placeholder="Vaše meno" data-i18n-attr="placeholder:f.first.ph"></label>
