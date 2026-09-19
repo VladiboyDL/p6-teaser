@@ -1,4 +1,4 @@
-/* P6 teaser — translations (EN, DE) and the SK / EN / DE switcher.
+/* P6 teaser — translations (EN, DE, UK) and the SK / EN / DE / UA switcher.
    Slovak is the source language and lives in the HTML itself; this file only
    carries what replaces it. Keys match data-i18n / data-i18n-attr in the markup.
    Strings are trusted HTML written by us, so they are applied with innerHTML. */
@@ -106,6 +106,38 @@
       'ck.mkt.d': 'Messung der Wirksamkeit unserer Werbung und deren Anzeige auf anderen Websites (Google Ads, Meta).',
       'ck.close': 'Schließen',
       'cfg.missing': 'zu ergänzen'
+    },
+    uk: {
+      'meta.title': 'P6 | Незабаром. Дім між ринком Мілетічка і Downtown',
+      'meta.desc': '44 нові квартири в братиславському районі Ружинов, між ринком Мілетічка та новим центром міста. Зареєструйтеся для пріоритетного вибору квартир до початку продажу.',
+      'err.first': 'Будь ласка, вкажіть ім’я.',
+      'err.last': 'Будь ласка, вкажіть прізвище.',
+      'err.email': 'Вкажіть дійсну адресу електронної пошти.',
+      'err.phone': 'Перевірте номер телефону.',
+      'err.consent': 'Без вашої згоди на обробку даних ми не можемо з вами зв’язатися.',
+      'err.send': 'Не вдалося надіслати форму. Спробуйте ще раз або напишіть нам на {email}.',
+      'sending': 'Надсилаємо…',
+      'done.title': 'Дякуємо, ви у списку',
+      'done.text': 'Ми зв’яжемося з вами одними з перших, щойно будуть готові планування та прайс-лист.',
+      'done.mail.title': 'Ще один крок',
+      'done.mail.text': 'Ми відкрили вашу поштову програму з підготовленим листом. Просто надішліть його, і ви у списку.',
+      'ck.title': 'Файли cookie',
+      'ck.text': 'Необхідні файли cookie забезпечують роботу сайту. За вашою згодою ми також використовуємо аналітичні та маркетингові cookie, щоб покращувати сайт і вимірювати рекламу. Свій вибір ви можете будь-коли змінити.',
+      'ck.more': 'Політика щодо файлів cookie',
+      'ck.accept': 'Прийняти всі',
+      'ck.reject': 'Відхилити',
+      'ck.settings': 'Налаштування',
+      'ck.save': 'Зберегти вибір',
+      'ck.set.title': 'Налаштування cookie',
+      'ck.always': 'завжди активні',
+      'ck.nec': 'Необхідні',
+      'ck.nec.d': 'Запам’ятовують ваш вибір щодо cookie та мову. Без них сайт не працює належним чином, тому їх не можна вимкнути.',
+      'ck.ana': 'Аналітичні',
+      'ck.ana.d': 'Анонімізована статистика відвідувань, яка допомагає нам покращувати сайт (Google Analytics).',
+      'ck.mkt': 'Маркетингові',
+      'ck.mkt.d': 'Вимірювання ефективності реклами та її показ на інших сайтах (Google Ads, Meta).',
+      'ck.close': 'Закрити',
+      'cfg.missing': 'заповнити'
     }
   };
 
@@ -146,6 +178,7 @@
       'map.danube': 'DANUBE', 'map.r5': '5 MIN WALK', 'map.r10': '10 MIN', 'map.r15': '15 MIN', 'map.oldtown': 'OLD TOWN',
       'map.market': 'Miletičova Market', 'map.school': 'School', 'map.nivy': 'Nivy Station',
       'map.bridge': 'Apollo Bridge', 'map.lake': '↑ Štrkovec Lake', 'map.airport': 'Airport 16 min →', 'map.stadium': '↑ Ice Stadium',
+      'map.credit': 'Map data ©',
       'map.cap': 'The project location is shown approximately. The rings show approximate walking reach; times in the list are measured along real routes.',
       'perks.eyebrow': 'Benefits', 'perks.title': 'What will P6 bring?',
       'perk.1': 'A balcony with every apartment', 'perk.2': 'Shared roof terrace', 'perk.3': 'Fitness room for residents',
@@ -225,6 +258,7 @@
       'map.danube': 'DONAU', 'map.r5': '5 MIN. ZU FUSS', 'map.r10': '10 MIN.', 'map.r15': '15 MIN.', 'map.oldtown': 'ALTSTADT',
       'map.market': 'Markt Miletičova', 'map.school': 'Schule', 'map.nivy': 'Busbahnhof Nivy',
       'map.bridge': 'Apollo-Brücke', 'map.lake': '↑ Štrkovec-See', 'map.airport': 'Flughafen 16 Min. →', 'map.stadium': '↑ Eisstadion',
+      'map.credit': 'Kartendaten ©',
       'map.cap': 'Die Lage des Projekts ist ungefähr eingezeichnet. Die Ringe zeigen die ungefähre fußläufige Erreichbarkeit; die Zeiten in der Liste wurden auf realen Wegen gemessen.',
       'perks.eyebrow': 'Vorteile', 'perks.title': 'Was bringt P6?',
       'perk.1': 'Ein Balkon zu jeder Wohnung', 'perk.2': 'Gemeinschaftliche Dachterrasse', 'perk.3': 'Fitnessraum für Bewohner',
@@ -268,11 +302,91 @@
       'foot.rights': 'Alle Rechte vorbehalten.',
       'foot.disclaimer': 'Visualisierungen dienen der Illustration. Flächen, Zeiten und Entfernungen sind Richtwerte. Es handelt sich um die Rekonstruktion eines bestehenden Skeletts; der Investor behält sich Änderungen vor. Die Informationen auf dieser Website stellen weder ein Vertragsangebot noch eine Auslobung dar.',
       'sticky.text': 'Vorrangige Wohnungsauswahl<span class="sticky__more"> vor dem Verkaufsstart</span>'
+    },
+    uk: {
+      'skip': 'Перейти до вмісту',
+      'nav.aria': 'Головна навігація',
+      'nav.project': 'Проєкт', 'nav.location': 'Розташування', 'nav.perks': 'Переваги', 'nav.steps': 'Як це працює',
+      'cta.interest': 'Мені цікаво',
+      'hero.alt': 'Візуалізація житлового будинку P6: п’ять поверхів із зеленими балконами та терасою на даху',
+      'hero.status': 'Незабаром · Братислава-Ружинов',
+      'hero.title': '<span class="line"><span>Дім між</span></span><span class="line"><span>ринком Мілетічка</span></span><span class="line"><span>і&nbsp;<em>Downtown</em></span></span>',
+      'hero.sub': '44 квартири у братиславському районі Ружинов. Ринок, школа, робота, Nivy та новий центр Братислави на зручній відстані. Зареєструйтеся та оберіть квартиру ще до початку продажу.',
+      'hero.cta': 'Хочу пріоритетний вибір', 'hero.cta2': 'Дізнатися про проєкт',
+      'hero.facts.aria': 'Проєкт коротко',
+      'fact.flats': 'квартири', 'fact.rooms.n': '1–3', 'fact.rooms': 'кімнати', 'fact.area.n': '30–78', 'fact.area': 'м² площі',
+      'viz': 'Візуалізація', 'hero.cue': 'Перейти до проєкту',
+      'about.eyebrow': 'Про проєкт',
+      'about.title': 'Спокійний дім<br>у&nbsp;динамічній<br>частині міста',
+      'about.lede': 'Проєкт P6 пропонує міське житло в Ружинові, на межі кварталу Мілетічка та нового Downtown. Оригінальний каркас будівлі отримує друге життя: 44 квартири, зелені балкони та тераса на даху для всіх мешканців.',
+      'about.p1': 'Квартири від однієї до трьох кімнат площею від 30 до 78&nbsp;м², кожна з власним балконом. Великі вікна, зрозумілі планування та приватність там, де вона справді потрібна.',
+      'about.p2': 'Житло для людей, які хочуть мати роботу, школу, ринок і центр на правильній відстані. І витрачати менше часу на дорогу, а більше на те, що для них важливо.',
+      'about.link': 'Отримати пріоритетний вибір',
+      'about.alt': 'Візуалізація вуличного фасаду P6: п’ять поверхів, балкони із зеленню, світлі панелі та тераса на даху',
+      'about.cap': 'Візуалізація · вуличний фасад',
+      'fig.area': 'м² площа квартир', 'fig.floors': 'надземних поверхів', 'fig.parking': 'паркомісць',
+      'loc.eyebrow': 'Розташування',
+      'loc.title': 'Усе важливе<br>на правильній <em>відстані</em>',
+      'loc.lede': 'Mlynské nivy та околиці утворюють головний діловий район Братислави. Ринок Miletičova, школа, Nivy та набережна Дунаю поруч: пішки або на велосипеді.',
+      'd1.n': '1 хв', 'd1': 'пішки до ділового району',
+      'd2.n': '2 хв', 'd2': 'пішки до зупинки громадського транспорту',
+      'd3.n': '7 хв', 'd3': 'пішки до школи та гімназії',
+      'd4.n': '13 хв', 'd4': 'пішки до ринку Miletičova',
+      'd5.n': 'до 1,5 км', 'd5': 'Nivy, Twin City, CBC, Sky Park',
+      'd6.n': '15–20 хв', 'd6': 'автомобілем до аеропорту Братислави',
+      'map.aria': 'Карта околиць P6 із колами пішої доступності 5, 10 і 15 хвилин: ринок Miletičova, школа, автовокзал Nivy, Sky Park, Eurovea та Дунай',
+      'map.danube': 'ДУНАЙ', 'map.r5': '5 ХВ ПІШКИ', 'map.r10': '10 ХВ', 'map.r15': '15 ХВ', 'map.oldtown': 'СТАРЕ МІСТО',
+      'map.market': 'Ринок Miletičova', 'map.school': 'Школа', 'map.nivy': 'Автовокзал Nivy',
+      'map.bridge': 'Міст Аполло', 'map.lake': '↑ Озеро Štrkovec', 'map.airport': 'Аеропорт 16 хв →', 'map.stadium': '↑ Зимовий стадіон',
+      'map.cap': 'Розташування проєкту позначено орієнтовно. Кола показують приблизну пішу доступність, час у списку виміряно за реальними маршрутами.',
+      'map.credit': 'Картографічні дані ©',
+      'perks.eyebrow': 'Переваги', 'perks.title': 'Що пропонує P6?',
+      'perk.1': 'Балкон у кожній квартирі', 'perk.2': 'Спільна тераса на даху', 'perk.3': 'Фітнес для мешканців',
+      'perk.4': '50 паркомісць перед будинком', 'perk.5': 'Великоформатні вікна з потрійним склінням',
+      'perk.6': 'Тепла підлога з підготовкою до охолодження', 'perk.7': 'Зупинка громадського транспорту за 2 хвилини пішки',
+      'perk.8': 'Діловий район і Nivy в пішій доступності',
+      'perks.note': 'Стандарт оздоблення та обладнання спільних просторів буде уточнено відповідно до остаточної проєктної документації.',
+      'gal.eyebrow': 'Перші візуалізації',
+      'gal.title': 'Дім не закінчується<br>за вашими дверима',
+      'gal.lede': 'Світлі квартири з балконом, зорієнтованим туди, де ви ним справді користуватиметеся. А над ними спільна тераса для розмови, відпочинку чи спокійного вечора над містом.',
+      'gal.alt1': 'Візуалізація вітальні з виходом на балкон, світлий інтер’єр із дерев’яною підлогою',
+      'gal.alt2': 'Візуалізація спільної тераси на даху після заходу сонця: перголи, зелень і місця для відпочинку',
+      'gal.alt3': 'Візуалізація спальні з вікном від підлоги до стелі та видом на зелень',
+      'gal.cap1': 'Візуалізація · вітальня', 'gal.cap2': 'Візуалізація · тераса на даху', 'gal.cap3': 'Візуалізація · спальня',
+      'steps.eyebrow': 'Як це працює',
+      'steps.title': 'Три кроки до квартири,<br>яку ви оберете першими',
+      'step1.t': 'Ви реєструєтеся', 'step1.p': 'Заповнюєте коротку форму. Це займе хвилину і ні до чого вас не зобов’язує.', 'step1.tag': 'Триває зараз',
+      'step2.t': 'Ми зв’яжемося з вами першими', 'step2.p': 'Планування, прайс-лист і стандарт ви отримаєте ще до публічного початку продажу.', 'step2.tag': 'До початку продажу',
+      'step3.t': 'Ви обираєте пріоритетно', 'step3.p': 'На особистій консультації ви оберете квартиру, поки доступна вся пропозиція.', 'step3.tag': 'Пріоритетний вибір',
+      'reg.eyebrow': 'Реєстрація зацікавлених',
+      'reg.title': 'Пріоритетний вибір квартир <em>до початку продажу</em>',
+      'reg.lede': 'Залиште нам свої контакти. Зареєстровані покупці дізнаються про квартири, ціни та терміни раніше за інших.',
+      'reg.t1': 'планування та прайс-лист раніше, ніж ми їх опублікуємо', 'reg.t2': 'вибір з усіх 44 квартир', 'reg.t3': 'особиста консультація без зобов’язань',
+      'f.first': 'Ім’я', 'f.first.ph': 'Ваше ім’я', 'f.last': 'Прізвище', 'f.last.ph': 'Ваше прізвище',
+      'f.email': 'E-mail', 'f.email.ph': 'vasha@poshta.com', 'f.phone': 'Телефон <i>(необов’язково)</i>',
+      'f.type': 'Яка квартира вас цікавить?', 'f.type1': '1-кімнатна', 'f.type2': '2-кімнатна', 'f.type3': '3-кімнатна', 'f.type0': 'Ще не знаю',
+      'f.purpose': 'Шукаю квартиру для <i>(необов’язково)</i>', 'f.purpose1': 'Власного проживання', 'f.purpose2': 'Інвестиції',
+      'f.source': 'Звідки ви дізналися про P6? <i>(необов’язково)</i>',
+      'f.src0': 'Оберіть', 'f.src1': 'Пошук у Google', 'f.src2': 'Соціальні мережі', 'f.src3': 'Онлайн-реклама', 'f.src4': 'Портал нерухомості',
+      'f.src5': 'Реклама на будівництві', 'f.src6': 'Рекомендація знайомих', 'f.src7': 'Інше',
+      'f.msg': 'Повідомлення <i>(необов’язково)</i>', 'f.msg.ph': 'Наприклад, бажаний поверх або орієнтація',
+      'f.consent1': 'Я даю <a href="suhlas-so-spracovanim.html" target="_blank" rel="noopener">згоду на обробку персональних даних</a> з метою зв’язку зі мною щодо проєкту P6. Я ознайомився(-лась) з <a href="ochrana-osobnych-udajov.html" target="_blank" rel="noopener">інформацією про захист персональних даних</a>.',
+      'f.consent2': 'Я погоджуюся отримувати новини про проєкт електронною поштою. Згоду можу будь-коли відкликати. <i>(необов’язково)</i>',
+      'f.fine': 'Ваші дані ми використаємо лише для зв’язку щодо проєкту P6. Ми не передаємо їх третім особам для рекламних цілей.',
+      'foot.about': 'Міське житло у братиславському районі Ружинов. Ринок Мілетічка, школа, діловий район, Nivy та новий центр Братислави на зручній відстані.',
+      'foot.sales': 'Продаж', 'foot.hours': 'Пн–Пт, 9:00–18:00', 'foot.page': 'Сторінка', 'foot.reg': 'Реєстрація зацікавлених',
+      'foot.legal': 'Правова інформація',
+      'legal.privacy': 'Захист персональних даних', 'legal.cookies': 'Політика щодо файлів cookie', 'legal.consent': 'Згода на обробку даних',
+      'legal.terms': 'Умови користування та оператор сайту', 'legal.cookieset': 'Налаштування cookie',
+      'legal.back': 'Назад на головну', 'legal.eyebrow': 'Правова інформація',
+      'foot.rights': 'Усі права захищено.',
+      'foot.disclaimer': 'Візуалізації мають ілюстративний характер. Площі, час і відстані є орієнтовними. Проєкт є реконструкцією наявного каркаса будівлі, інвестор залишає за собою право на зміни. Інформація на сайті не є пропозицією укласти договір ані публічною обіцянкою.',
+      'sticky.text': 'Пріоритетний вибір квартир<span class="sticky__more"> до початку продажу</span>'
     }
   };
 
-  var LOCALE = { sk: 'sk-SK', en: 'en-GB', de: 'de-DE' };
-  var OG = { sk: 'sk_SK', en: 'en_GB', de: 'de_DE' };
+  var LOCALE = { sk: 'sk-SK', en: 'en-GB', de: 'de-DE', uk: 'uk-UA' };
+  var OG = { sk: 'sk_SK', en: 'en_GB', de: 'de_DE', uk: 'uk_UA' };
 
   function t(key, vars) {
     var s = (JS[L.current] && JS[L.current][key]) || (PAGE[L.current] && PAGE[L.current][key]) || JS.sk[key] || '';
@@ -388,7 +502,9 @@
       .then(function (j) {
         if (!j || !j.country || L.source !== 'location') return;
         var byIp = L.fromCountry(j.country);
-        if (byIp !== 'sk' && L.browserIsSlovak()) byIp = 'sk';
+        var h = L.heritage ? L.heritage() : null;
+        if (h === 'uk') byIp = 'uk';
+        else if (byIp !== 'sk' && h === 'sk') byIp = 'sk';
         if (byIp && byIp !== L.current) setLang(byIp, false);
       })
       .catch(function () { /* keep the time-zone guess */ });

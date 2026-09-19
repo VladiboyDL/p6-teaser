@@ -36,6 +36,24 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* Cyrillic (Ukrainian). Newsreader has no Cyrillic, so Source Serif 4 stands in under the same family name:
+   headings need no extra rules, Latin letters and digits keep coming from Newsreader. Only fetched when Cyrillic is on screen. */
+@font-face {
+  font-family: "Newsreader"; font-style: normal; font-weight: 300 500; font-display: swap; size-adjust: 97%;
+  src: url("../fonts/sourceserif-normal-cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Newsreader"; font-style: italic; font-weight: 300 500; font-display: swap; size-adjust: 97%;
+  src: url("../fonts/sourceserif-italic-cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 300 600; font-display: swap;
+  src: url("../fonts/inter-cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
 :root {
   --ink: #14120F;
   --ink-2: #24201B;
@@ -164,7 +182,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .langs button[aria-pressed="true"] { opacity: 1; }
 @media (min-width: 1000px) { .nav__links { display: flex; } }
 @media (max-width: 1100px) and (min-width: 1000px) { .nav__links { gap: 20px; } }
-@media (max-width: 420px) { .nav__inner { gap: 14px; } .nav__cta { padding: 0 14px; } }
+/* four languages plus a long German CTA do not fit a phone: the hero and the sticky bar carry the CTA there */
+@media (max-width: 560px) { .nav__cta { display: none; } .nav__inner { gap: 14px; } }
 @media (max-width: 520px) { .brand__sub { display: none; } :root { --nav-h: 64px; } }
 
 /* --- hero ---------------------------------------------------------------------- */
@@ -453,7 +472,7 @@ body.ck-open .sticky { transform: translateY(105%); }
 .legal { padding: calc(var(--nav-h) + clamp(40px, 6vw, 90px)) 0 clamp(60px, 8vw, 120px); }
 .legal .shell { max-width: calc(880px + 2 * var(--gut)); }
 .legal [data-lang] { display: none; }
-html[lang="sk"] .legal [data-lang="sk"], html[lang="en"] .legal [data-lang="en"], html[lang="de"] .legal [data-lang="de"] { display: block; }
+html[lang="sk"] .legal [data-lang="sk"], html[lang="en"] .legal [data-lang="en"], html[lang="de"] .legal [data-lang="de"], html[lang="uk"] .legal [data-lang="uk"] { display: block; }
 .legal h1 { font-size: clamp(2.2rem, 4.6vw, 3.6rem); margin-bottom: 18px; }
 .legal__meta { font-size: .84rem; color: var(--text-muted); margin-bottom: clamp(28px, 4vw, 48px); padding-bottom: 22px; border-bottom: 1px solid var(--line); max-width: none; }
 .legal h2 { font-size: clamp(1.45rem, 2.2vw, 1.85rem); margin: clamp(38px, 4.4vw, 56px) 0 16px; }

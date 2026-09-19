@@ -33,5 +33,6 @@ window.P6_CONFIG = {
      takže žiadna IP adresa neopúšťa prehliadač. Ak hosting vie vrátiť krajinu podľa IP
      (Cloudflare / Netlify / Vercel edge funkcia), sem patrí jej URL; má vrátiť JSON {"country":"AT"}. */
   geoEndpoint: '',
-  slovakBrowserLangs: ['sk', 'cs']      // návštevník s týmto jazykom prehliadača dostane slovenčinu aj v zahraničí
+  slovakBrowserLangs: ['sk', 'cs'],     // návštevník s týmto jazykom prehliadača dostane slovenčinu aj v zahraničí
+  ukrainianBrowserLangs: ['uk']         // návštevník s ukrajinským prehliadačom dostane ukrajinčinu aj na Slovensku
 };
