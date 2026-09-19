@@ -48,7 +48,13 @@
   }
   function browserIsSlovak() { return heritage() === 'sk'; }
 
+  // Search engines crawl from anywhere (Googlebot mostly from the US). Without a ?lang= they must see the
+  // primary language, otherwise the root URL would be indexed in English. The other languages have their
+  // own URLs (?lang=en|de|uk) listed in hreflang and the sitemap.
+  var IS_BOT = /bot|crawl|spider|slurp|bingpreview|lighthouse|facebookexternalhit|whatsapp|telegram|linkedin|embedly|preview/i.test(navigator.userAgent || '');
+
   function fromLocation() {
+    if (IS_BOT) return 'sk';
     var tz = '';
     try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) { /* very old browser */ }
     var h = heritage();
@@ -76,6 +82,14 @@
   if (!lang) lang = fromLocation();
 
   root.lang = lang;
+
+  // one canonical per language URL, only on the landing page (the legal pages are noindex)
+  if (/\/(index\.html)?$/.test(location.pathname)) {
+    var link = document.createElement('link');
+    link.rel = 'canonical';
+    link.href = 'https://bytyp6.sk/' + (lang === 'sk' ? '' : '?lang=' + lang);
+    document.head.appendChild(link);
+  }
   // index.html ships Slovak text inline; hide it for the blink it takes i18n.js to swap it
   if (lang !== 'sk') {
     root.classList.add('lang-pending');

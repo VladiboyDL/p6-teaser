@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://bytyp6.sk/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://bytyp6.sk/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bytyp6.sk/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://bytyp6.sk/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://bytyp6.sk/?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bytyp6.sk/"/>
+  </url>
+  <url>
+    <loc>https://bytyp6.sk/?lang=en</loc>
+    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://bytyp6.sk/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bytyp6.sk/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://bytyp6.sk/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://bytyp6.sk/?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bytyp6.sk/"/>
+  </url>
+  <url>
+    <loc>https://bytyp6.sk/?lang=de</loc>
+    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://bytyp6.sk/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bytyp6.sk/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://bytyp6.sk/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://bytyp6.sk/?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bytyp6.sk/"/>
+  </url>
+  <url>
+    <loc>https://bytyp6.sk/?lang=uk</loc>
+    <lastmod>2026-09-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://bytyp6.sk/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bytyp6.sk/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://bytyp6.sk/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://bytyp6.sk/?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bytyp6.sk/"/>
+  </url>
+</urlset>
