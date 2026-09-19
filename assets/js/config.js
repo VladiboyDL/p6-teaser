@@ -3,12 +3,12 @@
    Prázdna hodnota sa v dokumentoch zobrazí ako žlto označené „[doplniť …]“. */
 window.P6_CONFIG = {
   legal: {
-    company:  '',                       // obchodné meno, napr. 'P6 Development, s. r. o.'
-    seat:     '',                       // sídlo, napr. 'Ulica 1, 811 01 Bratislava'
-    ico:      '',                       // IČO
+    company:  'Byty Jegeho2 s.r.o.',    // obchodné meno
+    seat:     'Prievozská 6, 821 09 Bratislava - mestská časť Ružinov',   // sídlo
+    ico:      '54 791 685',             // IČO
     dic:      '',                       // DIČ (nepovinné)
     icdph:    '',                       // IČ DPH (nepovinné)
-    register: '',                       // napr. 'Obchodný register Mestského súdu Bratislava III, oddiel Sro, vložka č. 000000/B'
+    register: 'Obchodný register Mestského súdu Bratislava III, oddiel Sro, vložka č. 162994/B',   // overené na orsr.sk 19. 9. 2026
     email:    'info@bytyp6.sk',    // kontakt pre osobné údaje aj všeobecné otázky
     phone:    '',                       // telefón; kým je prázdny, v dokumentoch sa riadok nezobrazuje. Pred ostrým spustením doplniť (§ 4 zákona č. 22/2004 Z. z. ho vyžaduje)
     dpo:      '',                       // zodpovedná osoba (DPO), ak je určená: meno alebo e-mail; inak nechať prázdne
