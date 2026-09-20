@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Bezpečnostná politika: skripty len z vlastnej domény a z vymenovaných služieb (meranie po súhlase, formulár, prípadná captcha). Žiadne inline skripty. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://connect.facebook.net https://js.hcaptcha.com https://*.hcaptcha.com; style-src 'self' 'unsafe-inline' https://*.hcaptcha.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://*.g.doubleclick.net https://www.google.com https://www.google.sk https://www.facebook.com; font-src 'self'; connect-src 'self' https://api.web3forms.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.g.doubleclick.net https://www.google.com https://www.facebook.com https://*.hcaptcha.com; frame-src https://*.hcaptcha.com https://td.doubleclick.net https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>P6 | Pripravujeme. Domov medzi Miletičkou a Downtownom</title>
 <meta name="description" content="Pripravujeme 44 bytov v bratislavskom Ružinove, medzi Miletičkou a novým downtownom. Zaregistrujte sa a získajte prístup k predpredaju prvých bytov za úvodné ceny.">
 <!-- rel=canonical vkladá assets/js/lang-detect.js: / pre slovenčinu, /?lang=xx pre ostatné jazyky -->
@@ -25,13 +28,13 @@
 <meta name="theme-color" content="#14120F">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="robots" content="max-image-preview:large">
-<script src="assets/js/config.js?v=10"></script>
-<script src="assets/js/lang-detect.js?v=11"></script>
+<script src="assets/js/config.js?v=14"></script>
+<script src="assets/js/lang-detect.js?v=14"></script>
 <link rel="preload" href="assets/fonts/newsreader-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/hero-1600.webp" imagesrcset="assets/img/hero-960.webp 960w, assets/img/hero-1600.webp 1600w, assets/img/hero-2200.webp 2200w" imagesizes="100vw" media="(min-aspect-ratio: 4/5)" fetchpriority="high">
 <link rel="preload" as="image" href="assets/img/hero-tall-1000.webp" media="(max-aspect-ratio: 4/5)" fetchpriority="high">
-<link rel="stylesheet" href="assets/css/teaser.css?v=8">
+<link rel="stylesheet" href="assets/css/teaser.css?v=14">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ApartmentComplex","name":"P6",
 "address":{"@type":"PostalAddress","addressLocality":"Bratislava","addressRegion":"Ružinov","addressCountry":"SK"},
@@ -338,14 +341,14 @@
         <form class="form" data-form data-endpoint="https://api.web3forms.com/submit" data-access-key="7fe2237a-781c-434a-8681-004cfc526785" data-mailto="info@bytyp6.sk" novalidate>
           <div class="form__row">
             <label class="field"><span data-i18n="f.first">Meno</span>
-              <input type="text" name="meno" autocomplete="given-name" required placeholder="Vaše meno" data-i18n-attr="placeholder:f.first.ph"></label>
+              <input type="text" name="meno" autocomplete="given-name" required maxlength="60" placeholder="Vaše meno" data-i18n-attr="placeholder:f.first.ph"></label>
             <label class="field"><span data-i18n="f.last">Priezvisko</span>
-              <input type="text" name="priezvisko" autocomplete="family-name" required placeholder="Vaše priezvisko" data-i18n-attr="placeholder:f.last.ph"></label>
+              <input type="text" name="priezvisko" autocomplete="family-name" required maxlength="60" placeholder="Vaše priezvisko" data-i18n-attr="placeholder:f.last.ph"></label>
           </div>
           <label class="field"><span data-i18n="f.email">E-mail</span>
-            <input type="email" name="email" autocomplete="email" required placeholder="vas@email.sk" inputmode="email" data-i18n-attr="placeholder:f.email.ph"></label>
+            <input type="email" name="email" autocomplete="email" required maxlength="120" placeholder="vas@email.sk" inputmode="email" data-i18n-attr="placeholder:f.email.ph"></label>
           <label class="field"><span data-i18n="f.phone">Telefón <i>(nepovinné)</i></span>
-            <input type="tel" name="telefon" autocomplete="tel" placeholder="+421" inputmode="tel"></label>
+            <input type="tel" name="telefon" autocomplete="tel" maxlength="30" placeholder="+421" inputmode="tel"></label>
 
           <fieldset class="chips">
             <legend data-i18n="f.type">O aký byt máte záujem?</legend>
@@ -374,16 +377,17 @@
             </select></label>
 
           <label class="field"><span data-i18n="f.msg">Správa <i>(nepovinné)</i></span>
-            <textarea name="sprava" rows="3" placeholder="Napríklad preferované podlažie alebo orientácia" data-i18n-attr="placeholder:f.msg.ph"></textarea></label>
+            <textarea name="sprava" rows="3" maxlength="1000" placeholder="Napríklad preferované podlažie alebo orientácia" data-i18n-attr="placeholder:f.msg.ph"></textarea></label>
 
           <!-- honeypot: ľudia ho nevidia, boti ho vyplnia -->
-          <label class="hp" aria-hidden="true">Web<input type="text" name="web" tabindex="-1" autocomplete="off"></label>
+          <label class="hp" aria-hidden="true">Nevypĺňajte<input type="text" name="p6_kontrola" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore></label>
 
           <label class="check"><input type="checkbox" name="suhlas_kontakt" value="áno" required>
             <span data-i18n="f.consent1">Udeľujem <a href="suhlas-so-spracovanim.html" target="_blank" rel="noopener">súhlas so spracovaním osobných údajov</a> na účel kontaktovania v&nbsp;súvislosti s&nbsp;projektom P6. Oboznámil(a) som sa s&nbsp;<a href="ochrana-osobnych-udajov.html" target="_blank" rel="noopener">informáciami o&nbsp;ochrane osobných údajov</a>.</span></label>
           <label class="check"><input type="checkbox" name="suhlas_newsletter" value="áno">
             <span data-i18n="f.consent2">Súhlasím so zasielaním noviniek o&nbsp;projekte e-mailom. Súhlas môžem kedykoľvek odvolať. <i>(nepovinné)</i></span></label>
 
+          <div class="form__captcha" data-captcha hidden></div>
           <p class="form__error" data-form-error role="alert" hidden></p>
           <button class="btn btn--light btn--block" type="submit"><span data-form-label data-i18n="cta.interest">Mám záujem</span> <svg aria-hidden="true"><use href="#arrow"/></svg></button>
           <p class="form__fine" data-i18n="f.fine">Údaje použijeme len na kontaktovanie v&nbsp;súvislosti s&nbsp;projektom P6. Neposkytujeme ich na reklamné účely tretím stranám.</p>
@@ -438,7 +442,7 @@
     </div>
     <div class="foot__bottom">
       <span>© <span data-year>2026</span> P6. <span data-i18n="foot.rights">Všetky práva vyhradené.</span></span>
-      <span data-i18n="foot.disclaimer">Vizualizácie sú ilustračné. Výmery, časy a&nbsp;vzdialenosti sú orientačné. Ide o&nbsp;rekonštrukciu existujúceho skeletu, investor si vyhradzuje právo na zmeny. Informácie na stránke nie sú návrhom na uzavretie zmluvy ani verejným prísľubom.</span>
+      <span data-i18n="foot.disclaimer">Vizualizácie sú ilustračné. Výmery, časy a&nbsp;vzdialenosti sú orientačné. Informácie na stránke nie sú návrhom na uzavretie zmluvy ani verejným prísľubom.</span>
     </div>
   </div>
 </footer>
@@ -451,8 +455,8 @@
   </div>
 </div>
 
-<script src="assets/js/i18n.js?v=13" defer></script>
+<script src="assets/js/i18n.js?v=14" defer></script>
 <script src="assets/js/consent.js?v=3" defer></script>
-<script src="assets/js/teaser.js?v=10" defer></script>
+<script src="assets/js/teaser.js?v=14" defer></script>
 </body>
 </html>

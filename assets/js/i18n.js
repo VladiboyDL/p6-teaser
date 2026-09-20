@@ -20,6 +20,10 @@
       'err.phone': 'Skontrolujte telefónne číslo.',
       'err.consent': 'Bez súhlasu so spracovaním údajov vás nemôžeme kontaktovať.',
       'err.send': 'Formulár sa nepodarilo odoslať. Skúste to, prosím, znova alebo nám napíšte na {email}.',
+      'err.wait': 'Skúste to, prosím, o pár sekúnd znova.',
+      'err.limit': 'Z tohto zariadenia už prišlo viac registrácií. Ak potrebujete niečo doplniť, napíšte nám na {email}.',
+      'err.links': 'Správa nemôže obsahovať odkazy. Odstráňte ich, prosím, a skúste to znova.',
+      'err.captcha': 'Potvrďte, prosím, že nie ste robot.',
       'sending': 'Odosielam…',
       'done.title': 'Ďakujeme, ste na zozname',
       'done.text': 'Ozveme sa vám ako prvým, hneď ako budú pripravené pôdorysy a cenník.',
@@ -52,6 +56,10 @@
       'err.phone': 'Please check the phone number.',
       'err.consent': 'We cannot contact you without your consent to data processing.',
       'err.send': 'The form could not be sent. Please try again or write to us at {email}.',
+      'err.wait': 'Please try again in a few seconds.',
+      'err.limit': 'Several registrations have already come from this device. If you need to add something, write to us at {email}.',
+      'err.links': 'The message cannot contain links. Please remove them and try again.',
+      'err.captcha': 'Please confirm that you are not a robot.',
       'sending': 'Sending…',
       'done.title': 'Thank you, you are on the list',
       'done.text': 'You will be among the first to hear from us once floor plans and prices are ready.',
@@ -84,6 +92,10 @@
       'err.phone': 'Bitte überprüfen Sie die Telefonnummer.',
       'err.consent': 'Ohne Ihre Einwilligung in die Datenverarbeitung können wir Sie nicht kontaktieren.',
       'err.send': 'Das Formular konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder schreiben Sie uns an {email}.',
+      'err.wait': 'Bitte versuchen Sie es in ein paar Sekunden erneut.',
+      'err.limit': 'Von diesem Gerät sind bereits mehrere Registrierungen eingegangen. Wenn Sie etwas ergänzen möchten, schreiben Sie uns an {email}.',
+      'err.links': 'Die Nachricht darf keine Links enthalten. Bitte entfernen Sie sie und versuchen Sie es erneut.',
+      'err.captcha': 'Bitte bestätigen Sie, dass Sie kein Roboter sind.',
       'sending': 'Wird gesendet…',
       'done.title': 'Vielen Dank, Sie stehen auf der Liste',
       'done.text': 'Wir melden uns bei Ihnen als Erste, sobald Grundrisse und Preisliste vorliegen.',
@@ -116,6 +128,10 @@
       'err.phone': 'Перевірте номер телефону.',
       'err.consent': 'Без вашої згоди на обробку даних ми не можемо з вами зв’язатися.',
       'err.send': 'Не вдалося надіслати форму. Спробуйте ще раз або напишіть нам на {email}.',
+      'err.wait': 'Будь ласка, спробуйте ще раз за кілька секунд.',
+      'err.limit': 'З цього пристрою вже надійшло кілька реєстрацій. Якщо потрібно щось доповнити, напишіть нам на {email}.',
+      'err.links': 'Повідомлення не може містити посилань. Будь ласка, видаліть їх і спробуйте ще раз.',
+      'err.captcha': 'Будь ласка, підтвердьте, що ви не робот.',
       'sending': 'Надсилаємо…',
       'done.title': 'Дякуємо, ви у списку',
       'done.text': 'Ми зв’яжемося з вами одними з перших, щойно будуть готові планування та прайс-лист.',
@@ -224,7 +240,7 @@
       'legal.terms': 'Terms of use and site operator', 'legal.cookieset': 'Cookie settings',
       'legal.back': 'Back to the homepage', 'legal.eyebrow': 'Legal information',
       'foot.rights': 'All rights reserved.',
-      'foot.disclaimer': 'Visualisations are illustrative. Floor areas, times and distances are approximate. The project is a reconstruction of an existing structure and the investor reserves the right to make changes. Information on this site is neither an offer to conclude a contract nor a public promise.',
+      'foot.disclaimer': 'Visualisations are illustrative. Floor areas, times and distances are approximate. Information on this site is neither an offer to conclude a contract nor a public promise.',
       'sticky.text': 'Pre-sale of the first apartments<span class="sticky__more"> at introductory prices</span>'
     },
     de: {
@@ -308,7 +324,7 @@
       'legal.terms': 'Nutzungsbedingungen und Impressum', 'legal.cookieset': 'Cookie-Einstellungen',
       'legal.back': 'Zurück zur Startseite', 'legal.eyebrow': 'Rechtliche Informationen',
       'foot.rights': 'Alle Rechte vorbehalten.',
-      'foot.disclaimer': 'Visualisierungen dienen der Illustration. Flächen, Zeiten und Entfernungen sind Richtwerte. Es handelt sich um die Rekonstruktion eines bestehenden Skeletts; der Investor behält sich Änderungen vor. Die Informationen auf dieser Website stellen weder ein Vertragsangebot noch eine Auslobung dar.',
+      'foot.disclaimer': 'Visualisierungen dienen der Illustration. Flächen, Zeiten und Entfernungen sind Richtwerte. Die Informationen auf dieser Website stellen weder ein Vertragsangebot noch eine Auslobung dar.',
       'sticky.text': 'Vorverkauf der ersten Wohnungen<span class="sticky__more"> zu Einführungspreisen</span>'
     },
     uk: {
@@ -392,7 +408,7 @@
       'legal.terms': 'Умови користування та оператор сайту', 'legal.cookieset': 'Налаштування cookie',
       'legal.back': 'Назад на головну', 'legal.eyebrow': 'Правова інформація',
       'foot.rights': 'Усі права захищено.',
-      'foot.disclaimer': 'Візуалізації мають ілюстративний характер. Площі, час і відстані є орієнтовними. Проєкт є реконструкцією наявного каркаса будівлі, інвестор залишає за собою право на зміни. Інформація на сайті не є пропозицією укласти договір ані публічною обіцянкою.',
+      'foot.disclaimer': 'Візуалізації мають ілюстративний характер. Площі, час і відстані є орієнтовними. Інформація на сайті не є пропозицією укласти договір ані публічною обіцянкою.',
       'sticky.text': 'Передпродаж перших квартир<span class="sticky__more"> за стартовими цінами</span>'
     }
   };
@@ -501,6 +517,8 @@
       if (u.searchParams.has('lang')) { u.searchParams.set('lang', L.current); history.replaceState(null, '', u); }
     } catch (err) { /* old browser */ }
   });
+
+  $$('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
   window.P6I18N = { t: t, setLang: setLang, get lang() { return L.current; } };
 

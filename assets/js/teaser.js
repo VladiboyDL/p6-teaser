@@ -171,14 +171,62 @@
       return data;
     };
 
+    /* --- bots -------------------------------------------------------------------------------
+       The form has no action attribute, so bots that just parse the HTML and POST have nowhere to send.
+       Against bots that drive a real browser: a hidden field people never see, a minimum time on the
+       page, proof of a real key press or tap, a per-browser hourly limit and no links in the message.
+       A blocked attempt gets a polite error with the e-mail address, never a fake "thank you", so a
+       real person caught by mistake is not lost. Optional hCaptcha is switched on in config.js. */
+    var cfg = window.P6_CONFIG || {};
+    var mail = form.getAttribute('data-mailto');
+    var born = Date.now(), human = false;
+    ['pointerdown', 'touchstart', 'keydown'].forEach(function (ev) {
+      form.addEventListener(ev, function (e) { if (e.isTrusted) human = true; }, { capture: true, passive: true });
+    });
+    var MIN_MS = 4000, MAX_PER_HOUR = 3, SENT_KEY = 'p6_sent';
+    var recentSends = function () {
+      try { return JSON.parse(localStorage.getItem(SENT_KEY) || '[]').filter(function (t0) { return Date.now() - t0 < 3600000; }); }
+      catch (e) { return []; }
+    };
+    var noteSend = function () {
+      try { localStorage.setItem(SENT_KEY, JSON.stringify(recentSends().concat(Date.now()))); } catch (e) { /* storage blocked */ }
+    };
+    var looksLikeSpam = function () {
+      var text = [form.meno.value, form.priezvisko.value, form.sprava.value].join(' ');
+      return /<\s*a\b|\[url|https?:\/\/|www\./i.test(text);
+    };
+
+    // optional hCaptcha (Web3Forms verifies it server-side once it is enabled in their dashboard)
+    var captcha = { on: !!cfg.formCaptcha, id: null, loading: false };
+    var captchaBox = $('[data-captcha]', form);
+    var loadCaptcha = function () {
+      if (!captcha.on || captcha.loading || !captchaBox) return;
+      captcha.loading = true;
+      captchaBox.hidden = false;
+      window.p6CaptchaReady = function () {
+        captcha.id = window.hcaptcha.render(captchaBox, { sitekey: '50b2fe65-b00b-4b9e-ad62-3ba471098be2', theme: 'dark' });
+      };
+      var s = document.createElement('script');
+      s.src = 'https://js.hcaptcha.com/1/api.js?render=explicit&onload=p6CaptchaReady&hl=' + (document.documentElement.lang || 'sk');
+      s.async = true;
+      document.head.appendChild(s);
+    };
+    if (captcha.on) form.addEventListener('focusin', loadCaptcha, { once: true });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       hideError();
       var bad = validate();
       if (bad) { bad.focus(); return; }
 
-      // honeypot filled: a bot. Look successful, send nothing.
-      if (form.web.value) { finish(); return; }
+      if (form.p6_kontrola.value || !human || Date.now() - born < MIN_MS) { showError(t('err.wait')); return; }
+      if (looksLikeSpam()) { showError(t('err.links')); return; }
+      if (recentSends().length >= MAX_PER_HOUR) { showError(t('err.limit', { email: mail })); return; }
+      var token = '';
+      if (captcha.on) {
+        token = (window.hcaptcha && captcha.id !== null) ? window.hcaptcha.getResponse(captcha.id) : '';
+        if (!token) { loadCaptcha(); showError(t('err.captcha')); return; }
+      }
 
       var endpoint = form.getAttribute('data-endpoint');
       var key = form.getAttribute('data-access-key');
@@ -196,6 +244,7 @@
       }
 
       if (key) data.set('access_key', key);
+      if (token) data.set('h-captcha-response', token);
       btn.disabled = true;
       label.textContent = t('sending');
       fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
@@ -205,10 +254,12 @@
         })
         .then(function (json) {
           if (json && json.success === false) throw new Error(json.message || 'rejected');
+          noteSend();
           finish();
         })
         .catch(function () {
           btn.disabled = false;
+          if (captcha.on && window.hcaptcha && captcha.id !== null) window.hcaptcha.reset(captcha.id);
           label.innerHTML = label.__sk !== undefined && document.documentElement.lang === 'sk' ? label.__sk : t('cta.interest');
           showError(t('err.send', { email: form.getAttribute('data-mailto') }));
         });

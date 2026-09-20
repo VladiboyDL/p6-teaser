@@ -1,0 +1,4 @@
+Contact: mailto:info@bytyp6.sk
+Expires: 2027-09-19T00:00:00.000Z
+Preferred-Languages: sk, en
+Canonical: https://bytyp6.sk/.well-known/security.txt

@@ -3,13 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bezpečnostná politika: skripty len z vlastnej domény a z vymenovaných služieb (meranie po súhlase, formulár, prípadná captcha). Žiadne inline skripty. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://connect.facebook.net https://js.hcaptcha.com https://*.hcaptcha.com; style-src 'self' 'unsafe-inline' https://*.hcaptcha.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://*.g.doubleclick.net https://www.google.com https://www.google.sk https://www.facebook.com; font-src 'self'; connect-src 'self' https://api.web3forms.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.g.doubleclick.net https://www.google.com https://www.facebook.com https://*.hcaptcha.com; frame-src https://*.hcaptcha.com https://td.doubleclick.net https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Podmienky používania stránky a prevádzkovateľ | P6</title>
 <meta name="robots" content="noindex, follow">
 <meta name="theme-color" content="#14120F">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<script src="assets/js/config.js?v=10"></script>
-<script src="assets/js/lang-detect.js?v=11"></script>
-<link rel="stylesheet" href="assets/css/teaser.css?v=8">
+<script src="assets/js/config.js?v=14"></script>
+<script src="assets/js/lang-detect.js?v=14"></script>
+<link rel="stylesheet" href="assets/css/teaser.css?v=14">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -254,13 +257,12 @@
   <div class="shell">
     <div class="foot__bottom">
       <span>© <span data-year>2026</span> P6. <span data-i18n="foot.rights">Všetky práva vyhradené.</span></span>
-      <span data-i18n="foot.disclaimer">Vizualizácie sú ilustračné. Výmery, časy a&nbsp;vzdialenosti sú orientačné. Ide o&nbsp;rekonštrukciu existujúceho skeletu, investor si vyhradzuje právo na zmeny. Informácie na stránke nie sú návrhom na uzavretie zmluvy ani verejným prísľubom.</span>
+      <span data-i18n="foot.disclaimer">Vizualizácie sú ilustračné. Výmery, časy a&nbsp;vzdialenosti sú orientačné. Informácie na stránke nie sú návrhom na uzavretie zmluvy ani verejným prísľubom.</span>
     </div>
   </div>
 </footer>
 
-<script src="assets/js/i18n.js?v=13" defer></script>
+<script src="assets/js/i18n.js?v=14" defer></script>
 <script src="assets/js/consent.js?v=3" defer></script>
-<script>document.querySelectorAll('[data-year]').forEach(function (e) { e.textContent = new Date().getFullYear(); });</script>
 </body>
 </html>

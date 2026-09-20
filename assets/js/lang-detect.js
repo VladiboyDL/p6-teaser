@@ -13,6 +13,17 @@
 (function () {
   'use strict';
   var root = document.documentElement;
+
+  // Clickjacking guard. GitHub Pages cannot send X-Frame-Options and CSP frame-ancestors is ignored in <meta>,
+  // so a page framed by another origin hides itself and tries to break out.
+  try {
+    if (window.top !== window.self && window.top.location.hostname !== window.location.hostname) throw new Error('framed');
+  } catch (e) {
+    root.style.display = 'none';
+    try { window.top.location = window.self.location.href; } catch (e2) { /* sandboxed frame: stay hidden */ }
+    return;
+  }
+
   root.classList.add('js');
 
   var SUPPORTED = ['sk', 'en', 'de', 'uk'];

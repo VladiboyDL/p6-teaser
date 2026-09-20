@@ -25,6 +25,12 @@ window.P6_CONFIG = {
     metaPixel: ''                       // Meta (Facebook) Pixel ID
   },
 
+  /* Ochrana formulára captchou (hCaptcha cez Web3Forms, zadarmo). Predvolene vypnutá: formulár chráni
+     skryté pole, časový zámok, overenie skutočného stlačenia klávesu alebo dotyku a hodinový limit.
+     Zapnúť, len ak začne chodiť spam. POSTUP: 1. vo Web3Forms (dashboard, formulár P6 teaser) zapnúť hCaptcha,
+     2. tu nastaviť true, 3. spustiť teaser-build/bake_config.py. Opačné poradie by formulár znefunkčnilo. */
+  formCaptcha: false,
+
   /* Cookie lišta: 'auto' = zobrazí sa, len ak je vyplnený aspoň jeden nástroj vyššie,
      true = vždy, false = nikdy. */
   cookieBanner: 'auto',
