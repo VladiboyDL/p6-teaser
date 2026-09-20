@@ -213,6 +213,21 @@
     };
     if (captcha.on) form.addEventListener('focusin', loadCaptcha, { once: true });
 
+    /* Conversion for the ad platforms. gtag/fbq only reach Google or Meta when the visitor has consented
+       (consent.js loads the libraries after opt-in), otherwise these calls go nowhere. No personal data is sent. */
+    var trackLead = function () {
+      try {
+        var tr = cfg.tracking || {};
+        var types = $$('[name="typ_bytu"]:checked', form).map(function (i) { return i.value; }).join(', ');
+        var purpose = (form.querySelector('[name="ucel"]:checked') || {}).value || '';
+        if (window.gtag) {
+          window.gtag('event', 'generate_lead', { form_name: 'registracia', page_language: document.documentElement.lang || 'sk', flat_type: types, purpose: purpose });
+          if (tr.googleAds && tr.googleAdsLeadLabel) window.gtag('event', 'conversion', { send_to: tr.googleAds + '/' + tr.googleAdsLeadLabel });
+        }
+        if (window.fbq) window.fbq('track', 'Lead', { content_name: 'registracia', content_category: types });
+      } catch (err) { /* measuring must never break the form */ }
+    };
+
     /* Confirmation e-mail to the visitor ("O krok bližšie k novému bývaniu"), sent by the n8n workflow behind
        cfg.confirmWebhook. Fire and forget: the lead itself has already been delivered, so a failure here must
        never show an error. A plain form POST in no-cors mode needs no preflight and no CORS set-up on n8n. */
@@ -270,6 +285,7 @@
         .then(function (json) {
           if (json && json.success === false) throw new Error(json.message || 'rejected');
           noteSend();
+          trackLead();
           sendConfirmation();
           finish();
         })

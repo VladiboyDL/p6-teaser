@@ -22,6 +22,7 @@ window.P6_CONFIG = {
   tracking: {
     ga4:       '',                      // Google Analytics 4, napr. 'G-XXXXXXXXXX'
     googleAds: '',                      // Google Ads, napr. 'AW-XXXXXXXXX'
+    googleAdsLeadLabel: '',             // označenie konverzie „registrácia“ z Google Ads (časť za lomkou v AW-XXXXXXXXX/AbCdEfGh)
     metaPixel: ''                       // Meta (Facebook) Pixel ID
   },
 
