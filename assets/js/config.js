@@ -25,6 +25,10 @@ window.P6_CONFIG = {
     metaPixel: ''                       // Meta (Facebook) Pixel ID
   },
 
+  /* Potvrdzovací e-mail záujemcovi po registrácii posiela n8n workflow „P6 · potvrdenie registrácie“
+     (zdroj: teaser-build/n8n/). Prázdna hodnota = potvrdenie sa neposiela. Doména musí byť aj v CSP (connect-src). */
+  confirmWebhook: 'https://n8n.allsoftcorp.com/webhook/p6-potvrdenie-registracie',
+
   /* Ochrana formulára captchou (hCaptcha cez Web3Forms, zadarmo). Predvolene vypnutá: formulár chráni
      skryté pole, časový zámok, overenie skutočného stlačenia klávesu alebo dotyku a hodinový limit.
      Zapnúť, len ak začne chodiť spam. POSTUP: 1. vo Web3Forms (dashboard, formulár P6 teaser) zapnúť hCaptcha,

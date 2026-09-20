@@ -213,6 +213,21 @@
     };
     if (captcha.on) form.addEventListener('focusin', loadCaptcha, { once: true });
 
+    /* Confirmation e-mail to the visitor ("O krok bližšie k novému bývaniu"), sent by the n8n workflow behind
+       cfg.confirmWebhook. Fire and forget: the lead itself has already been delivered, so a failure here must
+       never show an error. A plain form POST in no-cors mode needs no preflight and no CORS set-up on n8n. */
+    var sendConfirmation = function () {
+      if (!cfg.confirmWebhook || !window.fetch) return;
+      try {
+        var fd = new FormData();
+        fd.append('token', 'p6-web-2026');
+        fd.append('email', form.email.value.trim());
+        fd.append('name', form.meno.value.trim());
+        fd.append('lang', document.documentElement.lang || 'sk');
+        fetch(cfg.confirmWebhook, { method: 'POST', body: fd, mode: 'no-cors', keepalive: true }).catch(function () {});
+      } catch (err) { /* never block the thank-you screen */ }
+    };
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       hideError();
@@ -255,6 +270,7 @@
         .then(function (json) {
           if (json && json.success === false) throw new Error(json.message || 'rejected');
           noteSend();
+          sendConfirmation();
           finish();
         })
         .catch(function () {
