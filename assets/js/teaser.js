@@ -231,14 +231,29 @@
     /* Confirmation e-mail to the visitor ("O krok bližšie k novému bývaniu"), sent by the n8n workflow behind
        cfg.confirmWebhook. Fire and forget: the lead itself has already been delivered, so a failure here must
        never show an error. A plain form POST in no-cors mode needs no preflight and no CORS set-up on n8n. */
+    /* After a successful registration the same data goes to our own automation server, which sends the
+       confirmation e-mail and files the lead in the sales CRM. Field names stay ASCII (see collect()). */
     var sendConfirmation = function () {
       if (!cfg.confirmWebhook || !window.fetch) return;
       try {
+        var raw = new FormData(form);
+        var qs = new URLSearchParams(location.search);
         var fd = new FormData();
-        fd.append('token', 'p6-web-2026');
-        fd.append('email', form.email.value.trim());
-        fd.append('name', form.meno.value.trim());
-        fd.append('lang', document.documentElement.lang || 'sk');
+        var put = function (k, v) { if (v !== null && v !== undefined && String(v).trim() !== '') fd.append(k, String(v).trim()); };
+        put('token', 'p6-web-2026');
+        put('email', form.email.value);
+        put('name', form.meno.value);
+        put('priezvisko', form.priezvisko.value);
+        put('telefon', form.telefon.value);
+        put('typ_bytu', raw.getAll('typ_bytu').join(', '));
+        put('ucel', raw.get('ucel'));
+        put('zdroj', form.zdroj.value);
+        put('sprava', form.sprava.value);
+        put('suhlas_kontakt', form.suhlas_kontakt.checked ? 'ano' : 'nie');
+        put('suhlas_newsletter', form.suhlas_newsletter.checked ? 'ano' : 'nie');
+        put('lang', document.documentElement.lang || 'sk');
+        put('url', location.href.split('#')[0]);
+        ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) { put(k, qs.get(k)); });
         fetch(cfg.confirmWebhook, { method: 'POST', body: fd, mode: 'no-cors', keepalive: true }).catch(function () {});
       } catch (err) { /* never block the thank-you screen */ }
     };
