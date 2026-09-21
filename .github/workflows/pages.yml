@@ -1,0 +1,61 @@
+# Publishes bytyp6.sk. Replaces "deploy from branch", which served the whole repository: build scripts, the architect's
+# source drawings and the working notes were all downloadable from the production domain.
+#
+# What goes online is everything EXCEPT the list under "Assemble". New kinds of internal files belong on that list.
+name: Deploy bytyp6.sk
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Assemble what the public may see
+        run: |
+          mkdir -p "$RUNNER_TEMP/site"
+          rsync -a ./ "$RUNNER_TEMP/site/" \
+            --exclude '.git/' --exclude '.github/' --exclude '.gitignore' \
+            --exclude '*.md' \
+            --exclude '_build/' \
+            --exclude '*.py' --exclude '*.mjs' --exclude '*.blend' --exclude '*.psd' --exclude '*.ai'
+
+      - name: Refuse to publish a broken or leaky site
+        working-directory: ${{ runner.temp }}/site
+        run: |
+          set -e
+          for f in index.html CNAME robots.txt sitemap.xml cookies.html ochrana-osobnych-udajov.html suhlas-so-spracovanim.html pravne-informacie.html \
+                   .well-known/security.txt assets/js/config.js assets/js/consent.js assets/css/consent.css assets/img/email/hero.jpg \
+                   nahlad/index.html web/p6-site/index.html web/p6-site/byty.html web/p6-site/kontakt.html web/p6-site/assets/js/data.js; do
+            test -s "$f" || { echo "::error::missing from the site: $f"; exit 1; }
+          done
+          test "$(cat CNAME)" = "bytyp6.sk" || { echo "::error::CNAME is not bytyp6.sk"; exit 1; }
+          test "$(ls web/p6-site/assets/pdf/*.pdf | wc -l)" -ge 44 || { echo "::error::apartment PDFs are missing"; exit 1; }
+          leaks=$(find . \( -name '*.md' -o -name '_build' -o -name '*.py' -o -name '*.mjs' -o -path './.github*' \) | head -5)
+          test -z "$leaks" || { echo "::error::internal files would be published: $leaks"; exit 1; }
+          echo "publishing $(find . -type f | wc -l) files, $(du -sh . | cut -f1)"
+
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: ${{ runner.temp }}/site
+          include-hidden-files: true        # .well-known/security.txt is part of the site
+
+      - id: deployment
+        uses: actions/deploy-pages@v5
