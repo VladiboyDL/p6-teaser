@@ -3,18 +3,18 @@
    Prázdna hodnota sa v dokumentoch zobrazí ako žlto označené „[doplniť …]“. */
 window.P6_CONFIG = {
   legal: {
-    company:  'Byty Jegeho2 s.r.o.',    // obchodné meno
+    company:  'Byty Prievozska6 s.r.o.', // obchodné meno (presne podľa obchodného registra, bez dĺžňa)
     seat:     'Prievozská 6, 821 09 Bratislava - mestská časť Ružinov',   // sídlo
-    ico:      '54 791 685',             // IČO
-    dic:      '',                       // DIČ (nepovinné)
-    icdph:    '',                       // IČ DPH (nepovinné)
-    register: 'Obchodný register Mestského súdu Bratislava III, oddiel Sro, vložka č. 162994/B',   // overené na orsr.sk 19. 9. 2026
+    ico:      '54 793 360',             // IČO
+    dic:      '2121785754',             // DIČ (= IČ DPH bez predpony SK)
+    icdph:    'SK2121785754',           // IČ DPH
+    register: 'Obchodný register Mestského súdu Bratislava III, oddiel Sro, vložka č. 162817/B',   // overené na orsr.sk 21. 9. 2026
     email:    'info@bytyp6.sk',    // kontakt pre osobné údaje aj všeobecné otázky
     phone:    '+421 902 900 868',       // telefón prevádzkovateľa: LEN v údajoch o prevádzkovateľovi (§ 4 zákona č. 22/2004 Z. z.), nie je to predajná linka a nepatrí na hlavnú stránku
     dpo:      '',                       // zodpovedná osoba (DPO), ak je určená: meno alebo e-mail; inak nechať prázdne
     seller:   '',                       // výhradný predajca / realitná kancelária, ak predaj zabezpečuje tretia strana
     retentionYears: 3,                  // ako dlho sa uchovávajú kontakty záujemcov od udelenia súhlasu
-    effective: '2026-09-19'             // dátum účinnosti dokumentov (RRRR-MM-DD)
+    effective: '2026-09-21'             // dátum účinnosti dokumentov (RRRR-MM-DD)
   },
 
   /* Meracie a reklamné nástroje. Kým je ID prázdne, nástroj sa nenačíta.
