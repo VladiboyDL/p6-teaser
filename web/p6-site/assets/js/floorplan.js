@@ -16,7 +16,7 @@
  * WHICH WAY IS NORTH
  * The client's material never states it, so it is derived, not guessed: the
  * building at Prievozská 6 is in OpenStreetMap (Bratislava Business Center III,
- * the skeleton being reconstructed) as a 43.2 x 13.7 m block whose long axis
+ * the existing building) as a 43.2 x 13.7 m block whose long axis
  * runs 70.3°/250.3°, so its long facades face 340.3° (NNW) and 160.3° (SSE),
  * its ends 70.3° (ENE) and 250.3° (WSW). Prievozská, three lanes of it, runs
  * along the NNW side. On the 1.NP drawing the entrance stair sits bottom left

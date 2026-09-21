@@ -1,4 +1,6 @@
-/* P6 teaser — cookie consent.
+/* P6 — cookie consent for the whole domain (the teaser in the root and the official site beside it).
+   Self-sufficient on purpose: its own texts in four languages and its own stylesheet (/assets/css/consent.css),
+   so a page only needs /assets/js/config.js and this file.
    Nothing that needs consent (§ 109 ods. 8 zákona č. 452/2021 Z. z., čl. 6 ods. 1 písm. a) GDPR)
    is loaded until the visitor opts in: Google Analytics / Google Ads / Meta Pixel are injected
    from here, never from the HTML. "Reject" sits on the first layer next to "Accept", nothing is
@@ -7,11 +9,87 @@
   'use strict';
 
   var cfg = window.P6_CONFIG || {};
+  var TEXT = {
+    sk: {
+      'ck.title': 'Súbory cookies',
+      'ck.text': 'Nevyhnutné cookies zabezpečujú fungovanie stránky. S vaším súhlasom použijeme aj analytické a marketingové cookies, aby sme stránku zlepšovali a merali reklamu. Súhlas môžete kedykoľvek zmeniť.',
+      'ck.more': 'Zásady používania cookies',
+      'ck.accept': 'Prijať všetky',
+      'ck.reject': 'Odmietnuť',
+      'ck.settings': 'Nastavenia',
+      'ck.save': 'Uložiť výber',
+      'ck.set.title': 'Nastavenia cookies',
+      'ck.always': 'vždy aktívne',
+      'ck.nec': 'Nevyhnutné',
+      'ck.nec.d': 'Zapamätanie vášho výberu cookies a jazyka. Bez nich stránka nefunguje správne, preto sa nedajú vypnúť.',
+      'ck.ana': 'Analytické',
+      'ck.ana.d': 'Anonymizované štatistiky návštevnosti, ktoré nám pomáhajú stránku zlepšovať (Google Analytics).',
+      'ck.mkt': 'Marketingové',
+      'ck.mkt.d': 'Meranie účinnosti reklamy a jej zobrazovanie na iných stránkach (Google Ads, Meta).',
+      'ck.close': 'Zavrieť'
+    },
+    en: {
+      'ck.title': 'Cookies',
+      'ck.text': 'Necessary cookies keep the site working. With your consent we also use analytics and marketing cookies to improve the site and measure advertising. You can change your choice at any time.',
+      'ck.more': 'Cookie Policy',
+      'ck.accept': 'Accept all',
+      'ck.reject': 'Reject',
+      'ck.settings': 'Settings',
+      'ck.save': 'Save selection',
+      'ck.set.title': 'Cookie settings',
+      'ck.always': 'always active',
+      'ck.nec': 'Necessary',
+      'ck.nec.d': 'Remember your cookie choice and language. The site does not work properly without them, so they cannot be switched off.',
+      'ck.ana': 'Analytics',
+      'ck.ana.d': 'Anonymised visit statistics that help us improve the site (Google Analytics).',
+      'ck.mkt': 'Marketing',
+      'ck.mkt.d': 'Measuring how well our advertising works and showing it on other sites (Google Ads, Meta).',
+      'ck.close': 'Close'
+    },
+    de: {
+      'ck.title': 'Cookies',
+      'ck.text': 'Notwendige Cookies sichern die Funktion der Website. Mit Ihrer Einwilligung verwenden wir auch Analyse- und Marketing-Cookies, um die Website zu verbessern und Werbung zu messen. Sie können Ihre Auswahl jederzeit ändern.',
+      'ck.more': 'Cookie-Richtlinie',
+      'ck.accept': 'Alle akzeptieren',
+      'ck.reject': 'Ablehnen',
+      'ck.settings': 'Einstellungen',
+      'ck.save': 'Auswahl speichern',
+      'ck.set.title': 'Cookie-Einstellungen',
+      'ck.always': 'immer aktiv',
+      'ck.nec': 'Notwendig',
+      'ck.nec.d': 'Speichern Ihre Cookie-Auswahl und die Sprache. Ohne sie funktioniert die Website nicht richtig, daher lassen sie sich nicht abschalten.',
+      'ck.ana': 'Analyse',
+      'ck.ana.d': 'Anonymisierte Besuchsstatistiken, die uns helfen, die Website zu verbessern (Google Analytics).',
+      'ck.mkt': 'Marketing',
+      'ck.mkt.d': 'Messung der Wirksamkeit unserer Werbung und deren Anzeige auf anderen Websites (Google Ads, Meta).',
+      'ck.close': 'Schließen'
+    },
+    uk: {
+      'ck.title': 'Файли cookie',
+      'ck.text': 'Необхідні файли cookie забезпечують роботу сайту. За вашою згодою ми також використовуємо аналітичні та маркетингові cookie, щоб покращувати сайт і вимірювати рекламу. Свій вибір ви можете будь-коли змінити.',
+      'ck.more': 'Політика щодо файлів cookie',
+      'ck.accept': 'Прийняти всі',
+      'ck.reject': 'Відхилити',
+      'ck.settings': 'Налаштування',
+      'ck.save': 'Зберегти вибір',
+      'ck.set.title': 'Налаштування cookie',
+      'ck.always': 'завжди активні',
+      'ck.nec': 'Необхідні',
+      'ck.nec.d': 'Запам’ятовують ваш вибір щодо cookie та мову. Без них сайт не працює належним чином, тому їх не можна вимкнути.',
+      'ck.ana': 'Аналітичні',
+      'ck.ana.d': 'Анонімізована статистика відвідувань, яка допомагає нам покращувати сайт (Google Analytics).',
+      'ck.mkt': 'Маркетингові',
+      'ck.mkt.d': 'Вимірювання ефективності реклами та її показ на інших сайтах (Google Ads, Meta).',
+      'ck.close': 'Закрити'
+    }
+  };
   var tr = cfg.tracking || {};
   var KEY = 'p6_consent';
   var VERSION = 1;                       // bump when categories or vendors change: everyone is asked again
   var MAX_AGE = 365 * 24 * 3600 * 1000;  // ask again after 12 months
-  var t = function (k) { return window.P6I18N ? window.P6I18N.t(k) : k; };
+  var lang = function () { var l = (document.documentElement.lang || 'sk').slice(0, 2).toLowerCase(); return TEXT[l] ? l : 'sk'; };
+  var t = function (k) { return TEXT[lang()][k] || TEXT.sk[k] || k; };
+  var cookiePage = function () { return '/cookies.html' + (lang() === 'sk' ? '' : '?lang=' + lang()); };
 
   var hasTools = !!(tr.ga4 || tr.googleAds || tr.metaPixel);
   var bannerOn = cfg.cookieBanner === true || (cfg.cookieBanner !== false && hasTools);
@@ -103,7 +181,7 @@
     if (view === 'banner') {
       html =
         '<h2 class="ck__title" id="ck-title">' + esc(t('ck.title')) + '</h2>' +
-        '<p class="ck__text">' + esc(t('ck.text')) + ' <a href="cookies.html">' + esc(t('ck.more')) + '</a></p>' +
+        '<p class="ck__text">' + esc(t('ck.text')) + ' <a href="' + cookiePage() + '">' + esc(t('ck.more')) + '</a></p>' +
         '<div class="ck__actions">' +
           '<button type="button" class="ck__btn" data-ck="accept">' + esc(t('ck.accept')) + '</button>' +
           '<button type="button" class="ck__btn" data-ck="reject">' + esc(t('ck.reject')) + '</button>' +
@@ -123,7 +201,7 @@
         row('necessary', t('ck.nec'), t('ck.nec.d'), true, true) +
         row('analytics', t('ck.ana'), t('ck.ana.d'), c.analytics, false) +
         row('marketing', t('ck.mkt'), t('ck.mkt.d'), c.marketing, false) +
-        '<p class="ck__text ck__text--small"><a href="cookies.html">' + esc(t('ck.more')) + '</a></p>' +
+        '<p class="ck__text ck__text--small"><a href="' + cookiePage() + '">' + esc(t('ck.more')) + '</a></p>' +
         '<div class="ck__actions">' +
           '<button type="button" class="ck__btn" data-ck="save">' + esc(t('ck.save')) + '</button>' +
           '<button type="button" class="ck__btn" data-ck="accept">' + esc(t('ck.accept')) + '</button>' +
@@ -133,7 +211,21 @@
     box.innerHTML = html;
   }
 
-  function open(which) {
+  /* The banner's styles live in one file for both sites; it is fetched only when the banner is about to show. */
+  function withStyles(fn) {
+    var link = document.getElementById('ck-css');
+    if (link) { if (link.sheet) fn(); else link.addEventListener('load', fn, { once: true }); return; }
+    link = document.createElement('link');
+    link.id = 'ck-css'; link.rel = 'stylesheet'; link.href = '/assets/css/consent.css?v=1';
+    var done = false, go = function () { if (!done) { done = true; fn(); } };
+    link.addEventListener('load', go); link.addEventListener('error', go);
+    setTimeout(go, 1500);                 // never hold the question back because a stylesheet is slow
+    document.head.appendChild(link);
+  }
+
+  function open(which) { withStyles(function () { show(which); }); }
+
+  function show(which) {
     view = which || 'banner';
     if (!box) {
       box = document.createElement('section');

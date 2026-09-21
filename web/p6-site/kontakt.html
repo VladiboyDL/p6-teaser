@@ -15,11 +15,9 @@
 <meta name="theme-color" content="#14120F">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="robots" content="noindex, nofollow">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" href="assets/fonts/newsreader-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=66">
+<link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css?v=67">
 </head>
 <body>
 <a class="skip-link" href="#main">Preskočiť na obsah</a>
@@ -65,7 +63,7 @@
       <form class="form" data-form data-endpoint="https://api.web3forms.com/submit" data-access-key="7fe2237a-781c-434a-8681-004cfc526785" data-mailto="info@bytyp6.sk" novalidate>
         <div class="form__ok" data-form-ok role="status">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="m5 13 4 4L19 7"/></svg>
-          <span><strong>Ďakujeme, správu máme.</strong><br>Ozveme sa vám do jedného pracovného dňa.</span>
+          <span><strong>Ďakujeme, správu máme.</strong><br>Ozveme sa vám čo najskôr. Potvrdenie sme vám poslali aj e-mailom.</span>
         </div>
         <div class="form__row">
           <div><label for="c-name">Meno a priezvisko *</label><input id="c-name" name="name" type="text" autocomplete="name" maxlength="120" required></div>
@@ -94,7 +92,7 @@
         <p class="form__error" data-form-error role="alert" hidden></p>
         <div>
           <button class="btn btn--primary" type="submit">Odoslať správu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-          <p class="form__note" style="margin:14px 0 0">Odpovedáme do jedného pracovného dňa. Váš kontakt neposkytujeme tretím stranám.</p>
+          <p class="form__note" style="margin:14px 0 0">Váš kontakt použijeme len na odpoveď na vašu správu, ak nám nedáte súhlas aj so zasielaním noviniek.</p>
         </div>
       </form>
 
@@ -103,12 +101,11 @@
           <dl class="contact-list">
             <div><dt>E-mail</dt><dd><a href="mailto:info@bytyp6.sk">info@bytyp6.sk</a></dd></div>
             <div><dt>Adresa projektu</dt><dd>Prievozská 6<br>821 09 Bratislava-Ružinov</dd></div>
-            <div><dt>Otváracie hodiny</dt><dd>Pondelok až piatok<br>9:00 až 18:00</dd></div>
           </dl>
         </div>
         <div class="aside__box">
-          <p class="eyebrow" style="margin-bottom:10px">Osobná obhliadka</p>
-          <p style="font-size:.94rem;color:var(--text-muted);margin:0">Radi vám ukážeme projekt osobne, vrátane vzorových materiálov a presných dispozícií. Stretnutie si dohodneme telefonicky.</p>
+          <p class="eyebrow" style="margin-bottom:10px">Osobná konzultácia</p>
+          <p style="font-size:.94rem;color:var(--text-muted);margin:0">Radi sa s vami stretneme osobne a prejdeme dispozície aj ponuku. Termín si dohodneme e-mailom.</p>
         </div>
       </aside>
     </div>
@@ -152,6 +149,16 @@
           <li><a href="kontakt.html">Kontaktný formulár</a></li>
         </ul>
       </div>
+      <div>
+        <h4>Právne informácie</h4>
+        <ul>
+          <li><a href="/ochrana-osobnych-udajov.html">Ochrana osobných údajov</a></li>
+          <li><a href="/cookies.html">Cookies</a></li>
+          <li><a href="/suhlas-so-spracovanim.html">Súhlas so spracovaním údajov</a></li>
+          <li><a href="/pravne-informacie.html">Podmienky používania a prevádzkovateľ</a></li>
+          <li><a href="/cookies.html" data-cookie-settings>Nastavenia cookies</a></li>
+        </ul>
+      </div>
     </div>
     <div class="foot__bottom">
       <span>© <span data-year>2026</span> P6, Prievozská 6. Všetky práva vyhradené.<br>Byty Prievozska6 s.r.o., Prievozská 6, 821 09 Bratislava-Ružinov · IČO 54 793 360 · IČ DPH SK2121785754 · OR Mestského súdu Bratislava III, oddiel Sro, vložka č. 162817/B</span>
@@ -175,10 +182,11 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 <script src="/assets/js/config.js"></script>
-<script src="assets/js/data.js?v=66"></script>
-<script src="assets/js/availability.js?v=66"></script>
-<script src="assets/js/site.js?v=66"></script>
-<script src="assets/js/motion.js?v=66"></script>
-<script src="assets/js/forms.js?v=66"></script>
+<script src="/assets/js/consent.js" defer></script>
+<script src="assets/js/data.js?v=67"></script>
+<script src="assets/js/availability.js?v=67"></script>
+<script src="assets/js/site.js?v=67"></script>
+<script src="assets/js/motion.js?v=67"></script>
+<script src="assets/js/forms.js?v=67"></script>
 </body>
 </html>
