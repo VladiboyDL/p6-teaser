@@ -9,6 +9,13 @@ const STATUS_LABEL = {
   predany: 'Predaný',
 };
 
+/* What a flat's state is allowed to say, and how it is coloured. While
+   SHOW_STATUS is false (see data.js) every flat reads the same neutral line,
+   so nothing betrays which ones go first. */
+const statusText = st => (SHOW_STATUS ? STATUS_LABEL[st] : 'Pripravujeme');
+const statusKind = st => (SHOW_STATUS ? st : 'tbd');
+const soldOut = st => SHOW_STATUS && st === 'predany';
+
 const nfArea = new Intl.NumberFormat('sk-SK', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const nfPrice = new Intl.NumberFormat('sk-SK', { maximumFractionDigits: 0 });
 
@@ -99,6 +106,11 @@ function initForms() {
 /* --- footer year --------------------------------------------------------- */
 
 function initChrome() {
+  /* Staged sale: no availability legend, no availability filter, no count of
+     what is free (see SHOW_STATUS in data.js). */
+  if (!SHOW_STATUS) {
+    document.querySelectorAll('[data-status-legend], [data-status-filter]').forEach(el => el.remove());
+  }
   document.querySelectorAll('[data-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
   const free = APARTMENTS.filter(a => a.status === 'dostupny').length;
   document.querySelectorAll('[data-count-free]').forEach(el => {

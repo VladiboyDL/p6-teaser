@@ -18,7 +18,7 @@ function unitCardHTML(a, opts) {
           <div class="ucard__id">${a.id}</div>
           <div class="ucard__type">${a.type} · ${a.floor}. NP</div>
         </div>
-        <span class="pill pill--${a.status}">${STATUS_LABEL[a.status]}</span>
+        <span class="pill pill--${statusKind(a.status)}">${statusText(a.status)}</span>
       </div>
       <dl class="ucard__rows">
         <div><dt>Izby</dt><dd>${a.rooms}</dd></div>
@@ -57,11 +57,15 @@ function initList() {
     if (v && f[k] && [...f[k].options].some(op => op.value === v)) f[k].value = v;
   });
 
+  /* A field can be absent: the availability filter is pulled from the page
+     while the staged sale is unannounced (SHOW_STATUS in data.js). */
+  const val = k => (f[k] ? f[k].value : '');
+
   function matches(a) {
-    if (f.status.value && a.status !== f.status.value) return false;
-    if (f.rooms.value && String(a.rooms >= 5 ? 5 : a.rooms) !== f.rooms.value) return false;
-    if (f.floor.value && String(a.floor) !== f.floor.value) return false;
-    if (f.area.value && a.area < Number(f.area.value)) return false;
+    if (val('status') && a.status !== val('status')) return false;
+    if (val('rooms') && String(a.rooms >= 5 ? 5 : a.rooms) !== val('rooms')) return false;
+    if (val('floor') && String(a.floor) !== val('floor')) return false;
+    if (val('area') && a.area < Number(val('area'))) return false;
     return true;
   }
 

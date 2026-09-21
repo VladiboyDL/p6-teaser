@@ -21,7 +21,7 @@ import re
 # what the folder is called or which directory it is run from.
 OUT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SITE = "https://prievozska6.sk"          # placeholder domain — confirm with client
+SITE = "https://bytyp6.sk"               # the project domain, teaser lives on it today
 NAME = "P6"
 ADDRESS = "Prievozská 6, 821 09 Bratislava-Ružinov"
 
@@ -30,21 +30,26 @@ ADDRESS = "Prievozská 6, 821 09 Bratislava-Ružinov"
 # "illustrative" credit so nobody takes them for photographs of those places.
 # Set to None once the real photography is in and the labels all disappear.
 DEMO_IMG = "Ilustračný obrázok"
-EMAIL = "info@prievozska6.sk"            # placeholder
-PHONE = "+421 900 000 000"               # placeholder
+EMAIL = "info@bytyp6.sk"
+
+# No sales line exists yet, so no telephone number appears anywhere. Contact is
+# the form and the e-mail. Do not put an invented number back.
+OPERATOR = ("Byty Prievozska6 s.r.o., Prievozská 6, 821 09 Bratislava-Ružinov · "
+            "IČO 54 793 360 · IČ DPH SK2121785754 · "
+            "OR Mestského súdu Bratislava III, oddiel Sro, vložka č. 162817/B")
 
 # Client-preview build: noindex everywhere, robots blocks crawlers.
 PREVIEW = True
 
 # Bump whenever CSS/JS changes — appended as ?v= to every asset link.
-ASSET_V = "62"
+ASSET_V = "64"
 
 # Mandated by the architect (Ing. arch. Martin Krajči) — must stay visible
-# wherever plans or areas are shown.
-DISCLAIMER = ("Uvedené výmery sú orientačné a vychádzajú z podkladov architekta. "
-              "Ide o rekonštrukciu existujúceho skeletu, preto sú možné odchýlky "
-              "a plochy sa môžu zmeniť. Výmery balkónov nie sú definitívne potvrdené. "
-              "Investor si vyhradzuje právo na zmeny.")
+# wherever plans or areas are shown. Wording matches the teaser; the project is
+# before its building permit, so nothing here describes the works.
+DISCLAIMER = ("Výmery, dispozície a počty sú orientačné a vychádzajú z podkladov "
+              "architekta. Možné sú odchýlky a zmeny. Výmery balkónov nie sú "
+              "definitívne potvrdené.")
 
 # Brief §15: show the milestone table only with confirmed dates; otherwise
 # leave the section out. Fill in to render it, e.g.
@@ -164,7 +169,6 @@ def nav(page, over=False):
   </div>
   <nav class="drawer__links" aria-label="Mobilná navigácia">{dlinks}</nav>
   <div class="drawer__foot">
-    <a href="tel:{PHONE.replace(' ', '')}">{PHONE}</a>
     <a href="mailto:{EMAIL}">{EMAIL}</a>
   </div>
 </div>
@@ -185,7 +189,6 @@ FOOT = f'''<footer class="foot">
         <ul>
           <li><a href="index.html#lokalita">Lokalita</a></li>
           <li><a href="index.html#projekt">Projekt</a></li>
-          <li><a href="index.html#standard">Štandard</a></li>
           <li><a href="byty.html">Byty</a></li>
           <li><a href="galeria.html">Galéria</a></li>
           <li><a href="kontakt.html">Kontakt</a></li>
@@ -194,14 +197,13 @@ FOOT = f'''<footer class="foot">
       <div>
         <h4>Predaj</h4>
         <ul>
-          <li><a href="tel:{PHONE.replace(' ', '')}">{PHONE}</a></li>
           <li><a href="mailto:{EMAIL}">{EMAIL}</a></li>
-          <li><span style="color:var(--text-inv-muted);font-size:.92rem">Po až Pi, 9:00 až 18:00</span></li>
+          <li><a href="kontakt.html">Kontaktný formulár</a></li>
         </ul>
       </div>
     </div>
     <div class="foot__bottom">
-      <span>© <span data-year>2026</span> {NAME}, Prievozská 6. Všetky práva vyhradené.</span>
+      <span>© <span data-year>2026</span> {NAME}, Prievozská 6. Všetky práva vyhradené.<br>{OPERATOR}</span>
       <span>Vizualizácie sú ilustračné. Uvedené časy a vzdialenosti sú orientačné. Informácie na stránke nie sú návrhom na uzavretie zmluvy.</span>
     </div>
   </div>
@@ -248,7 +250,7 @@ def page_head(crumb, title, lede, current):
   </div>
 </section>'''
 
-def cta_slim(text, primary=("Pozrieť dostupné byty", "byty.html?status=dostupny"), secondary=("Dohodnúť konzultáciu", "kontakt.html"), cls="section--paper2"):
+def cta_slim(text, primary=("Pozrieť byty", "byty.html"), secondary=("Dohodnúť konzultáciu", "kontakt.html"), cls="section--paper2"):
     return f'''<section class="cta-slim {cls}">
   <div class="shell cta-slim__inner">
     <p class="cta-slim__text">{text}</p>
@@ -272,7 +274,7 @@ def final_block():
       <div>
         <p class="lede">Povedzte nám, aký byt hľadáte. Predstavíme vám dostupné dispozície, orientáciu, exteriérové priestory aj ďalší postup.</p>
         <div class="final__actions">
-          <a class="btn btn--light" href="byty.html?status=dostupny">Pozrieť dostupné byty {svg("arrow")}</a>
+          <a class="btn btn--light" href="byty.html">Pozrieť byty {svg("arrow")}</a>
           <a class="btn btn--onink" href="kontakt.html">Dohodnúť konzultáciu</a>
           <a class="btn btn--onink" href="kontakt.html?katalog=1">Stiahnuť katalóg</a>
         </div>
@@ -284,12 +286,12 @@ def final_block():
 
 # ---------------------------------------------------------------- content
 
+# Nobody has confirmed the commercial terms, so the reservation process, client
+# changes and the 3D tour are not promised here. Put them back only with the
+# client's sign-off.
 FAQ = [
- ("Ako prebieha rezervácia bytu?", "Vyberiete si byt, podpíšeme rezervačnú zmluvu a uhradíte rezervačný poplatok. Byt stiahneme z ponuky a pripravíme zmluvu o budúcej kúpnej zmluve."),
- ("Dá sa dispozícia bytu upraviť?", "Áno, klientske zmeny riešime individuálne do uzávierky, ktorú si dohodneme pri podpise zmluvy."),
- ("Je možné kúpiť parkovacie státie?", "Áno. Pred domom je 50 parkovacích miest. Parkovacie státia a pivničné kobky sa predávajú samostatne k jednotlivým bytom."),
- ("Ponúkate virtuálnu prehliadku?", "Pripravujeme ju. Po dokončení fotodokumentácie sprístupníme 3D prehliadku každej dispozície priamo v detaile bytu."),
- ("Ako získam katalóg?", "Napíšte nám cez formulár a katalóg vám pošleme e-mailom hneď, ako bude pripravený."),
+ ("Je možné kúpiť parkovacie státie?", "Parkovanie je pri dome. Státia aj pivničné kobky sa predávajú samostatne k jednotlivým bytom, podmienky upresníme."),
+ ("Ako získam ponuku a katalóg?", "Napíšte nám cez formulár a ozveme sa s dostupnými bytmi a podkladmi hneď, ako budú pripravené."),
 ]
 
 # §13 — six cards, one concrete benefit each, two sentences at most.
@@ -298,13 +300,18 @@ FAQ = [
 # investor stated them (WhatsApp, 2026-09-15): no garage — 50 spaces in front of
 # the building; chip entry, community terrace, gym. EV charging is unconfirmed,
 # so it is marked "upresníme" rather than promised.
+# The whole section is OFF until the project manager confirms the specification
+# in writing: triple glazing, underfloor heating, large-format tiling, wooden
+# floors, chip entry and EV charging were never confirmed, and the house will
+# have radiators, not underfloor heating. Flip SHOW_STANDARD back on only with
+# that confirmation in hand, and only for items that are in it.
+SHOW_STANDARD = False
+
+# What the project has actually confirmed.
 STANDARD = [
- ("Svetlo a okná",                    "Veľkoformátové okná s izolačným trojsklom. Viac denného svetla v izbách, menej hluku z ulice.",                        "detail: okenný profil a sklo", "std-okna"),
- ("Vykurovanie a chladenie",          "Podlahové kúrenie v celom byte s prípravou na chladenie. Stála teplota bez radiátorov na stenách.",                 "detail: podlahové kúrenie", "std-kurenie"),
- ("Kúpeľne",                          "Veľkoformátový obklad a zabudované zariaďovacie predmety. Kúpeľňa pripravená na bývanie od prvého dňa.",           "detail: obklad kúpeľne", "std-kupelna"),
- ("Podlahy a interiérové dvere",      "Drevené podlahy v obytných miestnostiach a dvere v jednotnom dizajne. Jeden detail od predsiene po spálňu.",        "detail: podlaha a dvere", "std-podlahy"),
- ("Parkovanie a nabíjanie",           "50 parkovacích miest priamo pred domom. Možnosť nabíjania elektromobilov upresníme.",                               "detail: parkovanie pred domom", "std-parkovanie"),
- ("Bezpečnosť a spoločné priestory",  "Čipový vstup do domu. Obyvatelia majú k dispozícii komunitnú terasu a fitness.",                                   "detail: čipový vstup do domu", "std-vstup"),
+ ("Balkón ku každému bytu",           "Každý byt má vlastný balkón. Výmery balkónov nie sú definitívne potvrdené.",                                        "detail: balkón", "std-okna"),
+ ("Komunitná strešná terasa",         "Spoločná strešná terasa pre obyvateľov domu.",                                                                      "detail: strešná terasa", "std-vstup"),
+ ("Parkovanie pri dome",              "Parkovanie pri dome. Státia sa predávajú samostatne, podmienky upresníme.",                                         "detail: parkovanie pri dome", "std-parkovanie"),
 ]
 
 # §12 — categories the brief wants listed here; values pending real data.
@@ -315,8 +322,6 @@ PARAMS = [
  ("Typológie", "1- až 3-izbové"),
  ("Výmery bytov", "30,1 až 77,9 m²"),
  ("Balkóny", "8,5 až 18,3 m²"),
- ("Parkovacie miesta", "50, pred domom"),
- ("Pivničné kobky", "1,5 až 3,0 m²"),
 ]
 
 def index_html():
@@ -326,7 +331,9 @@ def index_html():
 "url":"''' + SITE + '''/"}
 </script>
 '''
-    chapters = [("#lokalita", "Lokalita"), ("#projekt", "Projekt"), ("#standard", "Štandard"), ("#byty", "Byty")]
+    chapters = [("#lokalita", "Lokalita"), ("#projekt", "Projekt")]
+    if SHOW_STANDARD: chapters.append(("#standard", "Štandard"))
+    chapters.append(("#byty", "Byty"))
     if MILESTONES: chapters.append(("#harmonogram", "Harmonogram"))
     chap = "".join(f'<a class="chapters__link" href="{h}">{t}</a>' for h, t in chapters)
 
@@ -382,7 +389,7 @@ def index_html():
           <h1 class="hero__title">Domov medzi<br>Miletičkou a <em>Downtownom</em></h1>
           <p class="hero__sub">Mestské bývanie na Prievozskej 6. Trh, škola, práca, Nivy aj nové centrum Bratislavy v prirodzenom dosahu.</p>
           <div class="hero__actions">
-            <a class="btn btn--light" href="byty.html?status=dostupny">Pozrieť dostupné byty {svg("arrow")}</a>
+            <a class="btn btn--light" href="byty.html">Pozrieť byty {svg("arrow")}</a>
             <a class="btn btn--onink" href="#vyber-bytu">Vybrať byt v dome</a>
           </div>
         </div>
@@ -393,9 +400,9 @@ def index_html():
         </div>
         <div class="fly__beat" data-beat="2">
           <p class="eyebrow">Pre obyvateľov</p>
-          <p class="fly__big">Komunitná terasa a fitness</p>
+          <p class="fly__big">Komunitná strešná terasa</p>
           <div class="hero__actions">
-            <a class="btn btn--light" href="byty.html?status=dostupny">Pozrieť dostupné byty {svg("arrow")}</a>
+            <a class="btn btn--light" href="byty.html">Pozrieť byty {svg("arrow")}</a>
           </div>
         </div>
       </div>
@@ -419,8 +426,8 @@ def index_html():
         <h2>Vyberte si byt priamo v dome</h2>
       </div>
       <p class="picker-sec__note">
-        <span class="on-mouse">Prejdite myšou po podlažiach domu a uvidíte, koľko bytov je na nich voľných. Kliknutím otvoríte pôdorys podlažia a vyberiete si byt.</span>
-        <span class="on-touch">Ťuknite na podlažie a uvidíte, koľko bytov je na ňom voľných. Ďalším ťuknutím otvoríte pôdorys podlažia a vyberiete si byt.</span>
+        <span class="on-mouse">Prejdite myšou po podlažiach domu a uvidíte, koľko bytov je na ktorom podlaží. Kliknutím otvoríte pôdorys podlažia a vyberiete si byt.</span>
+        <span class="on-touch">Ťuknite na podlažie a uvidíte, koľko bytov je na ňom. Ďalším ťuknutím otvoríte pôdorys podlažia a vyberiete si byt.</span>
       </p>
     </div>
 
@@ -443,7 +450,7 @@ def index_html():
     </div>
 
     <div class="picker-sec__foot">
-      <div class="legend">
+      <div class="legend" data-status-legend>
         <span class="legend__item legend__item--static"><span class="legend__dot legend__dot--ok"></span>Voľný</span>
         <span class="legend__item legend__item--static"><span class="legend__dot legend__dot--warn"></span>Rezervovaný</span>
         <span class="legend__item legend__item--static"><span class="legend__dot legend__dot--off"></span>Predaný</span>
@@ -648,8 +655,8 @@ def index_html():
   </div>
   <div class="ticker" aria-hidden="true">
     <div class="ticker__track">
-      <span class="ticker__item">Zimný štadión Ondreja Nepelu</span><span class="ticker__item">Národný futbalový štadión</span><span class="ticker__item">Fitness centrá</span><span class="ticker__item">Štrkovecké jazero</span><span class="ticker__item">Dunajská promenáda</span><span class="ticker__item">Cyklistické spojenia</span>
-      <span class="ticker__item">Zimný štadión Ondreja Nepelu</span><span class="ticker__item">Národný futbalový štadión</span><span class="ticker__item">Fitness centrá</span><span class="ticker__item">Štrkovecké jazero</span><span class="ticker__item">Dunajská promenáda</span><span class="ticker__item">Cyklistické spojenia</span>
+      <span class="ticker__item">Zimný štadión Ondreja Nepelu</span><span class="ticker__item">Národný futbalový štadión</span><span class="ticker__item">Štrkovecké jazero</span><span class="ticker__item">Dunajská promenáda</span><span class="ticker__item">Cyklistické spojenia</span>
+      <span class="ticker__item">Zimný štadión Ondreja Nepelu</span><span class="ticker__item">Národný futbalový štadión</span><span class="ticker__item">Štrkovecké jazero</span><span class="ticker__item">Dunajská promenáda</span><span class="ticker__item">Cyklistické spojenia</span>
     </div>
   </div>
   <div class="shell shell-wide">
@@ -722,6 +729,7 @@ def index_html():
   </div>
 </section>
 
+''' + (f'''
 <!-- §13 Štandard ======================================================= -->
 <section class="section" id="standard">
   <div class="shell shell-wide">
@@ -735,13 +743,14 @@ def index_html():
 </section>
 
 ''' + cta_slim("Poznáte projekt. Ďalší krok je vybrať si byt.", cls="section--paper2") + f'''
+''' if SHOW_STANDARD else '') + f'''
 <!-- §14 Byty ============================================================ -->
 <section class="section" id="byty">
   <div class="shell shell-wide">
     <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end;justify-content:space-between;margin-bottom:clamp(24px,3vw,36px)">
       <div>
         <p class="eyebrow">Byty</p>
-        <h2>Dostupné byty</h2>
+        <h2>Byty v projekte</h2>
       </div>
       <a class="link-arrow" href="byty.html">Všetky byty a filtre {svg("arrow")}</a>
     </div>
@@ -798,7 +807,7 @@ def byty_html():
         <select id="f-floor"><option value="">Všetky</option>{floors}</select></div>
       <div class="field"><label for="f-area">Výmera</label>
         <select id="f-area"><option value="">Bez limitu</option><option value="35">od 35 m²</option><option value="45">od 45 m²</option><option value="55">od 55 m²</option><option value="65">od 65 m²</option><option value="75">od 75 m²</option></select></div>
-      <div class="field"><label for="f-status">Dostupnosť</label>
+      <div class="field" data-status-filter><label for="f-status">Dostupnosť</label>
         <select id="f-status"><option value="">Všetky</option><option value="dostupny">Voľné</option><option value="rezervovany">Rezervované</option><option value="predany">Predané</option></select></div>
       <button type="button" class="btn btn--primary filters__apply" data-filter-close>Zobraziť <span data-count>…</span></button>
       </div>
@@ -873,7 +882,7 @@ def byt_html():
         <div>
           <p class="eyebrow">Poloha v dome</p>
           <div data-floorplan></div>
-          <div class="legend legend--tight">
+          <div class="legend legend--tight" data-status-legend>
             <span class="legend__item legend__item--static"><span class="legend__dot legend__dot--ok"></span>Voľný</span>
             <span class="legend__item legend__item--static"><span class="legend__dot legend__dot--warn"></span>Rezervovaný</span>
             <span class="legend__item legend__item--static"><span class="legend__dot legend__dot--off"></span>Predaný</span>
@@ -1017,7 +1026,7 @@ def karta_html():
 <script>
 (async () => {{
   const DISCLAIMER = {json.dumps(DISCLAIMER, ensure_ascii=False)};
-  const PHONE = {json.dumps(PHONE)}, EMAIL = {json.dumps(EMAIL)};
+  const EMAIL = {json.dumps(EMAIL)}, OPERATOR = {json.dumps(OPERATOR, ensure_ascii=False)};
   const WEB = {json.dumps(SITE.replace("https://", ""))};
   const ADDRESS = {json.dumps(ADDRESS, ensure_ascii=False)};
 
@@ -1081,8 +1090,8 @@ def karta_html():
         <p class="k-price">${{sold ? 'Predané' : fmtPrice(a.price, a.status)}}</p>
         <p class="k-eyebrow" style="margin-top:8mm">Možnosť dokúpiť</p>
         <div class="k-extras">
-          <div class="k-extra"><b>Pivničná kobka</b><span>plocha 1,5 až 3,0 m²</span></div>
-          <div class="k-extra"><b>Parkovacie miesto</b><span>vonkajšie státie priamo pred domom, 50 miest</span></div>
+          <div class="k-extra"><b>Pivničná kobka</b><span>výmeru upresníme</span></div>
+          <div class="k-extra"><b>Parkovacie miesto</b><span>parkovanie pri dome, podmienky upresníme</span></div>
         </div>
         <p class="k-small">Pivničná kobka aj parkovacie miesto sa k bytu dokupujú samostatne. Cenu a dostupnosť vám oznámime na vyžiadanie.</p>
       </div>
@@ -1096,12 +1105,12 @@ def karta_html():
     <div class="k-contact">
       <div>
         <p class="k-eyebrow">Predaj bytov</p>
-        <p class="k-contact__big">${{PHONE}}</p>
-        <p>${{EMAIL}} · ${{WEB}}</p>
+        <p class="k-contact__big">${{EMAIL}}</p>
+        <p>${{WEB}}</p>
       </div>
       <div>
-        <p class="k-eyebrow">Adresa projektu</p>
-        <p>${{ADDRESS}}</p>
+        <p class="k-eyebrow">Prevádzkovateľ</p>
+        <p>${{OPERATOR}}</p>
       </div>
     </div>
     <p class="k-note">${{DISCLAIMER}}</p>
@@ -1244,7 +1253,6 @@ def kontakt_html():
       <aside class="aside" aria-label="Kontaktné údaje">
         <div class="aside__box">
           <dl class="contact-list">
-            <div><dt>Predaj bytov</dt><dd><a href="tel:{PHONE.replace(' ', '')}">{PHONE}</a></dd></div>
             <div><dt>E-mail</dt><dd><a href="mailto:{EMAIL}">{EMAIL}</a></dd></div>
             <div><dt>Adresa projektu</dt><dd>Prievozská 6<br>821 09 Bratislava-Ružinov</dd></div>
             <div><dt>Otváracie hodiny</dt><dd>Pondelok až piatok<br>9:00 až 18:00</dd></div>

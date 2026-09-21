@@ -468,6 +468,9 @@ body[data-locked="true"] { overflow: hidden; }
 .pill--dostupny { background: var(--ok-bg); color: var(--ok); }
 .pill--rezervovany { background: var(--warn-bg); color: var(--warn); }
 .pill--predany { background: var(--off-bg); color: var(--off); }
+/* the neutral state while the staged sale is unannounced (SHOW_STATUS in data.js) */
+.pill--tbd { background: var(--paper-3); color: var(--text-muted); }
+.fplan__unit[data-status="tbd"] .fplan__tag circle { stroke: rgba(20, 18, 15, .2); }
 
 /* ===========================================================================
    apartment list / filters

@@ -9,10 +9,10 @@
  * figure, and in one-room flats the entrance area is merged in as well —
  * the spaces run into one another and are not separated by walls.
  *
- * ⚠️  AREAS ARE INDICATIVE. The building is an existing skeleton being
- *     reconstructed; deviations of roughly ±5–10 cm are possible, which moves
- *     the areas. Balcony areas are not final. The investor reserves the right
- *     to changes. Keep the disclaimer visible wherever these numbers appear.
+ * ⚠️  AREAS ARE INDICATIVE. Deviations are possible and they move the areas.
+ *     Balcony areas are not final. The investor reserves the right to changes.
+ *     Keep the disclaimer visible wherever these numbers appear. This file is
+ *     served to the public: nothing about the works belongs in it.
  *
  * STILL TO COME FROM THE CLIENT — do not invent:
  *   price        currently null everywhere -> renders "Cena na vyžiadanie"
@@ -35,6 +35,13 @@
 /* Set to false to hide prices entirely; with price:null each unit already
    renders "Cena na vyžiadanie". */
 const SHOW_PRICES = true;
+
+/* The sale runs in stages: a limited selection goes first, at introductory
+   prices. Until status comes live from the CRM, the site must not claim that
+   all 44 are free, nor show which ones go first. With this false every flat
+   reads "Pripravujeme" and the availability filter, the counters and the
+   status legend are hidden. */
+const SHOW_STATUS = false;
 
 const BUILDING = {
   name: "P6",
