@@ -81,11 +81,15 @@ A form on either site does two posts, both from the browser, field **names in pl
 Reuse the bot protection from `/assets/js/teaser.js` (honeypot, 4 s minimum, a real pointer or key event, 3 sends per hour, no links in the message).
 The CRM's secret never reaches a browser; nothing on the site talks to the CRM's write API.
 
-### Availability feed (for `SHOW_STATUS`)
+### Availability feed (wired since 2026-09-21, `web/p6-site/assets/js/availability.js`)
 `GET https://p6-crm.onrender.com/api/public/units` → `{ "updatedAt": "...", "units": [{ "id": "2.A", "floor": 2, "rooms": 2, "area": "42.8", "ext": "13.0",
-"total": "55.8", "status": "available" | "reserved" | "sold" }] }`. CORS is open for https://bytyp6.sk and https://www.bytyp6.sk, cache 60 s.
-**A flat that is not in the list is not on offer: show it as "Pripravujeme", without a status, price or enquiry button.** Today the list is empty.
-The feed carries no prices yet. `data.js` stays the source of areas, rooms and plans; ids are identical on both sides.
+"total": "55.8", "status": "available" | "reserved" | "sold", "price": 189900 | null }] }`. CORS is open for https://bytyp6.sk and https://www.bytyp6.sk
+(so it cannot be tried from localhost or another preview host), cache 60 s.
+- The feed lists **only flats the administrator published in the CRM**. Selling and publishing are separate there: a closed sales round can
+  reserve and sell flats that never appear in the feed. **A flat that is not in the list reads "Pripravujeme", without a price**; it can still be enquired about.
+- `price` is a number only where the administrator published the price, otherwise `null` → "Na vyžiadanie".
+- An empty, slow (2.5 s) or unreachable feed leaves the whole site neutral. The site never shows stale or invented availability.
+- `data.js` stays the source of areas, rooms and plans; ids are identical on both sides. The apartment PDFs do not load the feed and stay neutral.
 
 ### Root files that production depends on
 `CNAME`, `.nojekyll`, `robots.txt`, `sitemap.xml`, `.well-known/security.txt`, and `assets/img/email/*` (the live confirmation e-mail loads its images
@@ -110,10 +114,14 @@ Switches in the official site, all documented in `web/p6-site/README.md`:
 - `PREVIEW` (`_build/build_pages.py`) — `True` puts noindex on every page.
 - `SHOW_STANDARD` (`_build/build_pages.py`) — the Štandard section, off until
   the project manager confirms the specification in writing.
-- `SHOW_STATUS` (`assets/js/data.js`) — availability, off until the CRM feeds
-  status live; every flat reads "Pripravujeme".
-- `SHOW_PRICES` (`assets/js/data.js`) — prices; every price is `null` today, so
-  the site says "Cena na vyžiadanie".
+- `SHOW_STATUS` / `SHOW_COUNTS` (`assets/js/data.js`) — **not switched by hand any more.** `assets/js/availability.js`
+  reads the CRM feed on every page load and turns `SHOW_STATUS` on once the CRM has published at least one flat, and
+  `SHOW_COUNTS` only when no flat is "Pripravujeme" any more. Until then the site is exactly as before: every flat reads
+  "Pripravujeme", no legend, no availability filter, no counters. `LIVE_STATUS_URL = ""` cuts the site off from the CRM.
+  Anything that draws flats must start through `whenAvailabilityKnown(fn)` (`site.js`), not on `DOMContentLoaded`.
+- `SHOW_PRICES` (`assets/js/data.js`) — master switch for prices. A price now comes from the CRM feed, and only for flats
+  whose price the administrator published; everything else says "Na vyžiadanie". The `status` and `price` values inside
+  `data.js` are placeholders that the feed overwrites.
 
 After changing anything in `web/p6-site/`, rebuild — and if the copy that goes
 into the apartment cards changed, rebuild the PDFs too:
@@ -125,6 +133,18 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 ```
 
 ## Dev notes
+
+### 2026-09-21 · availability comes live from the CRM · feat/live-availability · Vlad + Claude
+- At Vlad's request his side made this change inside `web/p6-site/`. New `assets/js/availability.js` (loaded right after `data.js`) reads the
+  CRM feed; `site.js`, `floors.js` and the home page's featured block now start through `whenAvailabilityKnown()`. `SHOW_STATUS` became a `let`
+  that the feed switches on, plus a new `SHOW_COUNTS`; counters stay hidden while any flat is still "Pripravujeme". Legend got a fourth entry.
+- **Nothing changes on the site today:** the CRM has published no flat, so the feed is empty and everything reads "Pripravujeme" as before.
+  It switches itself on when Vlad publishes the first flats in the CRM. Do not flip the flags by hand any more.
+- `_build/plans/gendata.py` did not know `SHOW_STATUS` at all (it had been added to `data.js` by hand), so a regenerated `data.js` would have
+  dropped it. The generator now writes the same block as `data.js`. `ASSET_V` 64 → 65, pages rebuilt; PDFs not rebuilt (their content is unchanged).
+- Checked in a browser against a mocked feed: empty feed, three published flats (status, price, filter, detail pages), all 44 published
+  (counters appear), feed failing and feed hanging (neutral after 2.5 s), no script errors.
+- CRM side, for information: a flat has "Zverejniť na webe" and "Zverejniť aj cenu" switches and the enquiry field `byt` is accepted by the CRM.
 
 ### 2026-09-21 · source of truth section · docs/source-of-truth · Vlad + Claude
 - Added **Source of truth** above: verified identity (controller, processor), what may and may not be said publicly, the contract for forms

@@ -86,6 +86,13 @@ filtered by Jekyll.
 | `kontakt.html` | Contact form + FAQ. `?byt=4.03` prefills the unit; `?katalog=1` prefills a catalogue request (the "Stiahnuť katalóg" CTA lands here until a PDF exists). |
 | `lokalita.html`, `projekt.html` | Instant redirects to `index.html#lokalita` / `#projekt` so old links keep working. |
 
+## Availability is live (since 2026-09-21)
+
+Status and price of a flat are **not edited in `data.js`**. `assets/js/availability.js` reads the sales CRM's public feed on every page
+load (`LIVE_STATUS_URL` in `data.js`): a flat in the feed is Voľný / Rezervovaný / Predaný with its price when the CRM publishes one, a flat
+that is not in the feed reads "Pripravujeme". With an empty or unreachable feed the site stays neutral. `SHOW_STATUS` and `SHOW_COUNTS`
+are set by that script. New code that draws flats starts through `whenAvailabilityKnown(fn)` from `site.js`. Details: the repo's `CLAUDE.md`.
+
 ## The one file you edit
 
 **`assets/js/data.js`** holds all 44 apartments. Everything on the site — hero

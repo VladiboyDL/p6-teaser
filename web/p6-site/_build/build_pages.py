@@ -42,7 +42,7 @@ OPERATOR = ("Byty Prievozska6 s.r.o., Prievozská 6, 821 09 Bratislava-Ružinov 
 PREVIEW = True
 
 # Bump whenever CSS/JS changes — appended as ?v= to every asset link.
-ASSET_V = "64"
+ASSET_V = "65"
 
 # Mandated by the architect (Ing. arch. Martin Krajči) — must stay visible
 # wherever plans or areas are shown. Wording matches the teaser; the project is
@@ -211,7 +211,7 @@ FOOT = f'''<footer class="foot">
 '''
 
 def scripts(*extra):
-    s = ''.join(f'<script src="assets/js/{n}?v={ASSET_V}"></script>\n' for n in ('data.js', 'site.js', 'motion.js'))
+    s = ''.join(f'<script src="assets/js/{n}?v={ASSET_V}"></script>\n' for n in ('data.js', 'availability.js', 'site.js', 'motion.js'))
     for e in extra:
         s += f'<script src="assets/js/{e}?v={ASSET_V}"></script>\n'
     return s + "</body>\n</html>\n"
@@ -454,6 +454,7 @@ def index_html():
         <span class="legend__item legend__item--static"><span class="legend__dot legend__dot--ok"></span>Voľný</span>
         <span class="legend__item legend__item--static"><span class="legend__dot legend__dot--warn"></span>Rezervovaný</span>
         <span class="legend__item legend__item--static"><span class="legend__dot legend__dot--off"></span>Predaný</span>
+        <span class="legend__item legend__item--static"><span class="legend__dot legend__dot--tbd"></span>Pripravujeme</span>
       </div>
       <span class="picker__hint">{svg("cursor")} <span data-bldg-hint>Vyberte podlažie priamo na dome</span></span>
     </div>
@@ -764,13 +765,17 @@ def index_html():
 </main>
 ''' + FOOT
     + '''<script>
-/* §14: six available units with plan thumbnails, largest first */
+/* §14: six units with plan thumbnails, largest first: the free ones once the CRM has released some, any six before that.
+   This block sits above the script tags, so it waits for them (DOMContentLoaded) and then for the CRM feed. */
 document.addEventListener('DOMContentLoaded', function () {
-  var wrap = document.querySelector('[data-featured]');
-  if (!wrap) return;
-  var picks = APARTMENTS.filter(function (a) { return a.status === 'dostupny'; })
-    .sort(function (a, b) { return b.area - a.area; }).slice(0, 6);
-  wrap.innerHTML = picks.map(function (a) { return unitCardHTML(a); }).join('');
+  whenAvailabilityKnown(function () {
+    var wrap = document.querySelector('[data-featured]');
+    if (!wrap) return;
+    var free = APARTMENTS.filter(function (a) { return a.status === 'dostupny'; });
+    var picks = (SHOW_STATUS && free.length ? free : APARTMENTS.slice())
+      .sort(function (a, b) { return b.area - a.area; }).slice(0, 6);
+    wrap.innerHTML = picks.map(function (a) { return unitCardHTML(a); }).join('');
+  });
 });
 </script>
 ''' + scripts("map.js", "floorplan.js", "floors.js", "list.js", "fly.js"))
@@ -886,6 +891,7 @@ def byt_html():
             <span class="legend__item legend__item--static"><span class="legend__dot legend__dot--ok"></span>Voľný</span>
             <span class="legend__item legend__item--static"><span class="legend__dot legend__dot--warn"></span>Rezervovaný</span>
             <span class="legend__item legend__item--static"><span class="legend__dot legend__dot--off"></span>Predaný</span>
+        <span class="legend__item legend__item--static"><span class="legend__dot legend__dot--tbd"></span>Pripravujeme</span>
             <span class="legend__item legend__item--static"><span class="legend__dot legend__dot--this"></span>Tento byt</span>
           </div>
           <p class="form__note" style="margin-top:8px">Kliknutím na iný byt na podlaží sa presuniete na jeho detail. Šípkami ← → prechádzate dom po poradí.</p>
