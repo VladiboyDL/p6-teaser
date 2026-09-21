@@ -38,7 +38,7 @@ function initDetail() {
     <p class="eyebrow">P6 · Prievozská 6 · ${a.floor}. nadzemné podlažie</p>
     <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:12px 22px">
       <h1 style="font-size:clamp(2.8rem,6.5vw,5rem)">Byt ${a.id}</h1>
-      <span class="pill pill--${a.status}">${STATUS_LABEL[a.status]}</span>
+      <span class="pill pill--${statusKind(a.status)}">${statusText(a.status)}</span>
     </div>
     <p class="lede" style="margin-top:14px">${a.type} · ${a.floor}. nadzemné podlažie · byt ${a.letter}</p>`;
 
@@ -75,13 +75,13 @@ function initDetail() {
 
   root.querySelector('[data-aside]').innerHTML = `
     <div class="aside__box">
-      <p class="eyebrow" style="margin-bottom:4px">${a.status === 'predany' ? 'Stav bytu' : 'Cena vrátane DPH'}</p>
-      <div class="aside__price">${a.status === 'predany' ? 'Predané' : fmtPrice(a.price, a.status)}</div>
-      ${ppm && a.status !== 'predany' && SHOW_PRICES
+      <p class="eyebrow" style="margin-bottom:4px">${soldOut(a.status) ? 'Stav bytu' : 'Cena vrátane DPH'}</p>
+      <div class="aside__price">${soldOut(a.status) ? 'Predané' : fmtPrice(a.price, a.status)}</div>
+      ${ppm && !soldOut(a.status) && SHOW_PRICES
         ? `<div class="aside__ppm">${nfPrice.format(ppm)} € / m² interiéru</div>` : ''}
       <div class="aside__actions">
-        ${a.status === 'predany'
-          ? `<a class="btn btn--primary" href="byty.html?status=dostupny">Zobraziť voľné byty ${icon.arrow}</a>
+        ${soldOut(a.status)
+          ? `<a class="btn btn--primary" href="byty.html">Zobraziť všetky byty ${icon.arrow}</a>
              ${pdfBtn}
              <a class="btn btn--ghost" href="kontakt.html">Napísať nám</a>`
           : `<a class="btn btn--primary" href="kontakt.html?byt=${encodeURIComponent(a.id)}">
@@ -130,14 +130,14 @@ function initDetail() {
      reach instead of living 2,000px up the page */
   const bar = document.querySelector('[data-sticky-cta]');
   if (bar) {
-    const sold = a.status === 'predany';
+    const sold = soldOut(a.status);
     bar.innerHTML = `
       <div class="sticky-cta__price">
         <span class="sticky-cta__label">${sold ? 'Byt ' + a.id : 'Cena vrátane DPH'}</span>
         <span class="sticky-cta__value">${sold ? 'Predané' : fmtPrice(a.price, a.status)}</span>
       </div>
       ${sold
-        ? `<a class="btn btn--primary" href="byty.html?status=dostupny">Voľné byty</a>`
+        ? `<a class="btn btn--primary" href="byty.html">Všetky byty</a>`
         : `<a class="btn btn--primary" href="kontakt.html?byt=${encodeURIComponent(a.id)}">Mám záujem</a>`}`;
     bar.hidden = false;
     document.body.classList.add('has-sticky-cta');

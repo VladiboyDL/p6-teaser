@@ -112,8 +112,8 @@ function initFloors() {
     const [x0, x1] = view.x;
     layer.innerHTML = Object.entries(view.floors).map(([f, [top, bottom]]) => {
       const c = floorCounts(Number(f));
-      const label = `${f}. nadzemné podlažie: ${c.total} ${plural(c.total, 'byt', 'byty', 'bytov')}, `
-        + `voľné ${c.free}, rezervované ${c.reserved}, predané ${c.sold}`;
+      const label = `${f}. nadzemné podlažie: ${c.total} ${plural(c.total, 'byt', 'byty', 'bytov')}`
+        + (SHOW_STATUS ? `, voľné ${c.free}, rezervované ${c.reserved}, predané ${c.sold}` : '');
       return `<a class="bldg__floor" href="byty.html?floor=${f}" data-floor="${f}" aria-label="${label}">
                 <rect x="${x0}" y="${top}" width="${x1 - x0}" height="${bottom - top}"/>
                 <g class="bldg__tag" transform="translate(${x1 - 18} ${(top + bottom) / 2})">
@@ -230,6 +230,7 @@ function initFloors() {
       </div>
       <dl class="tip__rows">
         <div class="tip__row tip__row--total"><dt>Bytov na podlaží</dt><dd>${c.total}</dd></div>
+        ${SHOW_STATUS ? `
         <div class="tip__bar" aria-hidden="true">
           <span class="tip__bar--ok" style="width:${pct(c.free)}%"></span>
           <span class="tip__bar--warn" style="width:${pct(c.reserved)}%"></span>
@@ -237,7 +238,7 @@ function initFloors() {
         </div>
         <div class="tip__row"><dt><i class="legend__dot legend__dot--ok"></i>Voľné</dt><dd>${c.free}</dd></div>
         <div class="tip__row"><dt><i class="legend__dot legend__dot--warn"></i>Rezervované</dt><dd>${c.reserved}</dd></div>
-        <div class="tip__row"><dt><i class="legend__dot legend__dot--off"></i>Predané</dt><dd>${c.sold}</dd></div>
+        <div class="tip__row"><dt><i class="legend__dot legend__dot--off"></i>Predané</dt><dd>${c.sold}</dd></div>` : ''}
       </dl>
       <div class="tip__cta">Kliknite a zobrazte pôdorys</div>
       <div class="tip__actions">
@@ -348,7 +349,8 @@ function initFloors() {
     const c = floorCounts(f);
     view.querySelector('[data-fview-no]').textContent = `${f}. NP`;
     view.querySelector('[data-fview-meta]').textContent =
-      `${c.total} ${plural(c.total, 'byt', 'byty', 'bytov')} · ${c.free} ${plural(c.free, 'voľný', 'voľné', 'voľných')}`;
+      `${c.total} ${plural(c.total, 'byt', 'byty', 'bytov')}`
+      + (SHOW_STATUS ? ` · ${c.free} ${plural(c.free, 'voľný', 'voľné', 'voľných')}` : '');
     chips.forEach(ch => {
       const on = Number(ch.dataset.fviewFloor) === f;
       ch.classList.toggle('is-on', on);
@@ -553,7 +555,7 @@ function initFloors() {
     unitTip.innerHTML = `
       <div class="tip__head">
         <span class="tip__id">${a.id}</span>
-        <span class="pill pill--${a.status}">${STATUS_LABEL[a.status]}</span>
+        <span class="pill pill--${statusKind(a.status)}">${statusText(a.status)}</span>
       </div>
       <div class="tip__type">${a.type} · ${a.floor}. nadzemné podlažie</div>
       <dl class="tip__rows">
@@ -631,10 +633,12 @@ function initFloors() {
   const strip = document.querySelector('[data-floorstrip]');
   if (strip) {
     strip.innerHTML = STOREYS.slice().sort((a, b) => b - a).map(f => {
-      const { free } = floorCounts(f);
+      const { free, total } = floorCounts(f);
       return `<a class="floorstrip__row" href="byty.html?floor=${f}">
                 <span class="floorstrip__no">${f}. NP</span>
-                <span class="floorstrip__free">${free} ${plural(free, 'voľný', 'voľné', 'voľných')}</span>
+                <span class="floorstrip__free">${SHOW_STATUS
+                  ? `${free} ${plural(free, 'voľný', 'voľné', 'voľných')}`
+                  : `${total} ${plural(total, 'byt', 'byty', 'bytov')}`}</span>
               </a>`;
     }).join('');
   }

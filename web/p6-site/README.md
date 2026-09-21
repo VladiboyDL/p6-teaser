@@ -15,6 +15,44 @@ Local preview:
 python3 -m http.server 8123 --directory rezidencia
 ```
 
+## Etapa 2 — what changed on 21. 9. 2026
+
+Done, from Vlad's `ETAPA2-ZMENY-PRE-KOLEGU.md` (the project is before its
+building permit, so nothing may describe the works or promise a specification):
+
+- **The Štandard section is off** (`SHOW_STANDARD = False`). Triple glazing,
+  underfloor heating, large-format tiling, wooden floors, chip entry and EV
+  charging were never confirmed, and the house will have radiators, not
+  underfloor heating. The card list now holds only what the project confirms:
+  a balcony per flat, the rooftop terrace, parking by the house. Turn the
+  section back on only with the project manager's written confirmation, and
+  only for what is in it.
+- **No fitness anywhere**, on the building or in the neighbourhood ticker.
+- **No parking count.** Physically 49, on paper 47, nothing guaranteed: the
+  copy says "Parkovanie pri dome. Státia sa predávajú samostatne, podmienky
+  upresníme." The `PARAMS` rows for parking and cellars are gone (the cellar
+  sizes were not from the drawings).
+- **The disclaimer** no longer mentions a reconstructed skeleton; it matches the
+  teaser's wording, and the same sentence went out of the public `data.js`.
+- **Identity and contacts**: `bytyp6.sk`, `info@bytyp6.sk`, the invented phone
+  number is gone from the bar, the footer, the contact page and the PDFs, and
+  the operator (Byty Prievozska6 s.r.o., IČO 54 793 360) is named in the footer
+  and on every PDF.
+- **Availability is hidden** (`SHOW_STATUS = false` in `data.js`). The sale runs
+  in stages, so the site must not claim all 44 are free nor show which go
+  first: every flat reads "Pripravujeme", the availability filter, the counters
+  and the status legend are pulled, and the buttons say "Pozrieť byty". When
+  the CRM feeds status live (`GET /api/public/units`), flip it back on.
+- **The FAQ** keeps only what is settled; reservation terms, client changes and
+  the 3D tour are out until the client signs them off.
+- `_build/gen_data.py`, the old placeholder generator, is deleted.
+
+Still open from that document: the contact form still does not send anything
+(D1), the legal pages, consent wording and cookie bar have to come over from
+the teaser (D2, D3, D5), Inter should be self-hosted instead of loaded from
+Google (D4), the gallery is still AI stand-ins (E), and `PREVIEW = False` waits
+for all of it (F).
+
 ## This is currently a CLIENT PREVIEW build
 
 Every page carries `<meta name="robots" content="noindex, nofollow">` and

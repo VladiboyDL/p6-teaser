@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=62">
+<link rel="stylesheet" href="assets/css/site.css?v=64">
 <style>
   @page { size: A4; margin: 0; }
   html, body { margin: 0; padding: 0; background: #fff; }
@@ -84,14 +84,14 @@
 </head>
 <body class="karta">
 <main data-karta></main>
-<script src="assets/js/data.js?v=62"></script>
-<script src="assets/js/site.js?v=62"></script>
-<script src="assets/js/floorplan.js?v=62"></script>
+<script src="assets/js/data.js?v=64"></script>
+<script src="assets/js/site.js?v=64"></script>
+<script src="assets/js/floorplan.js?v=64"></script>
 <script>
 (async () => {
-  const DISCLAIMER = "Uvedené výmery sú orientačné a vychádzajú z podkladov architekta. Ide o rekonštrukciu existujúceho skeletu, preto sú možné odchýlky a plochy sa môžu zmeniť. Výmery balkónov nie sú definitívne potvrdené. Investor si vyhradzuje právo na zmeny.";
-  const PHONE = "+421 900 000 000", EMAIL = "info@prievozska6.sk";
-  const WEB = "prievozska6.sk";
+  const DISCLAIMER = "Výmery, dispozície a počty sú orientačné a vychádzajú z podkladov architekta. Možné sú odchýlky a zmeny. Výmery balkónov nie sú definitívne potvrdené.";
+  const EMAIL = "info@bytyp6.sk", OPERATOR = "Byty Prievozska6 s.r.o., Prievozská 6, 821 09 Bratislava-Ružinov · IČO 54 793 360 · IČ DPH SK2121785754 · OR Mestského súdu Bratislava III, oddiel Sro, vložka č. 162817/B";
+  const WEB = "bytyp6.sk";
   const ADDRESS = "Prievozská 6, 821 09 Bratislava-Ružinov";
 
   const id = new URLSearchParams(location.search).get('id');
@@ -154,8 +154,8 @@
         <p class="k-price">${sold ? 'Predané' : fmtPrice(a.price, a.status)}</p>
         <p class="k-eyebrow" style="margin-top:8mm">Možnosť dokúpiť</p>
         <div class="k-extras">
-          <div class="k-extra"><b>Pivničná kobka</b><span>plocha 1,5 až 3,0 m²</span></div>
-          <div class="k-extra"><b>Parkovacie miesto</b><span>vonkajšie státie priamo pred domom, 50 miest</span></div>
+          <div class="k-extra"><b>Pivničná kobka</b><span>výmeru upresníme</span></div>
+          <div class="k-extra"><b>Parkovacie miesto</b><span>parkovanie pri dome, podmienky upresníme</span></div>
         </div>
         <p class="k-small">Pivničná kobka aj parkovacie miesto sa k bytu dokupujú samostatne. Cenu a dostupnosť vám oznámime na vyžiadanie.</p>
       </div>
@@ -169,12 +169,12 @@
     <div class="k-contact">
       <div>
         <p class="k-eyebrow">Predaj bytov</p>
-        <p class="k-contact__big">${PHONE}</p>
-        <p>${EMAIL} · ${WEB}</p>
+        <p class="k-contact__big">${EMAIL}</p>
+        <p>${WEB}</p>
       </div>
       <div>
-        <p class="k-eyebrow">Adresa projektu</p>
-        <p>${ADDRESS}</p>
+        <p class="k-eyebrow">Prevádzkovateľ</p>
+        <p>${OPERATOR}</p>
       </div>
     </div>
     <p class="k-note">${DISCLAIMER}</p>
