@@ -5,8 +5,8 @@ Two people and two assistants share it:
 - **Filip + Claude** — the official site in `web/p6-site/` (build scripts, plans, apartment PDFs).
 - **Vlad + his Claude** — the teaser at the repo root (live on **bytyp6.sk**), the legal pages, the CRM and the lead flow.
 
-`main` is production: it deploys to bytyp6.sk through GitHub Pages. The repo is
-public, and stays public.
+`main` is production: every push to it is deployed to bytyp6.sk by `.github/workflows/pages.yml`
+(GitHub Pages). The repo is public, and stays public.
 
 ## The rule: dev notes in this file
 
@@ -31,8 +31,8 @@ Write in whichever language suits you; both assistants read Slovak and English.
 
 ## Source of truth (kept by Vlad's side; if something here is wrong or missing, ask, do not guess)
 
-**This file, the READMEs and everything else in the repo are public and served on bytyp6.sk** (`/CLAUDE.md` answers 200).
-Keep notes factual: no secrets, no credentials, nothing about the client's business reasoning, prices or negotiations.
+**The repository is public on GitHub, so this file and the READMEs can be read by anyone** (since 2026-09-21 they are no longer served
+on bytyp6.sk, see *What gets published*). Keep notes factual: no secrets, no credentials, nothing about the client's business reasoning, prices or negotiations.
 
 ### What is *not* in this repo
 The website is the only thing here. The CRM (`p6-crm`, private, https://p6-crm.onrender.com), the n8n workflows (confirmation e-mail, lead → CRM),
@@ -98,10 +98,12 @@ The CRM's secret never reaches a browser; nothing on the site talks to the CRM's
 `CNAME`, `.nojekyll`, `robots.txt`, `sitemap.xml`, `.well-known/security.txt`, and `assets/img/email/*` (the live confirmation e-mail loads its images
 from there). Do not move, rename or delete them. Root assets are cache-busted with `?v=N`; bump the number when a file changes.
 
-### Open decision (Vlad)
-Pages publishes the whole branch, so `/web/p6-site/` with all 44 flats, the PDFs, `_build/` with the architect's drawings, and this file are reachable on
-the production domain (pages are noindex, PDFs and drawings cannot be). Option on the table: deploy through an Actions workflow that publishes only
-what should be public. Nobody changes the Pages setup until Vlad decides.
+### What gets published (decided by Vlad, 2026-09-21)
+bytyp6.sk is deployed by `.github/workflows/pages.yml` on every push to `main`, not by "deploy from branch" any more. It publishes the repository
+**except**: `*.md`, every `_build/` folder (build scripts, the architect's source drawings, the PDF template), `*.py`, `*.mjs`, design sources
+(`*.blend`, `*.psd`, `*.ai`), `.github/`, `.gitignore`. The workflow refuses to deploy when a page production depends on is missing or when one of
+those internal kinds slipped in. **A new kind of internal file must be added to the exclude list in that workflow**, otherwise it goes online.
+The custom domain and HTTPS are repository settings; `CNAME` stays in the root anyway. A deploy takes about a minute; its result is under *Actions*.
 
 ## Map, and the switches that decide what the site says
 
@@ -110,7 +112,7 @@ what should be public. Nobody changes the Pages setup until Vlad decides.
 | `/` (root) | the teaser, live on bytyp6.sk |
 | `/nahlad/` | short link to the official site while it lives beside the teaser |
 | `web/p6-site/` | the official site; see its own `README.md` for how it is built |
-| `web/p6-site/_build/` | build scripts and source drawings, **not** part of the site |
+| `web/p6-site/_build/` | build scripts and source drawings, **not** part of the site and not published |
 
 Switches in the official site, all documented in `web/p6-site/README.md`:
 
@@ -136,6 +138,15 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 ```
 
 ## Dev notes
+
+### 2026-09-21 · only public files are deployed · ci/publish-only-public · Vlad + Claude
+- Vlad decided the open point from PR #1's heads-up: Pages now deploys through `.github/workflows/pages.yml` (repository setting switched from
+  "deploy from branch" to "GitHub Actions"). `_build/` with the architect's drawings, all `*.md` (this file, the READMEs), scripts and design
+  sources are no longer downloadable from bytyp6.sk. Everything else is published exactly as before, same URLs.
+- The workflow has a guard: it fails, and the previous deployment stays online, if a page production depends on is missing, if fewer than
+  44 apartment PDFs are there, or if an internal file kind would be published. If a deploy fails, look at *Actions* first.
+- For Filip's side nothing changes in how you work: branch, PR, merge to `main`, about a minute later it is live. If you add a new kind of
+  internal file (e.g. `.xlsx` working sheets), add it to the exclude list in the workflow in the same PR.
 
 ### 2026-09-21 · legal links, local fonts, shared cookie banner, neutral contact page · feat/p6-site-legal-fonts-consent · Vlad + Claude
 - At Vlad's request his side closed D3, D4, D5 and the contact-page part of E inside `web/p6-site/`.
