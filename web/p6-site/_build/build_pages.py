@@ -42,7 +42,7 @@ OPERATOR = ("Byty Prievozska6 s.r.o., Prievozská 6, 821 09 Bratislava-Ružinov 
 PREVIEW = True
 
 # Bump whenever CSS/JS changes — appended as ?v= to every asset link.
-ASSET_V = "66"
+ASSET_V = "67"
 
 # Mandated by the architect (Ing. arch. Martin Krajči) — must stay visible
 # wherever plans or areas are shown. Wording matches the teaser; the project is
@@ -133,10 +133,8 @@ def head(title, desc, page, extra=""):
 <meta name="theme-color" content="#14120F">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 {noindex}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" href="assets/fonts/newsreader-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css?v={ASSET_V}">
 {extra}</head>
 <body>
@@ -201,6 +199,16 @@ FOOT = f'''<footer class="foot">
           <li><a href="kontakt.html">Kontaktný formulár</a></li>
         </ul>
       </div>
+      <div>
+        <h4>Právne informácie</h4>
+        <ul>
+          <li><a href="/ochrana-osobnych-udajov.html">Ochrana osobných údajov</a></li>
+          <li><a href="/cookies.html">Cookies</a></li>
+          <li><a href="/suhlas-so-spracovanim.html">Súhlas so spracovaním údajov</a></li>
+          <li><a href="/pravne-informacie.html">Podmienky používania a prevádzkovateľ</a></li>
+          <li><a href="/cookies.html" data-cookie-settings>Nastavenia cookies</a></li>
+        </ul>
+      </div>
     </div>
     <div class="foot__bottom">
       <span>© <span data-year>2026</span> {NAME}, Prievozská 6. Všetky práva vyhradené.<br>{OPERATOR}</span>
@@ -211,7 +219,10 @@ FOOT = f'''<footer class="foot">
 '''
 
 def scripts(*extra):
-    s = ''.join(f'<script src="assets/js/{n}?v={ASSET_V}"></script>\n' for n in ('data.js', 'availability.js', 'site.js', 'motion.js'))
+    # /assets/js/config.js and consent.js belong to the whole domain and are kept by Vlad's side: tracking ids, the n8n
+    # webhook, and the cookie banner, which appears by itself once a tracking id exists. Nothing else may load trackers.
+    s = '<script src="/assets/js/config.js"></script>\n<script src="/assets/js/consent.js" defer></script>\n'
+    s += ''.join(f'<script src="assets/js/{n}?v={ASSET_V}"></script>\n' for n in ('data.js', 'availability.js', 'site.js', 'motion.js'))
     for e in extra:
         s += f'<script src="assets/js/{e}?v={ASSET_V}"></script>\n'
     return s + "</body>\n</html>\n"
@@ -947,9 +958,6 @@ def karta_html():
 <base href="../../">
 <title>P6 — karta bytu</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css?v={ASSET_V}">
 <style>
   @page {{ size: A4; margin: 0; }}
@@ -1229,7 +1237,7 @@ def kontakt_html():
       <form class="form" data-form data-endpoint="https://api.web3forms.com/submit" data-access-key="7fe2237a-781c-434a-8681-004cfc526785" data-mailto="{EMAIL}" novalidate>
         <div class="form__ok" data-form-ok role="status">
           {svg("check")}
-          <span><strong>Ďakujeme, správu máme.</strong><br>Ozveme sa vám do jedného pracovného dňa.</span>
+          <span><strong>Ďakujeme, správu máme.</strong><br>Ozveme sa vám čo najskôr. Potvrdenie sme vám poslali aj e-mailom.</span>
         </div>
         <div class="form__row">
           <div><label for="c-name">Meno a priezvisko *</label><input id="c-name" name="name" type="text" autocomplete="name" maxlength="120" required></div>
@@ -1258,7 +1266,7 @@ def kontakt_html():
         <p class="form__error" data-form-error role="alert" hidden></p>
         <div>
           <button class="btn btn--primary" type="submit">Odoslať správu {svg("arrow")}</button>
-          <p class="form__note" style="margin:14px 0 0">Odpovedáme do jedného pracovného dňa. Váš kontakt neposkytujeme tretím stranám.</p>
+          <p class="form__note" style="margin:14px 0 0">Váš kontakt použijeme len na odpoveď na vašu správu, ak nám nedáte súhlas aj so zasielaním noviniek.</p>
         </div>
       </form>
 
@@ -1267,12 +1275,11 @@ def kontakt_html():
           <dl class="contact-list">
             <div><dt>E-mail</dt><dd><a href="mailto:{EMAIL}">{EMAIL}</a></dd></div>
             <div><dt>Adresa projektu</dt><dd>Prievozská 6<br>821 09 Bratislava-Ružinov</dd></div>
-            <div><dt>Otváracie hodiny</dt><dd>Pondelok až piatok<br>9:00 až 18:00</dd></div>
           </dl>
         </div>
         <div class="aside__box">
-          <p class="eyebrow" style="margin-bottom:10px">Osobná obhliadka</p>
-          <p style="font-size:.94rem;color:var(--text-muted);margin:0">Radi vám ukážeme projekt osobne, vrátane vzorových materiálov a presných dispozícií. Stretnutie si dohodneme telefonicky.</p>
+          <p class="eyebrow" style="margin-bottom:10px">Osobná konzultácia</p>
+          <p style="font-size:.94rem;color:var(--text-muted);margin:0">Radi sa s vami stretneme osobne a prejdeme dispozície aj ponuku. Termín si dohodneme e-mailom.</p>
         </div>
       </aside>
     </div>
@@ -1304,8 +1311,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 </script>
-''' + '<script src="/assets/js/config.js"></script>\n'   # the domain's one config (webhook, tracking ids), kept by Vlad's side
-    + scripts("forms.js"))
+''' + scripts("forms.js"))
 
 # ---------------------------------------------------------------- static
 

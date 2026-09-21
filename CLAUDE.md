@@ -59,14 +59,16 @@ Not to be stated anywhere (pages, PDFs, meta tags, alt texts, public JS comments
 glazing, floors or any other technical specification · dates of construction, completion or handover · prices, until an administrator enters them
 in the CRM · yield, appreciation or any financial promise · "novostavba" · the reconstructed skeleton · that all 44 flats are available, which flats
 are offered first or how many. Visualisations carry "ilustračná vizualizácia" / "Ilustračný obrázok".
-One leftover today: `web/p6-site/assets/js/floorplan.js:19` still says "the skeleton being reconstructed" in a comment.
 
-### One set of legal pages, consent and tracking for the whole domain
-Both sites live on the same origin, so the official site **links to the root legal pages** (`/ochrana-osobnych-udajov.html`, `/cookies.html`,
-`/suhlas-so-spracovanim.html`, `/pravne-informacie.html`, add `?lang=en|de|uk` when needed) and **loads the root scripts** (`/assets/js/config.js`,
-`/assets/js/consent.js`) instead of copying them. No analytics or ad tag may load outside `consent.js` (Consent Mode v2, everything denied until the
-visitor agrees). Fonts are self-hosted in `/assets/fonts/` (Inter incl. Cyrillic, Newsreader); nothing may be fetched from Google Fonts or another
-third party without consent. Root pages carry a CSP `<meta>`; a new third-party host has to be added there on all five root pages.
+### One set of legal pages, consent and tracking for the whole domain (in place since 2026-09-21)
+Both sites live on the same origin. The official site **links to the root legal pages** (footer and form: `/ochrana-osobnych-udajov.html`,
+`/cookies.html`, `/suhlas-so-spracovanim.html`, `/pravne-informacie.html`; add `?lang=en|de|uk` when needed) and every page of it **loads the root
+scripts** `/assets/js/config.js` and `/assets/js/consent.js` (the generator's `scripts()` does that). `consent.js` is self-sufficient: its own texts
+in four languages, its own stylesheet `/assets/css/consent.css` fetched on demand. The banner shows by itself as soon as a tracking id exists
+in `config.js`, and reopens from any element with `data-cookie-settings`. **No analytics or ad tag may load outside `consent.js`** (Consent Mode v2,
+everything denied until the visitor agrees). Fonts are self-hosted on both sites (`assets/fonts/`, the official site has its own copies of Inter);
+nothing may be fetched from Google Fonts or another third party without consent. Root pages carry a CSP `<meta>`; a new third-party host has to
+be added there on all five root pages.
 
 ### Forms (D1, done 2026-09-21 in `web/p6-site/assets/js/forms.js`): the one lead flow
 A form on either site does two posts, both from the browser, field **names in plain ASCII** (Web3Forms garbles accented names):
@@ -134,6 +136,21 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 ```
 
 ## Dev notes
+
+### 2026-09-21 · legal links, local fonts, shared cookie banner, neutral contact page · feat/p6-site-legal-fonts-consent · Vlad + Claude
+- At Vlad's request his side closed D3, D4, D5 and the contact-page part of E inside `web/p6-site/`.
+- **D3:** footer column "Právne informácie" with the four root legal pages and "Nastavenia cookies" (`data-cookie-settings`).
+- **D4:** Google Fonts are gone from every page and from the PDF template; Inter is served from `web/p6-site/assets/fonts/` (`@font-face` in
+  `site.css`, same files as the teaser). The official site now makes no third-party request except the CRM availability feed.
+- **D5:** every page loads the domain's `/assets/js/config.js` + `/assets/js/consent.js` through `scripts()`. Root change that made this possible:
+  `consent.js` no longer needs the teaser's `i18n.js` or `teaser.css`: the banner texts (4 languages) moved into it, its styles into the new
+  `/assets/css/consent.css`. No banner shows today because no tracking id is set. Root asset versions: `consent.js?v=4`, `i18n.js?v=16`, `teaser.css?v=15`.
+- **Contact page:** removed opening hours, "vzorové materiály" and the answer "do jedného pracovného dňa"; nobody confirmed them. The thank-you
+  now says a confirmation e-mail was sent (it is). `floorplan.js` comment no longer mentions the skeleton.
+- `ASSET_V` 66 → 67, pages rebuilt, PDFs not rebuilt (next PDF build no longer needs the network for Inter).
+- Checked in a browser: no third-party requests, Inter loaded locally, footer links resolve, banner with a simulated tracking id on both sites
+  (Slovak on the official site; sk/en/de/uk on the teaser; reject loads nothing, accept loads the Google tag, footer link reopens settings).
+- Still open on the official site: gallery images are AI stand-ins (E), `PREVIEW = False` last (F).
 
 ### 2026-09-21 · the contact form works: e-mail, confirmation, CRM · feat/p6-site-forms · Vlad + Claude
 - At Vlad's request his side wired the official site's form (D1). Until now it showed "ďakujeme" and **sent nothing**; every enquiry was lost.
