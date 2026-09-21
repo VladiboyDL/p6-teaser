@@ -12,6 +12,7 @@ window.P6_CONFIG = {
     email:    'info@bytyp6.sk',    // kontakt pre osobné údaje aj všeobecné otázky
     phone:    '+421 902 900 868',       // telefón prevádzkovateľa: LEN v údajoch o prevádzkovateľovi (§ 4 zákona č. 22/2004 Z. z.), nie je to predajná linka a nepatrí na hlavnú stránku
     dpo:      '',                       // zodpovedná osoba (DPO), ak je určená: meno alebo e-mail; inak nechať prázdne
+    processor: 'BIO - SERV, a.s. (avatarAI), Prešovská 39/A, 821 08 Bratislava - mestská časť Ružinov, IČO 31 442 072',   // sprostredkovateľ podľa čl. 28 GDPR: spravuje web, CRM a marketing; OR MS Bratislava III, oddiel Sa, vložka č. 6911/B (overené 21. 9. 2026)
     seller:   '',                       // výhradný predajca / realitná kancelária, ak predaj zabezpečuje tretia strana
     retentionYears: 3,                  // ako dlho sa uchovávajú kontakty záujemcov od udelenia súhlasu
     effective: '2026-09-21'             // dátum účinnosti dokumentov (RRRR-MM-DD)

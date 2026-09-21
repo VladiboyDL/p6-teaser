@@ -10,7 +10,7 @@
 <meta name="robots" content="noindex, follow">
 <meta name="theme-color" content="#14120F">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<script src="assets/js/config.js?v=18"></script>
+<script src="assets/js/config.js?v=19"></script>
 <script src="assets/js/lang-detect.js?v=14"></script>
 <link rel="stylesheet" href="assets/css/teaser.css?v=14">
 </head>
@@ -93,7 +93,8 @@
   <li>poskytovateľ služby, ktorá prijíma a&nbsp;doručuje údaje z&nbsp;formulára, a&nbsp;poskytovateľ e-mailových služieb,</li>
   <li>poskytovateľ nástroja na rozosielanie noviniek, ak ste s&nbsp;nimi súhlasili,</li>
   <li data-cfg-if="legal.seller" hidden>predajca projektu: <span data-cfg="legal.seller" data-cfg-label="predajca"></span>,</li>
-  <li>agentúra, ktorá stránku spravuje a&nbsp;zabezpečuje jej marketing,</li>
+  <li data-cfg-if="legal.processor">náš sprostredkovateľ, ktorý pre nás spravuje webovú stránku, systém na evidenciu záujemcov a&nbsp;marketing a&nbsp;má preto k&nbsp;údajom prístup: <span data-cfg="legal.processor" data-cfg-label="sprostredkovateľ">BIO - SERV, a.s. (avatarAI), Prešovská 39/A, 821 08 Bratislava - mestská časť Ružinov, IČO 31 442 072</span>,</li>
+  <li data-cfg-unless="legal.processor" hidden>agentúra, ktorá stránku spravuje a&nbsp;zabezpečuje jej marketing,</li>
   <li data-cfg-if="formCaptcha" hidden>poskytovateľ ochrany formulára pred robotmi hCaptcha (Intuition Machines, Inc., USA); spracúva IP adresu a&nbsp;technické údaje o&nbsp;zariadení na základe nášho oprávneného záujmu na ochrane formulára pred zneužitím,</li>
   <li>právni, daňoví a&nbsp;účtovní poradcovia viazaní mlčanlivosťou,</li>
   <li data-cfg-if="tracking.google" hidden>Google Ireland Limited, ak ste súhlasili s&nbsp;analytickými alebo marketingovými cookies,</li>
@@ -191,7 +192,8 @@
   <li>the provider of the service that receives and delivers form submissions, and our e-mail service provider,</li>
   <li>the provider of the newsletter tool, if you consented to receiving news,</li>
   <li data-cfg-if="legal.seller" hidden>the project’s sales agent: <span data-cfg="legal.seller" data-cfg-label="sales agent"></span>,</li>
-  <li>the agency that maintains the site and handles its marketing,</li>
+  <li data-cfg-if="legal.processor">our processor, which runs the website, the system in which we keep records of interested buyers and our marketing, and therefore has access to the data: <span data-cfg="legal.processor" data-cfg-label="processor">BIO - SERV, a.s. (avatarAI), Prešovská 39/A, 821 08 Bratislava - mestská časť Ružinov, IČO 31 442 072</span>,</li>
+  <li data-cfg-unless="legal.processor" hidden>the agency that maintains the site and handles its marketing,</li>
   <li data-cfg-if="formCaptcha" hidden>hCaptcha (Intuition Machines, Inc., USA), which protects the form against bots; it processes the IP address and technical device data on the basis of our legitimate interest in protecting the form against abuse,</li>
   <li>legal, tax and accounting advisers bound by confidentiality,</li>
   <li data-cfg-if="tracking.google" hidden>Google Ireland Limited, if you consented to analytics or marketing cookies,</li>
@@ -289,7 +291,8 @@
   <li>der Anbieter des Dienstes, der die Formulardaten entgegennimmt und zustellt, sowie unser E-Mail-Dienstleister,</li>
   <li>der Anbieter des Newsletter-Tools, sofern Sie in den Erhalt von Neuigkeiten eingewilligt haben,</li>
   <li data-cfg-if="legal.seller" hidden>der Vertriebspartner des Projekts: <span data-cfg="legal.seller" data-cfg-label="Vertriebspartner"></span>,</li>
-  <li>die Agentur, die die Website betreut und das Marketing übernimmt,</li>
+  <li data-cfg-if="legal.processor">unser Auftragsverarbeiter, der für uns die Website, das System zur Verwaltung von Interessenten und das Marketing betreibt und deshalb Zugriff auf die Daten hat: <span data-cfg="legal.processor" data-cfg-label="Auftragsverarbeiter">BIO - SERV, a.s. (avatarAI), Prešovská 39/A, 821 08 Bratislava - mestská časť Ružinov, IČO 31 442 072</span>,</li>
+  <li data-cfg-unless="legal.processor" hidden>die Agentur, die die Website betreut und das Marketing übernimmt,</li>
   <li data-cfg-if="formCaptcha" hidden>hCaptcha (Intuition Machines, Inc., USA) zum Schutz des Formulars vor Bots; verarbeitet werden die IP-Adresse und technische Gerätedaten auf Grundlage unseres berechtigten Interesses am Schutz des Formulars vor Missbrauch,</li>
   <li>zur Verschwiegenheit verpflichtete Rechts-, Steuer- und Buchhaltungsberater,</li>
   <li data-cfg-if="tracking.google" hidden>Google Ireland Limited, sofern Sie in Analyse- oder Marketing-Cookies eingewilligt haben,</li>
@@ -387,7 +390,8 @@
   <li>постачальник сервісу, який приймає та доставляє дані з форми, і постачальник послуг електронної пошти,</li>
   <li>постачальник інструменту для розсилання новин, якщо ви на них погодилися,</li>
   <li data-cfg-if="legal.seller" hidden>продавець проєкту: <span data-cfg="legal.seller" data-cfg-label="продавець"></span>,</li>
-  <li>агентство, яке обслуговує сайт і забезпечує його маркетинг,</li>
+  <li data-cfg-if="legal.processor">наш обробник даних, який веде для нас сайт, систему обліку зацікавлених осіб і маркетинг, тому має доступ до даних: <span data-cfg="legal.processor" data-cfg-label="обробник даних">BIO - SERV, a.s. (avatarAI), Prešovská 39/A, 821 08 Bratislava - mestská časť Ružinov, IČO 31 442 072</span>,</li>
+  <li data-cfg-unless="legal.processor" hidden>агентство, яке обслуговує сайт і забезпечує його маркетинг,</li>
   <li data-cfg-if="formCaptcha" hidden>сервіс захисту форми від ботів hCaptcha (Intuition Machines, Inc., США); він обробляє IP-адресу та технічні дані про пристрій на підставі нашого законного інтересу в захисті форми від зловживань,</li>
   <li>юридичні, податкові та бухгалтерські консультанти, зобов’язані зберігати конфіденційність,</li>
   <li data-cfg-if="tracking.google" hidden>Google Ireland Limited, якщо ви погодилися на аналітичні або маркетингові cookie,</li>
