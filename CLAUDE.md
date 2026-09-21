@@ -68,7 +68,7 @@ Both sites live on the same origin, so the official site **links to the root leg
 visitor agrees). Fonts are self-hosted in `/assets/fonts/` (Inter incl. Cyrillic, Newsreader); nothing may be fetched from Google Fonts or another
 third party without consent. Root pages carry a CSP `<meta>`; a new third-party host has to be added there on all five root pages.
 
-### Forms (D1): the one lead flow
+### Forms (D1, done 2026-09-21 in `web/p6-site/assets/js/forms.js`): the one lead flow
 A form on either site does two posts, both from the browser, field **names in plain ASCII** (Web3Forms garbles accented names):
 1. `POST https://api.web3forms.com/submit` (multipart; `access_key` as in the root `index.html`, it is public by design) → e-mail to info@bytyp6.sk.
    Fields: `subject`, `from_name`, `replyto`, `Meno`, `Priezvisko`, `email`, `Telefon`, `Typ bytu`, `Byt na`, `Zdroj`, `Odkaz`, `GDPR kontakt`,
@@ -76,7 +76,8 @@ A form on either site does two posts, both from the browser, field **names in pl
 2. After success, `POST P6_CONFIG.confirmWebhook` (multipart, `mode: "no-cors"`, `keepalive`) → n8n sends the confirmation e-mail and files the lead in the CRM.
    Fields: `token=p6-web-2026`, `email`, `name`, `priezvisko`, `telefon`, `typ_bytu`, `ucel`, `zdroj`, `sprava`, `suhlas_kontakt` (`ano`, mandatory:
    without it n8n drops the lead), `suhlas_newsletter` (`ano`/`nie`), `lang`, `url`, `utm_source|medium|campaign|content|term`,
-   and **`byt`** = the flat id exactly as in `data.js` (`4.C`). The honeypot field is `p6_kontrola` and must stay empty.
+   and **`byt`** = the flat id exactly as in `data.js` (`4.C`); n8n and the CRM attach that flat to the lead (live since 2026-09-21).
+   The honeypot field is `p6_kontrola` and must stay empty.
    n8n only accepts requests whose Origin or Referer is https://bytyp6.sk, so the flow cannot be tested from localhost or a github.io preview.
 Reuse the bot protection from `/assets/js/teaser.js` (honeypot, 4 s minimum, a real pointer or key event, 3 sends per hour, no links in the message).
 The CRM's secret never reaches a browser; nothing on the site talks to the CRM's write API.
@@ -133,6 +134,19 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 ```
 
 ## Dev notes
+
+### 2026-09-21 · the contact form works: e-mail, confirmation, CRM · feat/p6-site-forms · Vlad + Claude
+- At Vlad's request his side wired the official site's form (D1). Until now it showed "ďakujeme" and **sent nothing**; every enquiry was lost.
+- New `assets/js/forms.js` (contact page only; `initForms` left `site.js`): Web3Forms → e-mail to info@bytyp6.sk, then the n8n webhook from the
+  domain's `/assets/js/config.js` → confirmation e-mail to the visitor and the lead in the CRM **with the flat attached** (`?byt=4.C` from a
+  flat's detail page, or what the visitor types, `2,a` → `2.A`; free text stays in the e-mail only). Same bot protection as the teaser.
+- Form markup changed in `_build/build_pages.py`: two consents as on the teaser (contact mandatory, news optional) linking to the root legal
+  pages, honeypot, error line, `maxlength`s, placeholder `4.C` instead of `4.03`, and the room select lost "4-izbový" and "5 a viac izieb"
+  (the house has 1 to 3 rooms). `ASSET_V` 65 → 66, pages rebuilt. D2 is thereby done for this form; D3 (footer links), D4 (fonts), D5 (cookie bar) stay open.
+- Checked in a browser with Web3Forms, n8n and the CRM mocked: payloads, prefill, no consent, bad e-mail, too fast, honeypot, scripted
+  submit, links, delivery failure. Then one real enquiry on the live site (see the PR).
+- Not touched, but worth a look by Filip's side: the contact page still promises "Otváracie hodiny 9:00 až 18:00", "vzorové materiály" and
+  an answer "do jedného pracovného dňa". Nobody has confirmed those.
 
 ### 2026-09-21 · availability comes live from the CRM · feat/live-availability · Vlad + Claude
 - At Vlad's request his side made this change inside `web/p6-site/`. New `assets/js/availability.js` (loaded right after `data.js`) reads the

@@ -42,7 +42,7 @@ OPERATOR = ("Byty Prievozska6 s.r.o., Prievozská 6, 821 09 Bratislava-Ružinov 
 PREVIEW = True
 
 # Bump whenever CSS/JS changes — appended as ?v= to every asset link.
-ASSET_V = "65"
+ASSET_V = "66"
 
 # Mandated by the architect (Ing. arch. Martin Krajči) — must stay visible
 # wherever plans or areas are shown. Wording matches the teaser; the project is
@@ -1226,30 +1226,36 @@ def kontakt_html():
 <section class="section section--tight" style="padding-top:0">
   <div class="shell">
     <div class="detail">
-      <form class="form" data-form novalidate>
+      <form class="form" data-form data-endpoint="https://api.web3forms.com/submit" data-access-key="7fe2237a-781c-434a-8681-004cfc526785" data-mailto="{EMAIL}" novalidate>
         <div class="form__ok" data-form-ok role="status">
           {svg("check")}
           <span><strong>Ďakujeme, správu máme.</strong><br>Ozveme sa vám do jedného pracovného dňa.</span>
         </div>
         <div class="form__row">
-          <div><label for="c-name">Meno a priezvisko *</label><input id="c-name" name="name" type="text" autocomplete="name" required></div>
-          <div><label for="c-phone">Telefón</label><input id="c-phone" name="phone" type="tel" autocomplete="tel" placeholder="+421"></div>
+          <div><label for="c-name">Meno a priezvisko *</label><input id="c-name" name="name" type="text" autocomplete="name" maxlength="120" required></div>
+          <div><label for="c-phone">Telefón</label><input id="c-phone" name="phone" type="tel" autocomplete="tel" placeholder="+421" maxlength="40"></div>
         </div>
         <div class="form__row">
-          <div><label for="c-email">E-mail *</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
-          <div><label for="c-unit">Byt, ktorý vás zaujal</label><input id="c-unit" name="unit" type="text" placeholder="napr. 4.03, alebo nechajte prázdne"></div>
+          <div><label for="c-email">E-mail *</label><input id="c-email" name="email" type="email" autocomplete="email" maxlength="160" required></div>
+          <div><label for="c-unit">Byt, ktorý vás zaujal</label><input id="c-unit" name="unit" type="text" placeholder="napr. 4.C, alebo nechajte prázdne" maxlength="40"></div>
         </div>
         <div class="form__row">
           <div><label for="c-rooms">Preferovaná dispozícia</label>
-            <select id="c-rooms" name="rooms"><option value="">Nezáleží</option><option>1-izbový</option><option>2-izbový</option><option>3-izbový</option><option>4-izbový</option><option>5 a viac izieb</option></select></div>
+            <select id="c-rooms" name="rooms"><option value="">Nezáleží</option><option>1-izbový</option><option>2-izbový</option><option>3-izbový</option></select></div>
           <div><label for="c-topic">Čo potrebujete</label>
             <select id="c-topic" name="topic"><option value="konzultacia">Konzultáciu</option><option value="katalog">Katalóg</option><option value="obhliadka">Osobnú obhliadku</option><option value="ine">Iné</option></select></div>
         </div>
-        <div><label for="c-msg">Správa</label><textarea id="c-msg" name="message" placeholder="Čo je pre vás dôležité? Výhľad, terasa, podlažie, termín…"></textarea></div>
+        <div><label for="c-msg">Správa</label><textarea id="c-msg" name="message" maxlength="4000" placeholder="Čo je pre vás dôležité? Výhľad, terasa, podlažie, termín…"></textarea></div>
+        <label class="hp" aria-hidden="true">Nevypĺňajte<input type="text" name="p6_kontrola" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore></label>
         <div class="consent">
-          <input id="c-gdpr" name="gdpr" type="checkbox" required>
-          <label for="c-gdpr">Súhlasím so spracovaním osobných údajov na účely vybavenia mojej požiadavky. *</label>
+          <input id="c-gdpr" name="suhlas_kontakt" type="checkbox" required>
+          <label for="c-gdpr">Udeľujem <a href="/suhlas-so-spracovanim.html" target="_blank" rel="noopener">súhlas so spracovaním osobných údajov</a> na účel kontaktovania v&nbsp;súvislosti s&nbsp;projektom P6. Oboznámil(a) som sa s&nbsp;<a href="/ochrana-osobnych-udajov.html" target="_blank" rel="noopener">informáciami o&nbsp;ochrane osobných údajov</a>. *</label>
         </div>
+        <div class="consent">
+          <input id="c-news" name="suhlas_newsletter" type="checkbox">
+          <label for="c-news">Súhlasím so zasielaním noviniek o&nbsp;projekte e-mailom. Súhlas môžem kedykoľvek odvolať. <i>(nepovinné)</i></label>
+        </div>
+        <p class="form__error" data-form-error role="alert" hidden></p>
         <div>
           <button class="btn btn--primary" type="submit">Odoslať správu {svg("arrow")}</button>
           <p class="form__note" style="margin:14px 0 0">Odpovedáme do jedného pracovného dňa. Váš kontakt neposkytujeme tretím stranám.</p>
@@ -1284,7 +1290,7 @@ def kontakt_html():
 </section>
 </main>
 ''' + FOOT + '''<script>
-/* prefill from the detail page (?byt=4.03) or the catalogue CTA (?katalog=1) */
+/* prefill from the detail page (?byt=4.C) or the catalogue CTA (?katalog=1) */
 document.addEventListener('DOMContentLoaded', function () {
   var q = new URLSearchParams(location.search);
   var byt = q.get('byt'), unit = document.getElementById('c-unit'), msg = document.getElementById('c-msg'), topic = document.getElementById('c-topic');
@@ -1298,7 +1304,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 </script>
-''' + scripts())
+''' + '<script src="/assets/js/config.js"></script>\n'   # the domain's one config (webhook, tracking ids), kept by Vlad's side
+    + scripts("forms.js"))
 
 # ---------------------------------------------------------------- static
 

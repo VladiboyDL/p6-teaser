@@ -83,7 +83,7 @@ filtered by Jekyll.
 | `byty.html` | Unit cards with a floor-plan thumbnail; filters exactly per the brief: rooms, floor, area, terrace/balcony, orientation, availability. No table. |
 | `byt.html?id=4.03` | Unit detail: specs, the architect's rendered plan, room table, clickable storey plan ("Poloha v dome"), similar units, sticky price bar on phones. |
 | `galeria.html` | Photo placeholders for the shots the brief asks for (Miletička, cyclist, Nivy at night, school run, terrace). |
-| `kontakt.html` | Contact form + FAQ. `?byt=4.03` prefills the unit; `?katalog=1` prefills a catalogue request (the "Stiahnuť katalóg" CTA lands here until a PDF exists). |
+| `kontakt.html` | Contact form + FAQ. The form is live (`assets/js/forms.js`): e-mail via Web3Forms, then the n8n webhook from the domain's `/assets/js/config.js` for the confirmation e-mail and the CRM; see the repo's `CLAUDE.md`, "Forms". `?byt=4.03` prefills the unit; `?katalog=1` prefills a catalogue request (the "Stiahnuť katalóg" CTA lands here until a PDF exists). |
 | `lokalita.html`, `projekt.html` | Instant redirects to `index.html#lokalita` / `#projekt` so old links keep working. |
 
 ## Availability is live (since 2026-09-21)
