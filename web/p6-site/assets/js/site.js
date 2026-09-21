@@ -1,20 +1,32 @@
 /* ---------------------------------------------------------------------------
  * P6 — shared helpers, navigation, page chrome
- * Load order:  data.js → site.js → motion.js → plan.js → (map.js | building.js | list.js | detail.js)
+ * Load order:  data.js → availability.js → site.js → motion.js → plan.js → (map.js | building.js | list.js | detail.js)
  * ------------------------------------------------------------------------ */
 
 const STATUS_LABEL = {
   dostupny: 'Voľný',
   rezervovany: 'Rezervovaný',
   predany: 'Predaný',
+  pripravujeme: 'Pripravujeme',
 };
 
-/* What a flat's state is allowed to say, and how it is coloured. While
-   SHOW_STATUS is false (see data.js) every flat reads the same neutral line,
-   so nothing betrays which ones go first. */
-const statusText = st => (SHOW_STATUS ? STATUS_LABEL[st] : 'Pripravujeme');
-const statusKind = st => (SHOW_STATUS ? st : 'tbd');
+/* What a flat's state is allowed to say, and how it is coloured. Status comes
+   live from the CRM (availability.js). While nothing is released (SHOW_STATUS
+   false) every flat reads the same neutral line, so nothing betrays which ones
+   go first; afterwards a flat the CRM has not released stays "Pripravujeme". */
+const statusText = st => (SHOW_STATUS ? (STATUS_LABEL[st] || STATUS_LABEL.pripravujeme) : STATUS_LABEL.pripravujeme);
+const statusKind = st => (SHOW_STATUS && st !== 'pripravujeme' && STATUS_LABEL[st] ? st : 'tbd');
 const soldOut = st => SHOW_STATUS && st === 'predany';
+
+/* Anything that draws flats starts here instead of on DOMContentLoaded, so it
+   never paints a status the CRM has not confirmed. The promise always resolves
+   (2.5 s cap); without availability.js the site simply stays neutral. */
+function whenAvailabilityKnown(fn) {
+  const known = typeof P6_AVAILABILITY !== 'undefined' ? P6_AVAILABILITY : Promise.resolve();
+  const run = () => known.then(fn);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+  else run();
+}
 
 const nfArea = new Intl.NumberFormat('sk-SK', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const nfPrice = new Intl.NumberFormat('sk-SK', { maximumFractionDigits: 0 });
@@ -112,7 +124,7 @@ function initChrome() {
     document.querySelectorAll('[data-status-legend], [data-status-filter]').forEach(el => el.remove());
   }
   document.querySelectorAll('[data-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
-  const free = APARTMENTS.filter(a => a.status === 'dostupny').length;
+  const free = SHOW_COUNTS ? APARTMENTS.filter(a => a.status === 'dostupny').length : 0;
   document.querySelectorAll('[data-count-free]').forEach(el => {
     el.textContent = free;
     el.dataset.countup = free;   // motion.js animates it into view
@@ -122,6 +134,8 @@ function initChrome() {
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initForms();
+});
+whenAvailabilityKnown(() => {
   initChrome();
   if (typeof initList === 'function') initList();
   if (typeof initDetail === 'function') initDetail();

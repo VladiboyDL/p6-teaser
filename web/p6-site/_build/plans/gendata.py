@@ -95,6 +95,23 @@ hdr = '''/* --------------------------------------------------------------------
    renders "Cena na vyžiadanie". */
 const SHOW_PRICES = true;
 
+/* Availability is LIVE: status and price of every flat come from the sales CRM
+   (assets/js/availability.js), never from this file. The "status" and "price"
+   fields below are placeholders that the feed overwrites.
+
+   SHOW_STATUS and SHOW_COUNTS are switched on by availability.js, not by hand:
+     SHOW_STATUS  true once the CRM has released at least one flat. Until then
+                  every flat reads "Pripravujeme" and the availability filter
+                  and the status legend are hidden.
+     SHOW_COUNTS  true only when no flat is "Pripravujeme" any more. The sale
+                  runs in stages, so the site shows each flat's state but does
+                  not announce how many are free while some are still to come.
+   Set LIVE_STATUS_URL to "" to cut the site off from the CRM (everything
+   neutral again). */
+const LIVE_STATUS_URL = "https://p6-crm.onrender.com/api/public/units";
+let SHOW_STATUS = false;
+let SHOW_COUNTS = false;
+
 const BUILDING = {
   name: "P6",
   street: "Prievozská 6",

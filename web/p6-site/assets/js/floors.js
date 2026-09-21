@@ -113,7 +113,7 @@ function initFloors() {
     layer.innerHTML = Object.entries(view.floors).map(([f, [top, bottom]]) => {
       const c = floorCounts(Number(f));
       const label = `${f}. nadzemné podlažie: ${c.total} ${plural(c.total, 'byt', 'byty', 'bytov')}`
-        + (SHOW_STATUS ? `, voľné ${c.free}, rezervované ${c.reserved}, predané ${c.sold}` : '');
+        + (SHOW_COUNTS ? `, voľné ${c.free}, rezervované ${c.reserved}, predané ${c.sold}` : '');
       return `<a class="bldg__floor" href="byty.html?floor=${f}" data-floor="${f}" aria-label="${label}">
                 <rect x="${x0}" y="${top}" width="${x1 - x0}" height="${bottom - top}"/>
                 <g class="bldg__tag" transform="translate(${x1 - 18} ${(top + bottom) / 2})">
@@ -230,7 +230,7 @@ function initFloors() {
       </div>
       <dl class="tip__rows">
         <div class="tip__row tip__row--total"><dt>Bytov na podlaží</dt><dd>${c.total}</dd></div>
-        ${SHOW_STATUS ? `
+        ${SHOW_COUNTS ? `
         <div class="tip__bar" aria-hidden="true">
           <span class="tip__bar--ok" style="width:${pct(c.free)}%"></span>
           <span class="tip__bar--warn" style="width:${pct(c.reserved)}%"></span>
@@ -350,7 +350,7 @@ function initFloors() {
     view.querySelector('[data-fview-no]').textContent = `${f}. NP`;
     view.querySelector('[data-fview-meta]').textContent =
       `${c.total} ${plural(c.total, 'byt', 'byty', 'bytov')}`
-      + (SHOW_STATUS ? ` · ${c.free} ${plural(c.free, 'voľný', 'voľné', 'voľných')}` : '');
+      + (SHOW_COUNTS ? ` · ${c.free} ${plural(c.free, 'voľný', 'voľné', 'voľných')}` : '');
     chips.forEach(ch => {
       const on = Number(ch.dataset.fviewFloor) === f;
       ch.classList.toggle('is-on', on);
@@ -636,7 +636,7 @@ function initFloors() {
       const { free, total } = floorCounts(f);
       return `<a class="floorstrip__row" href="byty.html?floor=${f}">
                 <span class="floorstrip__no">${f}. NP</span>
-                <span class="floorstrip__free">${SHOW_STATUS
+                <span class="floorstrip__free">${SHOW_COUNTS
                   ? `${free} ${plural(free, 'voľný', 'voľné', 'voľných')}`
                   : `${total} ${plural(total, 'byt', 'byty', 'bytov')}`}</span>
               </a>`;
@@ -644,4 +644,4 @@ function initFloors() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', initFloors);
+whenAvailabilityKnown(initFloors);   // the picker draws flats, so it waits for the CRM feed (site.js)
