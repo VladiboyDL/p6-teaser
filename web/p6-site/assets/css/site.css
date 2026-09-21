@@ -810,6 +810,12 @@ table.rooms tbody.rooms__sum tr:hover { background: none; }
 .form .consent input { width: 20px; height: 20px; min-height: 20px; margin-top: 2px; flex: none; accent-color: var(--sand); }
 .form .consent label { text-transform: none; letter-spacing: 0; font-size: .84rem; margin: 0; color: inherit; }
 .form__note { font-size: .8rem; color: var(--text-muted); }
+.form__error { margin: 0; padding: 12px 14px; border: 1px solid rgba(164, 69, 44, .4); border-radius: 4px; background: rgba(164, 69, 44, .08); color: #8a3a25; font-size: .9rem; }
+.form__error[hidden] { display: none; }
+.form .consent a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.form .consent i { font-style: normal; opacity: .8; }
+/* honeypot: people never see it, bots fill it in */
+.form .hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form__ok {
   display: none; gap: 12px; align-items: flex-start;
   background: var(--ok-bg); color: var(--ok); border-radius: var(--r-sm); padding: 16px 18px; font-size: .9rem;

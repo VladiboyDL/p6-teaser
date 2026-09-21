@@ -101,19 +101,7 @@ function initNav() {
   });
 }
 
-/* --- contact / interest forms (front-end only for now) ------------------- */
-
-function initForms() {
-  document.querySelectorAll('[data-form]').forEach(form => {
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      /* TODO: point this at the real endpoint (Formspree / API / CRM webhook). */
-      const ok = form.querySelector('[data-form-ok]');
-      form.querySelectorAll('input, textarea, select, button').forEach(el => { el.disabled = true; });
-      if (ok) { ok.dataset.show = 'true'; ok.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
-    });
-  });
-}
+/* --- contact form: assets/js/forms.js (loaded on the contact page only) -------------------- */
 
 /* --- footer year --------------------------------------------------------- */
 
@@ -133,7 +121,7 @@ function initChrome() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
-  initForms();
+  if (typeof initForms === 'function') initForms();
 });
 whenAvailabilityKnown(() => {
   initChrome();
