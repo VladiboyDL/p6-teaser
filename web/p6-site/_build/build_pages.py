@@ -17,7 +17,9 @@
 import json
 import os
 import re
-OUT = "rezidencia"
+# The site folder itself, worked out from this file, so the build does not care
+# what the folder is called or which directory it is run from.
+OUT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SITE = "https://prievozska6.sk"          # placeholder domain — confirm with client
 NAME = "P6"
