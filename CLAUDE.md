@@ -139,6 +139,17 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-09-22 · wider facade picture in "O projekte" · img/facade-proportions · Vlad + Claude
+- Vlad asked for the orthogonal facade render to be widened by 10 to 15 %, to match the street visualisation. Measured instead of guessed:
+  the street view, rectified from its two vanishing points, gives the facade a width to height ratio of 2.20 (and its end wall to street
+  wall ratio comes out at 0.32, the architect's plan says 0.321, so it is a trustworthy reference); the orthogonal render had 1.95.
+  So the picture is now **13 % wider**: `assets/img/p6-fasada-1157.webp` (1157 x 1024) replaces `p6-fasada-1024.webp` (deleted, it was
+  used only here). The cars were put back with their original proportions, only the building, trees and road are stretched.
+- `index.html` points to the new file, `width`/`height` updated. The frame crops with `object-fit: cover`; the whole building stays in view
+  on desktop and phone (checked).
+- The official site's `p6-dom-*.webp` has the same narrow proportions (same design, bays about 1.5 x the storey height). Not touched:
+  widening it would move every storey band in `floors.js`, which are measured in that picture's pixels.
+
 ### 2026-09-22 · Meta Pixel + Google Ads konverzia doplnené, cookie lišta sa tým zapína · feat/meta-pixel-id · Filip + Claude
 - `assets/js/config.js`: `tracking.metaPixel` = `1799799647800061` (dataset „P6 bytyp6.sk“, Events Manager,
   business P6 Byty). Zvyšné tri ID (`ga4`, `googleAds`, `googleAdsLeadLabel`) sú stále prázdne.
