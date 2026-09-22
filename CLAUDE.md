@@ -139,6 +139,23 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-09-22 · Meta Pixel + Google Ads konverzia doplnené, cookie lišta sa tým zapína · feat/meta-pixel-id · Filip + Claude
+- `assets/js/config.js`: `tracking.metaPixel` = `1799799647800061` (dataset „P6 bytyp6.sk“, Events Manager,
+  business P6 Byty). Zvyšné tri ID (`ga4`, `googleAds`, `googleAdsLeadLabel`) sú stále prázdne.
+- `tracking.googleAds` = `AW-18465429250`, `tracking.googleAdsLeadLabel` = `FkOUCNWQmoEdEIKugOVE`.
+  Konverzná akcia „Registrácia P6“ v účte Byty Prievozska6 s.r.o. (142-372-4150): kategória Submit lead form,
+  primárna pre bidding, počítanie One, hodnota 1 EUR, okno 90 dní. **Enhanced conversions sme zámerne nezapli**:
+  posielali by sa Googlu hashované e-maily záujemcov a nevieme, či to súčasné znenie súhlasu a zásad pokrýva.
+  Ak to chceš zapnúť, najprv prosím over právny text. `ga4` zostáva prázdne, GA4 property zatiaľ neexistuje.
+- **Dôsledok, o ktorom musíš vedieť:** `cookieBanner: 'auto'` a `consent.js` berie `hasTools` z toho, či je
+  vyplnené aspoň jedno tracking ID. Doteraz nebolo žiadne, takže lišta sa nezobrazovala. Od tohto merge sa
+  **cookie lišta na bytyp6.sk zobrazuje všetkým návštevníkom**. Ak sa tým mení text cookie stránky, prepeč
+  právne stránky na svojej strane.
+- Kód sa nemenil: pixel načítava `consent.js` až po súhlase s marketingom (PageView), `teaser.js` posiela
+  `Lead` po odoslaní registrácie. CSP už `connect.facebook.net` aj `www.facebook.com` povoľuje.
+- Ad account P6 Byty (`28619163461082427`) je zatiaľ prázdny a **nemá platobnú metódu**. Kampane sa pripravujú
+  cez oficiálny Meta Ads MCP a vytvárajú sa v stave PAUSED.
+
 ### 2026-09-21 · only public files are deployed · ci/publish-only-public · Vlad + Claude
 - Vlad decided the open point from PR #1's heads-up: Pages now deploys through `.github/workflows/pages.yml` (repository setting switched from
   "deploy from branch" to "GitHub Actions"). `_build/` with the architect's drawings, all `*.md` (this file, the READMEs), scripts and design

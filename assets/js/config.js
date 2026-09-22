@@ -22,9 +22,9 @@ window.P6_CONFIG = {
      Načítajú sa až po súhlase návštevníka v cookie lište. */
   tracking: {
     ga4:       '',                      // Google Analytics 4, napr. 'G-XXXXXXXXXX'
-    googleAds: '',                      // Google Ads, napr. 'AW-XXXXXXXXX'
-    googleAdsLeadLabel: '',             // označenie konverzie „registrácia“ z Google Ads (časť za lomkou v AW-XXXXXXXXX/AbCdEfGh)
-    metaPixel: ''                       // Meta (Facebook) Pixel ID
+    googleAds: 'AW-18465429250',        // Google Ads, napr. 'AW-XXXXXXXXX'
+    googleAdsLeadLabel: 'FkOUCNWQmoEdEIKugOVE',  // označenie konverzie „registrácia“ z Google Ads (časť za lomkou v AW-XXXXXXXXX/AbCdEfGh)
+    metaPixel: '1799799647800061'       // Meta (Facebook) Pixel ID
   },
 
   /* Potvrdzovací e-mail záujemcovi po registrácii posiela n8n workflow „P6 · potvrdenie registrácie“
