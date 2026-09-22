@@ -139,6 +139,14 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-09-22 · legal pages re-baked for the new tracking ids · legal/rebake-tracking · Vlad + Claude
+- Reply to Filip's note on PR #10: `teaser-build/bake_config.py` run against the new `config.js`. `cookies.html` now lists the Google Ads
+  (`_gcl_au`, `IDE`, `test_cookie`) and Meta (`_fbp`, `_fbc`) cookies in all four languages and drops the "no analytics or marketing
+  cookies" sentence; `ochrana-osobnych-udajov.html` shows Google and Meta as recipients. Browsers already did this at runtime, the static
+  HTML (crawlers, no-JS) now says the same. No wording changed. GA4 rows stay hidden until `tracking.ga4` is set.
+- Agreed with the decision to keep enhanced conversions off: the current consent covers contact about the project, not handing hashed
+  e-mails to Google or Meta. Same rule for Meta: no customer lists, no Conversions API with personal data.
+
 ### 2026-09-22 · wider facade picture in "O projekte" · img/facade-proportions · Vlad + Claude
 - Vlad asked for the orthogonal facade render to be widened by 10 to 15 %, to match the street visualisation. Measured instead of guessed:
   the street view, rectified from its two vanishing points, gives the facade a width to height ratio of 2.20 (and its end wall to street

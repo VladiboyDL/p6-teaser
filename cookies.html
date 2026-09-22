@@ -59,12 +59,12 @@
     <tr><td><code>p6_consent</code></td><td>Nevyhnutné</td><td>P6, vlastné úložisko prehliadača (localStorage)</td><td>Uloženie vášho výberu v&nbsp;cookie lište, aby sme sa nepýtali pri každej návšteve</td><td>12 mesiacov</td></tr>
     <tr><td><code>p6_lang</code></td><td>Nevyhnutné</td><td>P6, vlastné úložisko prehliadača (localStorage)</td><td>Zapamätanie jazyka, ktorý ste si zvolili</td><td>kým ho nezmeníte alebo nevymažete úložisko</td></tr>
     <tr data-cfg-if="tracking.ga4" hidden><td><code>_ga</code>, <code>_ga_*</code></td><td>Analytické</td><td>Google Ireland Limited</td><td>Rozlíšenie návštevníkov a&nbsp;relácií, štatistiky návštevnosti (Google Analytics 4)</td><td>2 roky</td></tr>
-    <tr data-cfg-if="tracking.googleAds" hidden><td><code>_gcl_au</code></td><td>Marketingové</td><td>Google Ireland Limited</td><td>Meranie konverzií z&nbsp;reklamy Google Ads</td><td>90 dní</td></tr>
-    <tr data-cfg-if="tracking.googleAds" hidden><td><code>IDE</code>, <code>test_cookie</code> (doubleclick.net)</td><td>Marketingové</td><td>Google Ireland Limited</td><td>Meranie a&nbsp;zobrazovanie reklamy v&nbsp;sieti Google</td><td>až 13 mesiacov</td></tr>
-    <tr data-cfg-if="tracking.metaPixel" hidden><td><code>_fbp</code>, <code>_fbc</code></td><td>Marketingové</td><td>Meta Platforms Ireland Limited</td><td>Meranie konverzií a&nbsp;zobrazovanie reklamy na platformách Meta (Facebook, Instagram)</td><td>90 dní</td></tr>
+    <tr data-cfg-if="tracking.googleAds"><td><code>_gcl_au</code></td><td>Marketingové</td><td>Google Ireland Limited</td><td>Meranie konverzií z&nbsp;reklamy Google Ads</td><td>90 dní</td></tr>
+    <tr data-cfg-if="tracking.googleAds"><td><code>IDE</code>, <code>test_cookie</code> (doubleclick.net)</td><td>Marketingové</td><td>Google Ireland Limited</td><td>Meranie a&nbsp;zobrazovanie reklamy v&nbsp;sieti Google</td><td>až 13 mesiacov</td></tr>
+    <tr data-cfg-if="tracking.metaPixel"><td><code>_fbp</code>, <code>_fbc</code></td><td>Marketingové</td><td>Meta Platforms Ireland Limited</td><td>Meranie konverzií a&nbsp;zobrazovanie reklamy na platformách Meta (Facebook, Instagram)</td><td>90 dní</td></tr>
   </tbody>
 </table></div>
-<p data-cfg-unless="tracking.any">Analytické ani marketingové cookies stránka v&nbsp;súčasnosti nepoužíva. Ak ich začneme používať, tabuľka sa doplní a&nbsp;stránka si najprv vyžiada váš súhlas.</p>
+<p data-cfg-unless="tracking.any" hidden>Analytické ani marketingové cookies stránka v&nbsp;súčasnosti nepoužíva. Ak ich začneme používať, tabuľka sa doplní a&nbsp;stránka si najprv vyžiada váš súhlas.</p>
 <p>Stránka nenačítava písma, mapy ani videá zo serverov tretích strán. Písma sú uložené priamo na našom serveri a&nbsp;mapa lokality je súčasťou stránky.</p>
 
 <h2>4. Ako zmeniť alebo odvolať súhlas</h2>
@@ -96,12 +96,12 @@
     <tr><td><code>p6_consent</code></td><td>Necessary</td><td>P6, the browser’s own storage (localStorage)</td><td>Stores your choice from the cookie banner so that we do not ask on every visit</td><td>12 months</td></tr>
     <tr><td><code>p6_lang</code></td><td>Necessary</td><td>P6, the browser’s own storage (localStorage)</td><td>Remembers the language you selected</td><td>until you change it or clear the storage</td></tr>
     <tr data-cfg-if="tracking.ga4" hidden><td><code>_ga</code>, <code>_ga_*</code></td><td>Analytics</td><td>Google Ireland Limited</td><td>Distinguishes visitors and sessions, visit statistics (Google Analytics 4)</td><td>2 years</td></tr>
-    <tr data-cfg-if="tracking.googleAds" hidden><td><code>_gcl_au</code></td><td>Marketing</td><td>Google Ireland Limited</td><td>Measures conversions from Google Ads</td><td>90 days</td></tr>
-    <tr data-cfg-if="tracking.googleAds" hidden><td><code>IDE</code>, <code>test_cookie</code> (doubleclick.net)</td><td>Marketing</td><td>Google Ireland Limited</td><td>Measuring and showing advertising in the Google network</td><td>up to 13 months</td></tr>
-    <tr data-cfg-if="tracking.metaPixel" hidden><td><code>_fbp</code>, <code>_fbc</code></td><td>Marketing</td><td>Meta Platforms Ireland Limited</td><td>Measures conversions and shows advertising on Meta platforms (Facebook, Instagram)</td><td>90 days</td></tr>
+    <tr data-cfg-if="tracking.googleAds"><td><code>_gcl_au</code></td><td>Marketing</td><td>Google Ireland Limited</td><td>Measures conversions from Google Ads</td><td>90 days</td></tr>
+    <tr data-cfg-if="tracking.googleAds"><td><code>IDE</code>, <code>test_cookie</code> (doubleclick.net)</td><td>Marketing</td><td>Google Ireland Limited</td><td>Measuring and showing advertising in the Google network</td><td>up to 13 months</td></tr>
+    <tr data-cfg-if="tracking.metaPixel"><td><code>_fbp</code>, <code>_fbc</code></td><td>Marketing</td><td>Meta Platforms Ireland Limited</td><td>Measures conversions and shows advertising on Meta platforms (Facebook, Instagram)</td><td>90 days</td></tr>
   </tbody>
 </table></div>
-<p data-cfg-unless="tracking.any">The site currently uses no analytics or marketing cookies. If we start using them, this table will be updated and the site will ask for your consent first.</p>
+<p data-cfg-unless="tracking.any" hidden>The site currently uses no analytics or marketing cookies. If we start using them, this table will be updated and the site will ask for your consent first.</p>
 <p>The site does not load fonts, maps or videos from third-party servers. Fonts are stored on our own server and the location map is part of the page.</p>
 
 <h2>4. How to change or withdraw consent</h2>
@@ -133,12 +133,12 @@
     <tr><td><code>p6_consent</code></td><td>Notwendig</td><td>P6, eigener Speicher des Browsers (localStorage)</td><td>Speichert Ihre Auswahl aus dem Cookie-Banner, damit wir nicht bei jedem Besuch erneut fragen</td><td>12 Monate</td></tr>
     <tr><td><code>p6_lang</code></td><td>Notwendig</td><td>P6, eigener Speicher des Browsers (localStorage)</td><td>Merkt sich die von Ihnen gewählte Sprache</td><td>bis Sie sie ändern oder den Speicher löschen</td></tr>
     <tr data-cfg-if="tracking.ga4" hidden><td><code>_ga</code>, <code>_ga_*</code></td><td>Analyse</td><td>Google Ireland Limited</td><td>Unterscheidung von Besuchern und Sitzungen, Besuchsstatistiken (Google Analytics 4)</td><td>2 Jahre</td></tr>
-    <tr data-cfg-if="tracking.googleAds" hidden><td><code>_gcl_au</code></td><td>Marketing</td><td>Google Ireland Limited</td><td>Messung von Conversions aus Google Ads</td><td>90 Tage</td></tr>
-    <tr data-cfg-if="tracking.googleAds" hidden><td><code>IDE</code>, <code>test_cookie</code> (doubleclick.net)</td><td>Marketing</td><td>Google Ireland Limited</td><td>Messung und Anzeige von Werbung im Google-Netzwerk</td><td>bis zu 13 Monate</td></tr>
-    <tr data-cfg-if="tracking.metaPixel" hidden><td><code>_fbp</code>, <code>_fbc</code></td><td>Marketing</td><td>Meta Platforms Ireland Limited</td><td>Messung von Conversions und Anzeige von Werbung auf Meta-Plattformen (Facebook, Instagram)</td><td>90 Tage</td></tr>
+    <tr data-cfg-if="tracking.googleAds"><td><code>_gcl_au</code></td><td>Marketing</td><td>Google Ireland Limited</td><td>Messung von Conversions aus Google Ads</td><td>90 Tage</td></tr>
+    <tr data-cfg-if="tracking.googleAds"><td><code>IDE</code>, <code>test_cookie</code> (doubleclick.net)</td><td>Marketing</td><td>Google Ireland Limited</td><td>Messung und Anzeige von Werbung im Google-Netzwerk</td><td>bis zu 13 Monate</td></tr>
+    <tr data-cfg-if="tracking.metaPixel"><td><code>_fbp</code>, <code>_fbc</code></td><td>Marketing</td><td>Meta Platforms Ireland Limited</td><td>Messung von Conversions und Anzeige von Werbung auf Meta-Plattformen (Facebook, Instagram)</td><td>90 Tage</td></tr>
   </tbody>
 </table></div>
-<p data-cfg-unless="tracking.any">Derzeit verwendet die Website keine Analyse- oder Marketing-Cookies. Sollten wir sie künftig einsetzen, wird diese Tabelle ergänzt und die Website holt zuvor Ihre Einwilligung ein.</p>
+<p data-cfg-unless="tracking.any" hidden>Derzeit verwendet die Website keine Analyse- oder Marketing-Cookies. Sollten wir sie künftig einsetzen, wird diese Tabelle ergänzt und die Website holt zuvor Ihre Einwilligung ein.</p>
 <p>Die Website lädt keine Schriftarten, Karten oder Videos von Servern Dritter. Die Schriftarten liegen auf unserem eigenen Server, und die Lagekarte ist Bestandteil der Seite.</p>
 
 <h2>4. Einwilligung ändern oder widerrufen</h2>
@@ -170,12 +170,12 @@
     <tr><td><code>p6_consent</code></td><td>Необхідні</td><td>P6, власне сховище браузера (localStorage)</td><td>Зберігає ваш вибір у банері cookie, щоб ми не питали під час кожного візиту</td><td>12 місяців</td></tr>
     <tr><td><code>p6_lang</code></td><td>Необхідні</td><td>P6, власне сховище браузера (localStorage)</td><td>Запам’ятовує обрану вами мову</td><td>доки ви її не зміните або не очистите сховище</td></tr>
     <tr data-cfg-if="tracking.ga4" hidden><td><code>_ga</code>, <code>_ga_*</code></td><td>Аналітичні</td><td>Google Ireland Limited</td><td>Розрізнення відвідувачів і сеансів, статистика відвідувань (Google Analytics 4)</td><td>2 роки</td></tr>
-    <tr data-cfg-if="tracking.googleAds" hidden><td><code>_gcl_au</code></td><td>Маркетингові</td><td>Google Ireland Limited</td><td>Вимірювання конверсій із реклами Google Ads</td><td>90 днів</td></tr>
-    <tr data-cfg-if="tracking.googleAds" hidden><td><code>IDE</code>, <code>test_cookie</code> (doubleclick.net)</td><td>Маркетингові</td><td>Google Ireland Limited</td><td>Вимірювання та показ реклами в мережі Google</td><td>до 13 місяців</td></tr>
-    <tr data-cfg-if="tracking.metaPixel" hidden><td><code>_fbp</code>, <code>_fbc</code></td><td>Маркетингові</td><td>Meta Platforms Ireland Limited</td><td>Вимірювання конверсій і показ реклами на платформах Meta (Facebook, Instagram)</td><td>90 днів</td></tr>
+    <tr data-cfg-if="tracking.googleAds"><td><code>_gcl_au</code></td><td>Маркетингові</td><td>Google Ireland Limited</td><td>Вимірювання конверсій із реклами Google Ads</td><td>90 днів</td></tr>
+    <tr data-cfg-if="tracking.googleAds"><td><code>IDE</code>, <code>test_cookie</code> (doubleclick.net)</td><td>Маркетингові</td><td>Google Ireland Limited</td><td>Вимірювання та показ реклами в мережі Google</td><td>до 13 місяців</td></tr>
+    <tr data-cfg-if="tracking.metaPixel"><td><code>_fbp</code>, <code>_fbc</code></td><td>Маркетингові</td><td>Meta Platforms Ireland Limited</td><td>Вимірювання конверсій і показ реклами на платформах Meta (Facebook, Instagram)</td><td>90 днів</td></tr>
   </tbody>
 </table></div>
-<p data-cfg-unless="tracking.any">Наразі сайт не використовує ні аналітичних, ні маркетингових cookie. Якщо ми почнемо їх використовувати, таблицю буде доповнено, а сайт спершу попросить вашої згоди.</p>
+<p data-cfg-unless="tracking.any" hidden>Наразі сайт не використовує ні аналітичних, ні маркетингових cookie. Якщо ми почнемо їх використовувати, таблицю буде доповнено, а сайт спершу попросить вашої згоди.</p>
 <p>Сайт не завантажує шрифти, карти чи відео із серверів третіх сторін. Шрифти зберігаються безпосередньо на нашому сервері, а карта розташування є частиною сторінки.</p>
 
 <h2>4. Як змінити або відкликати згоду</h2>
