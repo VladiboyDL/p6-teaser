@@ -24,7 +24,7 @@ window.P6_CONFIG = {
     ga4:       '',                      // Google Analytics 4, napr. 'G-XXXXXXXXXX'
     googleAds: '',                      // Google Ads, napr. 'AW-XXXXXXXXX'
     googleAdsLeadLabel: '',             // označenie konverzie „registrácia“ z Google Ads (časť za lomkou v AW-XXXXXXXXX/AbCdEfGh)
-    metaPixel: ''                       // Meta (Facebook) Pixel ID
+    metaPixel: '1799799647800061'       // Meta (Facebook) Pixel ID
   },
 
   /* Potvrdzovací e-mail záujemcovi po registrácii posiela n8n workflow „P6 · potvrdenie registrácie“
