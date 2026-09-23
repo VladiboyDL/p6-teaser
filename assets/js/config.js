@@ -21,7 +21,7 @@ window.P6_CONFIG = {
   /* Meracie a reklamné nástroje. Kým je ID prázdne, nástroj sa nenačíta.
      Načítajú sa až po súhlase návštevníka v cookie lište. */
   tracking: {
-    ga4:       '',                      // Google Analytics 4, napr. 'G-XXXXXXXXXX'
+    ga4:       'G-4683MB2PDY',          // Google Analytics 4, napr. 'G-XXXXXXXXXX'
     googleAds: 'AW-18465429250',        // Google Ads, napr. 'AW-XXXXXXXXX'
     googleAdsLeadLabel: 'FkOUCNWQmoEdEIKugOVE',  // označenie konverzie „registrácia“ z Google Ads (časť za lomkou v AW-XXXXXXXXX/AbCdEfGh)
     metaPixel: '1799799647800061'       // Meta (Facebook) Pixel ID
