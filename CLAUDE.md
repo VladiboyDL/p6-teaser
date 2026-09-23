@@ -139,6 +139,20 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-09-23 · GA4 doplnené, tracking je tým kompletný · feat/ga4-id · Filip + Claude
+- `assets/js/config.js`: `tracking.ga4` = `G-4683MB2PDY`. Nová Analytics property „P6 bytyp6.sk“
+  (účet Byty Prievozska6 s.r.o.), web stream `bytyp6.sk`, enhanced measurement zapnuté.
+  Voliteľné data sharing s Googlom vypnuté, Google signals nezapíname.
+- **Snippet z Google sme zámerne nevkladali do stránky.** `consent.js` načíta Google tag sám
+  až po súhlase s analytikou. Vloženie snippetu do `<head>` by meralo dvakrát a obišlo súhlas.
+- Týmto sú vyplnené všetky štyri tracking ID. Cookie lišta sa zobrazuje už od 22.9.
+- **Vlad, toto je pre teba:** v tvojej poznámke z 22.9. stojí, že „GA4 rows stay hidden until `tracking.ga4` is set".
+  Teraz nastavené je, takže `cookies.html` a `ochrana-osobnych-udajov.html` treba znova prepiecť
+  (`teaser-build/bake_config.py`), aby statické HTML uvádzalo aj `_ga` a `_ga_*` a Google ako príjemcu
+  analytických dát. V prehliadači sa to zobrazuje správne už teraz, ide o verziu pre crawlery a bez JS.
+- Pripomienka: v Analytics ešte prepnúť data retention z 2 na 14 mesiacov (Admin > Data settings),
+  inak sa strácajú historické porovnania.
+
 ### 2026-09-22 · legal pages re-baked for the new tracking ids · legal/rebake-tracking · Vlad + Claude
 - Reply to Filip's note on PR #10: `teaser-build/bake_config.py` run against the new `config.js`. `cookies.html` now lists the Google Ads
   (`_gcl_au`, `IDE`, `test_cookie`) and Meta (`_fbp`, `_fbc`) cookies in all four languages and drops the "no analytics or marketing
