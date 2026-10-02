@@ -145,7 +145,7 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
   rozmery takmer zhodné s pôvodnými a orientácia rovnaká, takže kompas na detaile bytu sedí.
 - Prepečených 9 PDF (1E až 5E, 2H až 5H). `P6-byt-1H.pdf` nezmenený.
 - Plochy sedia s `data.js` (H 69,9 + 18,3 m², E 30,1 + 8,7 m²), `data.js` sa nemenil.
-- **Pozor:** nový pôdorys E nemá popis hlavnej izby (pôvodný mal E.3 19,7 m²). Čaká na opravený výkres.
+- Pôdorys E má všetky tri miestnosti: E.1 6,3 + E.2 4,1 + E.3 19,7 = 30,1 m² (sedí s `data.js`).
 - Zdrojové PNG pre `import_renders.py` (`~/Downloads/P6 Floor Plans/`) už neexistujú, takže skript sa nedá spustiť
   a nové súbory neprepíše.
 
