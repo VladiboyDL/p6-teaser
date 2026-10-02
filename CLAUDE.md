@@ -139,6 +139,16 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-02 · nové pôdorysy bytov E a H · feat/plans-e-h-refresh · Filip + Claude
+- `flat-1np-E.webp`, `flat-25np-E.webp`, `flat-25np-H.webp` nahradené novými rendermi od Filipa. **1.H zámerne
+  nezmenený**, má iný pôdorys. Spracované rovnako ako `import_renders.py` (pozadie, trim, max 1500 px, WebP q86):
+  rozmery takmer zhodné s pôvodnými a orientácia rovnaká, takže kompas na detaile bytu sedí.
+- Prepečených 9 PDF (1E až 5E, 2H až 5H). `P6-byt-1H.pdf` nezmenený.
+- Plochy sedia s `data.js` (H 69,9 + 18,3 m², E 30,1 + 8,7 m²), `data.js` sa nemenil.
+- **Pozor:** nový pôdorys E nemá popis hlavnej izby (pôvodný mal E.3 19,7 m²). Čaká na opravený výkres.
+- Zdrojové PNG pre `import_renders.py` (`~/Downloads/P6 Floor Plans/`) už neexistujú, takže skript sa nedá spustiť
+  a nové súbory neprepíše.
+
 ### 2026-09-23 · GA4 doplnené, tracking je tým kompletný · feat/ga4-id · Filip + Claude
 - `assets/js/config.js`: `tracking.ga4` = `G-4683MB2PDY`. Nová Analytics property „P6 bytyp6.sk“
   (účet Byty Prievozska6 s.r.o.), web stream `bytyp6.sk`, enhanced measurement zapnuté.
