@@ -139,6 +139,20 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-02 · motion dizajn pre teaser (len dev, nie je v main) · dev/teaser-motion · Filip + Claude
+- **Vlad, toto je tvoja strana (teaser), preto zatiaľ len lokálna vetva, bez PR a bez merge.** Filip si to pozrie, potom sa dohodneme.
+- Nová vrstva pohybu, ktorá sa pridáva navrch a nemení text ani tvrdenia: `assets/css/motion.css`, `assets/js/motion-boot.js` (v `<head>`),
+  `assets/js/motion.js` (pred `teaser.js`, preberá `.reveal`). Knižnice sú lokálne v `assets/vendor/` (GSAP 3.15 so ScrollTrigger,
+  SplitText, DrawSVG, MotionPath, štandardná bezplatná licencia GSAP), takže CSP sa nemení. Scroll je zámerne natívny
+  (bez Lenis a podobných): JS scroller beží v Safari len na 60 fps a na 120 Hz displeji pôsobil trhane. Z rovnakého dôvodu
+  nie je zrnitý filter cez celú stránku ani orezávanie celých sekcií pri scrolle.
+- Čo robí: intro s kreslením loga P6 (raz za session, preskočí sa pri `#kotve`), nadpisy po písmenách a riadkoch, hero s parallaxou,
+  obrázky sa otvárajú pri scrolle, na desktope sa sekcia Lokalita pri scrolle zastaví a zoznam vzdialeností postupne rozsvieti miesta na mape
+  s trasami (na mobile sa prepína sám), ikony výhod sa kreslia, kroky spája medená linka, v registrácii sa kreslí veľké P6.
+- `index.html`: 1 link na CSS, 1 skript v `<head>`, 6 skriptov pred `teaser.js`, prázdny `div.intro`. `prefers-reduced-motion` = stránka
+  presne ako doteraz. Ak `motion.js` nenabehne do 4 s, stránka sa vráti do pôvodného stavu.
+- Po prepnutí jazyka sa text delí nanovo z čerstvého HTML z `i18n.js` (overené SK, EN, DE). Formulár, tracking a sticky CTA nedotknuté.
+
 ### 2026-10-02 · nové pôdorysy bytov E a H · feat/plans-e-h-refresh · Filip + Claude
 - `flat-1np-E.webp`, `flat-25np-E.webp`, `flat-25np-H.webp` nahradené novými rendermi od Filipa. **1.H zámerne
   nezmenený**, má iný pôdorys. Spracované rovnako ako `import_renders.py` (pozadie, trim, max 1500 px, WebP q86):

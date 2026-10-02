@@ -1,0 +1,119 @@
+/* ===========================================================================
+   P6 teaser, motion layer
+   Everything here sits behind html.motion, which motion-boot.js sets only when the visitor
+   has not asked for reduced motion. Without it the teaser renders exactly as before.
+   =========================================================================== */
+
+/* --- scrolling stays native (full refresh rate); motion.js smooths in-page links ---- */
+html.motion { scroll-behavior: auto; }
+html.m-lock { overflow: hidden; }
+
+/* --- intro ------------------------------------------------------------------ */
+div.intro { display: none; }
+.motion.intro div.intro {
+  display: grid; place-items: center; position: fixed; inset: 0; z-index: 100;
+  background: var(--ink); color: var(--text-inv);
+  animation: intro-failsafe .01s 4.5s forwards;
+}
+@keyframes intro-failsafe { to { visibility: hidden; opacity: 0; } }
+.intro__mark { width: clamp(96px, 13vw, 168px); height: auto; overflow: visible; }
+.intro__mark path { fill: var(--paper); fill-opacity: 0; stroke: var(--sand-2); stroke-width: 2.4; }
+.intro__meta {
+  position: absolute; left: var(--gut); right: var(--gut); bottom: clamp(26px, 6vh, 56px);
+  display: flex; justify-content: space-between; align-items: baseline;
+  font: 500 .7rem/1 var(--f-ui); letter-spacing: .24em; text-transform: uppercase; color: var(--text-inv-muted);
+}
+.intro__count { font: 300 clamp(1.4rem, 2.4vw, 2rem)/1 var(--f-display); letter-spacing: .02em; color: var(--text-inv); font-variant-numeric: tabular-nums; }
+.intro__bar { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--copper-2); transform: scaleX(0); transform-origin: left; }
+
+/* --- hero ------------------------------------------------------------------- */
+.motion .hero__poster { animation: none; }
+.motion .hero picture { position: absolute; inset: -2.5%; display: block; }
+.hero__dim { position: absolute; inset: 0; background: var(--ink); opacity: 0; pointer-events: none; will-change: opacity; }
+.motion .hero__media { will-change: transform; }
+.motion .hero__title .line { padding-top: .1em; margin-top: -.1em; }
+.motion .hero__title .line > span { animation: none; transform: translateY(115%); }
+.motion .hero__title .m-ch { display: inline-block; }
+.motion .status, .motion .hero__sub, .motion .hero__actions { animation: none; opacity: 0; }
+.motion .hero__facts { animation: none; opacity: 1; }
+.motion .hero__facts li { opacity: 0; }
+.motion .hero__cue { opacity: 0; }
+
+/* --- split text: masks get room for diacritics above and descenders below ---- */
+.m-line-mask { padding: .12em 0 .14em; margin: -.12em 0 -.14em; }
+
+/* --- nav: scroll progress, hides on the way down ----------------------------- */
+.nav__progress { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--copper-2); transform: scaleX(0); transform-origin: left; pointer-events: none; }
+.motion .nav.m-hide { transform: translateY(-101%); }
+
+/* --- eyebrows: the rule draws in ------------------------------------------- */
+.motion .eyebrow::before { transform: scaleX(0); transform-origin: left; transition: transform 1.1s var(--ease) .15s; }
+.motion .eyebrow.m-on::before { transform: none; }
+
+/* --- frames: GSAP drives the image transform, hover zoom moves to `scale` ---- */
+.motion .frame img { transition: scale 1.4s var(--ease); will-change: transform; }
+.motion .frame:hover img { transform: none; scale: 1.03; }
+.motion .frame figcaption { transition: opacity .6s ease .5s; }
+.motion .frame.m-veil figcaption { opacity: 0; }
+
+/* --- figures ----------------------------------------------------------------- */
+.motion .figs { position: relative; border-top-color: transparent; }
+.motion .figs::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: var(--ink); opacity: .14; transform: scaleX(0); transform-origin: left; transition: transform 1.6s var(--ease); }
+.motion .figs.m-on::before { transform: none; }
+
+/* --- location: the list drives the map ---------------------------------------- */
+.motion .dist li { position: relative; transition: padding-left .5s var(--ease); cursor: default; }
+.motion .dist li::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 2px; background: var(--copper-2); transform: scaleY(0); transition: transform .5s var(--ease); }
+.motion .dist b, .motion .dist span { transition: color .4s; }
+.motion .dist li.is-active { padding-left: 16px; }
+.motion .dist li.is-active::before { transform: none; }
+.motion .dist li.is-active b { color: var(--copper-2); }
+.motion .dist li.is-active span { color: var(--text-inv); }
+.map__route { fill: none; stroke: var(--copper-2); stroke-width: 1.6; stroke-linecap: round; opacity: .95; }
+.map__runner { fill: var(--paper); opacity: 0; }
+.map__poi text, .map__edge text, .map__poi circle { transition: opacity .5s, fill .4s; }
+.map svg.is-focus .map__poi:not(.is-hot) { opacity: .38 !important; }
+.map .map__poi.is-hot circle { animation: none; fill: var(--copper-2); transform: scale(1.55); transition: transform .5s var(--ease), fill .4s; }
+.map .map__poi.is-hot text { fill: var(--paper); }
+.map .map__edge.is-hot text { fill: var(--copper-2); }
+.map .radar__ring.is-hot { stroke-dasharray: none; stroke-width: 2; opacity: 1 !important; }
+.map .map__p6.is-hot .zone { animation-duration: 1.6s; }
+
+/* --- perks ------------------------------------------------------------------- */
+.motion .perks li { position: relative; border-bottom-color: transparent; }
+.motion .perks li::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: rgba(20, 18, 15, .2); transform: scaleX(0); transform-origin: left; transition: transform 1.2s var(--ease); }
+.motion .perks li.m-on::after { transform: none; }
+.motion .perks svg { transition: stroke .4s; }
+@media (hover: hover) { .motion .perks li:hover svg { stroke: var(--copper); } }
+
+/* --- steps: a rail runs across and lights each step ------------------------ */
+.steps__rail { display: none; }
+@media (min-width: 860px) {
+  .motion .steps { position: relative; }
+  .steps__rail { display: block; position: absolute; left: 0; right: 0; top: -1px; height: 2px; background: var(--copper-2); transform: scaleX(0); transform-origin: left; pointer-events: none; }
+  .motion .steps li::before { content: ""; position: absolute; top: -5px; left: -5px; width: 9px; height: 9px; border-radius: 50%; background: var(--copper-2); transform: scale(0); transition: transform .6s var(--ease); }
+  .motion .steps li:first-child::before { left: 0; }
+  .motion .steps li.m-lit::before { transform: none; }
+  .motion .steps__n { transition: color .5s; }
+  .motion .steps li.m-lit .steps__n { color: var(--copper); }
+}
+
+/* --- registration: drifting glow + a large P6 drawn in line ------------------ */
+.reg__glow { position: absolute; inset: -20%; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(38% 34% at 22% 30%, rgba(184, 115, 51, .22), transparent 70%),
+    radial-gradient(30% 30% at 78% 72%, rgba(196, 171, 137, .14), transparent 70%);
+  animation: glow-drift 22s ease-in-out infinite alternate; will-change: transform; }
+@keyframes glow-drift { 0% { transform: translate3d(-4%, -2%, 0) rotate(0deg); } 100% { transform: translate3d(5%, 4%, 0) rotate(8deg); } }
+.reg__mark { position: absolute; right: -6vw; top: 6%; width: min(72vw, 1040px); height: auto; overflow: visible; pointer-events: none; z-index: 0; }
+.reg__mark path { fill: none; stroke: var(--sand-2); stroke-width: 1.4; opacity: .16; }
+.motion .reg .shell { position: relative; z-index: 1; }
+
+/* --- cursor ring (mouse only) ------------------------------------------------ */
+.m-cursor { position: fixed; left: 0; top: 0; z-index: 95; width: 0; height: 0; pointer-events: none; opacity: 0; transition: opacity .3s; mix-blend-mode: difference; }
+.m-cursor.is-on { opacity: 1; }
+.m-cursor span { position: absolute; left: -17px; top: -17px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid #fff; transition: transform .45s var(--ease), background .3s, border-color .3s; }
+.m-cursor.is-link span { transform: scale(1.65); background: #fff; border-color: transparent; }
+.m-cursor.is-link { opacity: .9; }
+.m-cursor.is-media span { transform: scale(2.4); }
+.m-cursor.is-field { opacity: 0; }
