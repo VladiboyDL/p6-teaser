@@ -139,6 +139,16 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-04 · hero vo WebGL (2.5D z vizualizácie) · dev/teaser-motion · Filip + Claude
+- Stále len lokálna vetva, bez PR. Hero obrázok kreslí nový `assets/js/hero-gl.js` (vlastný WebGL, žiadna knižnica):
+  z architektovej vizualizácie je pomocou hĺbkovej mapy (`assets/img/hero-depth-1100.webp`, `hero-tall-depth-600.webp`,
+  odhad Depth Anything 3 cez Magnific, blízko = biela) jemná 3D parallaxa na myš, na Androide náklon telefónu,
+  pri scrolle priblíženie s hĺbkou ostrosti a pri načítaní svetlo, ktoré prejde od oblohy po ulicu. Do obrázka sa nič nepridáva, len sa hýbe.
+- Starý úvod s logom P6 je preč, úvodom je samotný hero. Písmená nadpisu pri kurzore pribrali na váhe (Newsreader je variabilný font),
+  riadok sa nikdy nezalomí inak.
+- Bez WebGL (alebo keď sa nenačíta do 1,6 s) ostáva bežný `<img>` ako doteraz; `prefers-reduced-motion` = pôvodná stránka.
+  Kreslí sa len keď je hero na obrazovke a karta je viditeľná.
+
 ### 2026-10-02 · motion dizajn pre teaser (len dev, nie je v main) · dev/teaser-motion · Filip + Claude
 - **Vlad, toto je tvoja strana (teaser), preto zatiaľ len lokálna vetva, bez PR a bez merge.** Filip si to pozrie, potom sa dohodneme.
 - Nová vrstva pohybu, ktorá sa pridáva navrch a nemení text ani tvrdenia: `assets/css/motion.css`, `assets/js/motion-boot.js` (v `<head>`),
@@ -146,10 +156,10 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
   SplitText, DrawSVG, MotionPath, štandardná bezplatná licencia GSAP), takže CSP sa nemení. Scroll je zámerne natívny
   (bez Lenis a podobných): JS scroller beží v Safari len na 60 fps a na 120 Hz displeji pôsobil trhane. Z rovnakého dôvodu
   nie je zrnitý filter cez celú stránku ani orezávanie celých sekcií pri scrolle.
-- Čo robí: intro s kreslením loga P6 (raz za session, preskočí sa pri `#kotve`), nadpisy po písmenách a riadkoch, hero s parallaxou,
+- Čo robí: nadpisy po písmenách a riadkoch, hero s parallaxou,
   obrázky sa otvárajú pri scrolle, na desktope sa sekcia Lokalita pri scrolle zastaví a zoznam vzdialeností postupne rozsvieti miesta na mape
   s trasami (na mobile sa prepína sám), ikony výhod sa kreslia, kroky spája medená linka, v registrácii sa kreslí veľké P6.
-- `index.html`: 1 link na CSS, 1 skript v `<head>`, 6 skriptov pred `teaser.js`, prázdny `div.intro`. `prefers-reduced-motion` = stránka
+- `index.html`: 1 link na CSS, 1 skript v `<head>`, 6 skriptov pred `teaser.js`, `prefers-reduced-motion` = stránka
   presne ako doteraz. Ak `motion.js` nenabehne do 4 s, stránka sa vráti do pôvodného stavu.
 - Po prepnutí jazyka sa text delí nanovo z čerstvého HTML z `i18n.js` (overené SK, EN, DE). Formulár, tracking a sticky CTA nedotknuté.
 

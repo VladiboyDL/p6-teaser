@@ -102,13 +102,13 @@
     return gsap.to(o, { v: to, duration: dur || 1.6, ease: 'power3.out', onUpdate: function () { el.textContent = Math.round(o.v); } });
   }
 
-  function heroIn() {
+  function heroIn(withGL) {
     var t = heroText();
     var facts = $$('.hero__facts li');
     var n44 = $('.hero__facts li:first-child b');
-    var tl = gsap.timeline({ defaults: { ease: EASE }, onComplete: function () { heroPlayed = true; } });
-    tl.fromTo(heroImg, { scale: 1.3 }, { scale: 1, duration: 2.6 }, 0)
-      .from(t.chars, { yPercent: 120, rotate: 8, duration: 1.35, stagger: 0.022 }, 0.12)
+    var tl = gsap.timeline({ defaults: { ease: EASE }, onComplete: function () { heroPlayed = true; measureChars(); } });
+    if (!withGL) tl.fromTo(heroImg, { scale: 1.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 2.6 }, 0);
+    tl.from(t.chars, { yPercent: 120, rotate: 8, duration: 1.35, stagger: 0.022 }, 0.12)
       .fromTo('.status', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 1 }, 0.05)
       .set(sub, { opacity: 1 }, 0.5)
       .from(t.lines, { yPercent: 105, duration: 1.15, stagger: 0.08 }, 0.5)
@@ -123,44 +123,66 @@
     var t = heroText();
     gsap.set(t.chars, { yPercent: 0, rotate: 0 });
     gsap.set(['.status', sub, '.hero__actions', '.hero__facts li', '.hero__cue'], { opacity: 1 });
+    measureChars();
   }
 
+  /* The hero is its own intro: WebGL scans the picture in (sky to street), the headline follows.
+     Longer on the first visit of the session, short after that, instant title when landing on a #section. */
   function intro() {
-    var el = $('div.intro');
-    if (!el || !root.classList.contains('intro')) { gsap.delayedCall(0.05, heroIn); return; }
-    var mark = $('.intro__mark', el);
-    var count = $('.intro__count', el);
-    $$('#p6 path').forEach(function (p) { mark.appendChild(p.cloneNode()); });
-    var paths = $$('path', mark);
-    el.style.animation = 'none';
-    gsap.set(el, { clipPath: 'inset(0% 0% 0% 0%)' });
-    root.classList.add('m-lock');
+    var first = root.classList.contains('intro');
+    var GL = window.P6HeroGL;
+    var wait = new Promise(function (r) { setTimeout(function () { r(false); }, 1600); });
+    var ok = GL ? Promise.race([GL.ready.catch(function () { return false; }), wait]) : Promise.resolve(false);
+    ok.then(function (gl) {
+      root.classList.remove('intro');
+      try { sessionStorage.setItem('p6-intro', '1'); } catch (e) { /* fine */ }
+      if (gl === true) {
+        GL.reveal(first ? 2.2 : 1.3);
+        gsap.delayedCall(first ? 0.85 : 0.35, function () { heroIn(true); });
+      } else {
+        if (GL) GL.abort();
+        root.classList.add('hero-img');
+        heroIn(false);
+      }
+    });
+  }
 
-    var ready = Promise.race([
-      heroImg && heroImg.decode ? heroImg.decode().catch(function () {}) : Promise.resolve(),
-      new Promise(function (r) { setTimeout(r, 1800); })
-    ]);
-    var n = { v: 0 };
-    gsap.timeline({ onComplete: function () { ready.then(out); } })
-      .from(paths, { drawSVG: '0%', duration: 1.2, ease: 'power2.inOut', stagger: 0.14 }, 0.1)
-      .to(n, { v: 100, duration: 1.45, ease: 'power2.inOut', onUpdate: function () { count.textContent = ('00' + Math.round(n.v)).slice(-3); } }, 0)
-      .to('.intro__bar', { scaleX: 1, duration: 1.45, ease: 'power2.inOut' }, 0)
-      .to(paths, { fillOpacity: 1, strokeOpacity: 0, duration: 0.5, ease: 'power1.out' }, 1.1);
-
-    function out() {
-      gsap.timeline({
-        onComplete: function () {
-          el.remove();
-          root.classList.remove('intro');
-          root.classList.remove('m-lock');
-          try { sessionStorage.setItem('p6-intro', '1'); } catch (e) { /* fine */ }
-        }
-      })
-        .to(mark, { scale: 0.82, opacity: 0, duration: 0.7, ease: 'power3.in' }, 0)
-        .to(['.intro__meta', '.intro__bar'], { opacity: 0, duration: 0.4 }, 0)
-        .to(el, { clipPath: 'inset(0% 0% 100% 0%)', duration: 1.15, ease: 'expo.inOut' }, 0.35)
-        .add(heroIn(), 0.7);
+  /* headline weight follows the cursor: Newsreader is a variable font (200 to 800), letters near the pointer grow bolder */
+  var chars = [], centers = [], wNow = [], wTo = [], wRaf = 0;
+  function measureChars() {
+    // only lines that already sit on one row take part, and they are locked to it: bolder letters must never rewrap the headline
+    chars = [];
+    if (wRaf) { cancelAnimationFrame(wRaf); wRaf = 0; }
+    $$('.hero__title .m-ch').forEach(function (c) { c.style.fontWeight = ''; });
+    $$('.hero__title .line > span').forEach(function (line) {
+      line.style.whiteSpace = '';
+      var cs = $$('.m-ch', line);
+      var tops = cs.map(function (c) { return Math.round(c.getBoundingClientRect().top); });
+      var oneRow = tops.every(function (t) { return Math.abs(t - tops[0]) < 4; });
+      if (oneRow) { line.style.whiteSpace = 'nowrap'; chars = chars.concat(cs); }
+      else cs.forEach(function (c) { c.style.fontWeight = ''; });
+    });
+    centers = chars.map(function (c) { var r = c.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2 + window.scrollY]; });
+    wNow = chars.map(function () { return 300; });
+    wTo = wNow.slice();
+    chars.forEach(function (c) { c.style.fontWeight = ''; });
+  }
+  function weightTick() {
+    var moving = false;
+    for (var i = 0; i < chars.length; i++) {
+      var d = wTo[i] - wNow[i];
+      if (Math.abs(d) > 0.6) { wNow[i] += d * 0.16; moving = true; } else wNow[i] = wTo[i];
+      chars[i].style.fontWeight = Math.round(wNow[i]);
     }
+    wRaf = moving ? requestAnimationFrame(weightTick) : 0;
+  }
+  function weightAt(x, y) {
+    if (!heroPlayed || !chars.length) return;
+    for (var i = 0; i < chars.length; i++) {
+      var dx = centers[i][0] - x, dy = centers[i][1] - y;
+      wTo[i] = 300 + 110 * Math.exp(-(dx * dx + dy * dy) / (2 * 110 * 110));
+    }
+    if (!wRaf) wRaf = requestAnimationFrame(weightTick);
   }
 
   var dim = document.createElement('div');
@@ -168,8 +190,9 @@
   dim.setAttribute('aria-hidden', 'true');
   $('.hero__media').appendChild(dim);
   /* hero leaves: image sinks slower than the page, darkens, copy lifts away */
-  gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } })
-    .to('.hero__media', { yPercent: 26, ease: 'none' }, 0)
+  gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true,
+      onUpdate: function (s) { if (window.P6HeroGL) window.P6HeroGL.scroll(s.progress); } } })
+    .to('.hero__media', { yPercent: 22, ease: 'none' }, 0)
     .to(dim, { opacity: 0.6, ease: 'none' }, 0)
     .to(heroPic, { scale: 1.1, ease: 'none' }, 0)
     .to('.hero__copy', { yPercent: -16, opacity: 0, ease: 'power1.in' }, 0)
@@ -181,10 +204,19 @@
     var cx = gsap.quickTo('.hero__body', 'x', { duration: 1.4, ease: 'power3' });
     hero.addEventListener('pointermove', function (e) {
       var r = hero.getBoundingClientRect();
-      var dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
-      px(dx * -26); py(dy * -18); cx(dx * 10);
+      var ux = (e.clientX - r.left) / r.width, uy = (e.clientY - r.top) / r.height;
+      var dx = ux - 0.5, dy = uy - 0.5;
+      if (root.classList.contains('hero-gl')) window.P6HeroGL.look(dx * 2, dy * 2, ux, uy);
+      else { px(dx * -26); py(dy * -18); }
+      cx(dx * 10);
+      weightAt(e.clientX, e.clientY + window.scrollY);
     });
-    hero.addEventListener('pointerleave', function () { px(0); py(0); cx(0); });
+    hero.addEventListener('pointerleave', function () {
+      px(0); py(0); cx(0);
+      if (window.P6HeroGL) window.P6HeroGL.rest();
+      wTo = wTo.map(function () { return 300; });
+      if (!wRaf && chars.length) wRaf = requestAnimationFrame(weightTick);
+    });
   }
 
   /* --- text blocks ---------------------------------------------------------------------- */
@@ -484,6 +516,7 @@
     blocks.forEach(function (b) { b.run(); });
     if (heroPlayed) heroShow();
     ScrollTrigger.refresh();
+    measureChars();
   }
 
   /* --- go ------------------------------------------------------------------------------- */

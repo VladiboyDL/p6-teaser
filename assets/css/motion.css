@@ -8,26 +8,11 @@
 html.motion { scroll-behavior: auto; }
 html.m-lock { overflow: hidden; }
 
-/* --- intro ------------------------------------------------------------------ */
-div.intro { display: none; }
-.motion.intro div.intro {
-  display: grid; place-items: center; position: fixed; inset: 0; z-index: 100;
-  background: var(--ink); color: var(--text-inv);
-  animation: intro-failsafe .01s 4.5s forwards;
-}
-@keyframes intro-failsafe { to { visibility: hidden; opacity: 0; } }
-.intro__mark { width: clamp(96px, 13vw, 168px); height: auto; overflow: visible; }
-.intro__mark path { fill: var(--paper); fill-opacity: 0; stroke: var(--sand-2); stroke-width: 2.4; }
-.intro__meta {
-  position: absolute; left: var(--gut); right: var(--gut); bottom: clamp(26px, 6vh, 56px);
-  display: flex; justify-content: space-between; align-items: baseline;
-  font: 500 .7rem/1 var(--f-ui); letter-spacing: .24em; text-transform: uppercase; color: var(--text-inv-muted);
-}
-.intro__count { font: 300 clamp(1.4rem, 2.4vw, 2rem)/1 var(--f-display); letter-spacing: .02em; color: var(--text-inv); font-variant-numeric: tabular-nums; }
-.intro__bar { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--copper-2); transform: scaleX(0); transform-origin: left; }
-
 /* --- hero ------------------------------------------------------------------- */
-.motion .hero__poster { animation: none; }
+/* the picture is drawn by WebGL (hero-gl.js); the <img> shows only when WebGL is not available */
+.motion .hero__poster { animation: none; visibility: hidden; }
+.motion.hero-img .hero__poster { visibility: visible; }
+.hero__gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .motion .hero picture { position: absolute; inset: -2.5%; display: block; }
 .hero__dim { position: absolute; inset: 0; background: var(--ink); opacity: 0; pointer-events: none; will-change: opacity; }
 .motion .hero__media { will-change: transform; }
