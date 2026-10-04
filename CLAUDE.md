@@ -139,6 +139,13 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-04 · WebGL hero: oprava artefaktov · dev/teaser-motion · Filip + Claude
+- Filip videl v Safari čierne šmuhy na konári vpravo hore a svetlé obrysy pri hranách domu. Príčina: posun pixelov
+  sa odhadoval len niekoľkými iteráciami a rozmazaná hĺbková mapa dávala hranám medzihodnotu.
+- `hero-gl.js` teraz hľadá pre každý pixel prvý povrch pozdĺž lúča (parallax occlusion mapping, 16 krokov + 5 krokov
+  spresnenia), takže bližší objekt vždy vyhrá a hrany ostanú celé. Hĺbkové mapy (`?v=2`) majú ostré hrany a popredie mierne rozšírené.
+  Pohyb kamery je o tretinu menší, plátno max 1,5× (zdroj má 2200 px). GPU čas 0,5 ms na snímku.
+
 ### 2026-10-04 · hero vo WebGL (2.5D z vizualizácie) · dev/teaser-motion · Filip + Claude
 - Stále len lokálna vetva, bez PR. Hero obrázok kreslí nový `assets/js/hero-gl.js` (vlastný WebGL, žiadna knižnica):
   z architektovej vizualizácie je pomocou hĺbkovej mapy (`assets/img/hero-depth-1100.webp`, `hero-tall-depth-600.webp`,
