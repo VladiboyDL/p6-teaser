@@ -119,3 +119,6 @@ div.intro { display: none; }
 .m-cursor.is-link { opacity: 0; } /* buttons and links keep the native pointer, no blob over the label */
 .m-cursor.is-media span { transform: scale(2.4); }
 .m-cursor.is-field { opacity: 0; }
+
+/* off-screen sections stop their looping animations (motion.js toggles .m-paused) */
+.m-paused, .m-paused * { animation-play-state: paused !important; }

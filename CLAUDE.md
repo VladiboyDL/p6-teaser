@@ -139,6 +139,13 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-05 · plynulý hover efekt nadpisu · dev/teaser-motion · Filip + Claude
+- Písmená pri kurzore už nemenia `font-weight` (každá zmena znamenala nové rozloženie celého nadpisu, v Safari trhané),
+  ale dostanú jemný obrys vo vlastnej farbe (`-webkit-text-stroke`): len prekreslenie, žiadny layout, nadpis sa nikdy nezalomí inak.
+- Odstránené vynútené prepočty štýlov: `quickTo` na `.hero__body` pri každom pohybe myši čítal štýly (122× za 2 s),
+  nahradený vlastnou slučkou, ktorá len zapisuje; rozmery hera a tlačidiel sa merajú len pri zmene okna alebo vstupe myši.
+- Opakované CSS animácie (radar v mape, žiara v registrácii) sa pozastavia, keď je sekcia mimo obrazovky.
+
 ### 2026-10-05 · hero: logo intro späť, nadpis po slovách, bez kurzívy · dev/teaser-motion · Filip + Claude
 - Úvod s kreslením loga P6 a počítadlom je späť (prvá návšteva v session), po ňom opona odhalí WebGL hero.
 - Nadpis sa skladá slovo po slove: písmená vystúpia z rozmazania s medenou žiarou, ktorá vychladne do finálnej farby,

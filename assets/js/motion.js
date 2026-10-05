@@ -201,40 +201,37 @@
     }
   }
 
-  /* headline weight follows the cursor: Newsreader is a variable font (200 to 800), letters near the pointer grow bolder */
-  var chars = [], centers = [], wNow = [], wTo = [], wRaf = 0;
+  /* Letters near the cursor grow bolder. Drawn as a text stroke in the letter's own colour, not font-weight:
+     a stroke only repaints, it never re-lays-out the headline, so it runs at the screen's full refresh rate
+     and can never rewrap a line. Easing is time-based, so it feels the same at 60 and 120 Hz. */
+  var chars = [], centers = [], wNow = [], wTo = [], wOut = [], wRaf = 0, wLast = 0;
+  var W_MAX = 0.024; // em of stroke at the cursor, about Newsreader 300 to 500
   function measureChars() {
-    // only lines that already sit on one row take part, and they are locked to it: bolder letters must never rewrap the headline
-    chars = [];
     if (wRaf) { cancelAnimationFrame(wRaf); wRaf = 0; }
-    $$('.hero__title .m-ch').forEach(function (c) { c.style.fontWeight = ''; });
-    $$('.hero__title .line > span').forEach(function (line) {
-      line.style.whiteSpace = '';
-      var cs = $$('.m-ch', line);
-      var tops = cs.map(function (c) { return Math.round(c.getBoundingClientRect().top); });
-      var oneRow = tops.every(function (t) { return Math.abs(t - tops[0]) < 4; });
-      if (oneRow) { line.style.whiteSpace = 'nowrap'; chars = chars.concat(cs); }
-      else cs.forEach(function (c) { c.style.fontWeight = ''; });
-    });
+    chars = $$('.hero__title .m-ch');
+    chars.forEach(function (c) { c.style.webkitTextStroke = ''; });
     centers = chars.map(function (c) { var r = c.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2 + window.scrollY]; });
-    wNow = chars.map(function () { return 300; });
+    wNow = chars.map(function () { return 0; });
     wTo = wNow.slice();
-    chars.forEach(function (c) { c.style.fontWeight = ''; });
+    wOut = wNow.map(function () { return -1; });
   }
-  function weightTick() {
-    var moving = false;
+  function weightTick(now) {
+    var dt = Math.min(0.05, wLast ? (now - wLast) / 1000 : 0.016);
+    wLast = now;
+    var k = 1 - Math.exp(-dt * 14), moving = false;
     for (var i = 0; i < chars.length; i++) {
       var d = wTo[i] - wNow[i];
-      if (Math.abs(d) > 0.6) { wNow[i] += d * 0.16; moving = true; } else wNow[i] = wTo[i];
-      chars[i].style.fontWeight = Math.round(wNow[i]);
+      if (Math.abs(d) > 0.004) { wNow[i] += d * k; moving = true; } else wNow[i] = wTo[i];
+      var q = Math.round(wNow[i] * 200) / 200;                 // write only when the value visibly changes
+      if (q !== wOut[i]) { wOut[i] = q; chars[i].style.webkitTextStroke = q > 0 ? (q * W_MAX).toFixed(4) + 'em currentColor' : ''; }
     }
-    wRaf = moving ? requestAnimationFrame(weightTick) : 0;
+    if (moving) wRaf = requestAnimationFrame(weightTick); else { wRaf = 0; wLast = 0; }
   }
   function weightAt(x, y) {
     if (!heroPlayed || !chars.length) return;
     for (var i = 0; i < chars.length; i++) {
       var dx = centers[i][0] - x, dy = centers[i][1] - y;
-      wTo[i] = 300 + 110 * Math.exp(-(dx * dx + dy * dy) / (2 * 110 * 110));
+      wTo[i] = Math.exp(-(dx * dx + dy * dy) / (2 * 72 * 72));
     }
     if (!wRaf) wRaf = requestAnimationFrame(weightTick);
   }
@@ -255,10 +252,24 @@
   if (fine) { // depth: image drifts against the mouse, copy a little with it
     var px = gsap.quickTo(heroPic, 'x', { duration: 1.2, ease: 'power3' });
     var py = gsap.quickTo(heroPic, 'y', { duration: 1.2, ease: 'power3' });
-    var cx = gsap.quickTo('.hero__body', 'x', { duration: 1.4, ease: 'power3' });
+    // the copy drifts a little with the mouse; a write-only loop, because quickTo reads styles back on every event
+    var body = $('.hero__body'), bx0 = 0, bxTo = 0, bRaf = 0, bLast = 0;
+    var bodyTick = function (now) {
+      var dt = Math.min(0.05, bLast ? (now - bLast) / 1000 : 0.016); bLast = now;
+      bx0 += (bxTo - bx0) * (1 - Math.exp(-dt * 3.2));
+      if (Math.abs(bxTo - bx0) < 0.02) bx0 = bxTo;
+      body.style.transform = bx0 ? 'translate3d(' + bx0.toFixed(2) + 'px,0,0)' : '';
+      bRaf = bx0 !== bxTo ? requestAnimationFrame(bodyTick) : 0;
+      if (!bRaf) bLast = 0;
+    };
+    var cx = function (v) { bxTo = v; if (!bRaf) bRaf = requestAnimationFrame(bodyTick); };
+    // geometry is cached: reading it inside pointermove would force a synchronous layout on every mouse event
+    var heroBox = { top: 0, w: 1, h: 1 };
+    var heroMeasure = function () { heroBox = { top: hero.offsetTop, w: hero.offsetWidth || 1, h: hero.offsetHeight || 1 }; };
+    heroMeasure();
+    window.addEventListener('resize', heroMeasure);
     hero.addEventListener('pointermove', function (e) {
-      var r = hero.getBoundingClientRect();
-      var ux = (e.clientX - r.left) / r.width, uy = (e.clientY - r.top) / r.height;
+      var ux = e.clientX / heroBox.w, uy = (e.clientY + window.scrollY - heroBox.top) / heroBox.h;
       var dx = ux - 0.5, dy = uy - 0.5;
       if (root.classList.contains('hero-gl')) window.P6HeroGL.look(dx * 2, dy * 2, ux, uy);
       else { px(dx * -26); py(dy * -18); }
@@ -268,7 +279,7 @@
     hero.addEventListener('pointerleave', function () {
       px(0); py(0); cx(0);
       if (window.P6HeroGL) window.P6HeroGL.rest();
-      wTo = wTo.map(function () { return 300; });
+      wTo = wTo.map(function () { return 0; });
       if (!wRaf && chars.length) wRaf = requestAnimationFrame(weightTick);
     });
   }
@@ -544,12 +555,14 @@
     $$('.btn').forEach(function (b) {
       var bx = gsap.quickTo(b, 'x', { duration: 0.7, ease: 'elastic.out(1, .45)' });
       var by = gsap.quickTo(b, 'y', { duration: 0.7, ease: 'elastic.out(1, .45)' });
+      var r = null;                                              // measured once on entry, not on every move
+      b.addEventListener('pointerenter', function () { r = b.getBoundingClientRect(); });
       b.addEventListener('pointermove', function (e) {
-        var r = b.getBoundingClientRect();
+        if (!r) r = b.getBoundingClientRect();
         bx((e.clientX - r.left - r.width / 2) * 0.28);
         by((e.clientY - r.top - r.height / 2) * 0.4);
       });
-      b.addEventListener('pointerleave', function () { bx(0); by(0); });
+      b.addEventListener('pointerleave', function () { bx(0); by(0); r = null; });
     });
   }
 
@@ -571,6 +584,14 @@
     if (heroPlayed) heroShow();
     ScrollTrigger.refresh();
     measureChars();
+  }
+
+  /* --- looping CSS animations (map radar, glow) pause while their section is off screen ---- */
+  if ('IntersectionObserver' in window) {
+    var idle = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { e.target.classList.toggle('m-paused', !e.isIntersecting); });
+    }, { rootMargin: '10% 0px' });
+    $$('#lokalita, #registracia').forEach(function (s) { s.classList.add('m-paused'); idle.observe(s); });
   }
 
   /* --- go ------------------------------------------------------------------------------- */
