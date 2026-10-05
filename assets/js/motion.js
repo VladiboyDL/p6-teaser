@@ -91,10 +91,10 @@
     source(sub);
     var spans = $$('.line > span', h1);
     gsap.set(spans, { y: 0 });
-    var c = SplitText.create(spans, { type: 'words,chars', charsClass: 'm-ch' });
+    var c = SplitText.create(spans, { type: 'words,chars', wordsClass: 'm-w', charsClass: 'm-ch' });
     var l = SplitText.create(sub, { type: 'lines', mask: 'lines', linesClass: 'm-line' });
     heroSplits.push(c, l);
-    return { chars: c.chars, lines: l.lines };
+    return { words: c.words, chars: c.chars, lines: l.lines };
   }
 
   function countTo(el, to, dur) {
@@ -102,49 +102,103 @@
     return gsap.to(o, { v: to, duration: dur || 1.6, ease: 'power3.out', onUpdate: function () { el.textContent = Math.round(o.v); } });
   }
 
-  function heroIn(withGL) {
+  /* Headline "ignition": word by word, each word's letters rise out of a soft blur while a copper glow runs through them
+     and cools to the final colour, the same warm light that sweeps the picture. The last word lands after a beat,
+     slower, and gets a second shimmer. */
+  var GLOW = '#F3B985';
+  function ignite(t, at) {
+    var tl = gsap.timeline();
+    var cursor = 0;
+    t.words.forEach(function (w, i) {
+      var cs = $$('.m-ch', w);
+      var last = i === t.words.length - 1;
+      var finals = cs.map(function (c) { return getComputedStyle(c).color; });
+      if (last) cursor += 0.22;                                  // a breath before the destination word
+      var d = last ? 1.25 : 0.95, st = last ? 0.045 : 0.026;
+      tl.fromTo(cs, { yPercent: 72, opacity: 0, filter: 'blur(10px)', color: GLOW, textShadow: '0 0 22px rgba(243,185,133,.95)' },
+        { yPercent: 0, opacity: 1, filter: 'blur(0px)', duration: d, ease: 'expo.out', stagger: st }, cursor);
+      cs.forEach(function (c, k) {                               // the glow cools: copper to the final colour, the halo fades
+        tl.to(c, { color: finals[k], textShadow: '0 0 0px rgba(243,185,133,0)', duration: last ? 1.3 : 0.95, ease: 'power2.out' }, cursor + 0.18 + k * st);
+      });
+      if (last) {                                                // the shimmer: the glow passes once more, left to right
+        cs.forEach(function (c, k) {
+          tl.to(c, { color: GLOW, textShadow: '0 0 18px rgba(243,185,133,.8)', duration: 0.2, ease: 'power1.in', yoyo: true, repeat: 1 }, cursor + 1.15 + k * 0.03);
+        });
+      }
+      cursor += last ? 0 : 0.13 + cs.length * 0.012;            // longer words take a touch longer, the rhythm stays even
+    });
+    tl.call(function () { gsap.set(t.chars, { clearProps: 'color,filter,textShadow' }); });
+    return tl.delay(at || 0);
+  }
+
+  function heroIn(withGL, delay) {
     var t = heroText();
     var facts = $$('.hero__facts li');
     var n44 = $('.hero__facts li:first-child b');
-    var tl = gsap.timeline({ defaults: { ease: EASE }, onComplete: function () { heroPlayed = true; measureChars(); } });
+    var tl = gsap.timeline({ delay: delay || 0, defaults: { ease: EASE }, onComplete: function () { heroPlayed = true; measureChars(); } });
     if (!withGL) tl.fromTo(heroImg, { scale: 1.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 2.6 }, 0);
-    tl.from(t.chars, { yPercent: 120, rotate: 8, duration: 1.35, stagger: 0.022 }, 0.12)
-      .fromTo('.status', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 1 }, 0.05)
-      .set(sub, { opacity: 1 }, 0.5)
-      .from(t.lines, { yPercent: 105, duration: 1.15, stagger: 0.08 }, 0.5)
-      .fromTo('.hero__actions', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 1.1 }, 0.72)
-      .fromTo(facts, { opacity: 0, x: 26 }, { opacity: 1, x: 0, duration: 1.1, stagger: 0.1 }, 0.85)
-      .to('.hero__cue', { opacity: 1, duration: 0.8 }, 1.3);
-    if (n44) tl.add(countTo(n44, 44, 1.8), 0.85);
+    gsap.set(t.chars, { opacity: 0 });
+    tl.add(ignite(t), 0.1)
+      .fromTo('.status', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 1 }, 0)
+      .set(sub, { opacity: 1 }, 0.9)
+      .from(t.lines, { yPercent: 105, duration: 1.15, stagger: 0.08 }, 0.9)
+      .fromTo('.hero__actions', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 1.1 }, 1.15)
+      .fromTo(facts, { opacity: 0, x: 26 }, { opacity: 1, x: 0, duration: 1.1, stagger: 0.1 }, 1.3)
+      .to('.hero__cue', { opacity: 1, duration: 0.8 }, 1.8);
+    if (n44) tl.add(countTo(n44, 44, 1.8), 1.3);
     return tl;
   }
 
   function heroShow() { // after a language switch, or when the intro already ran
     var t = heroText();
-    gsap.set(t.chars, { yPercent: 0, rotate: 0 });
+    gsap.set(t.chars, { yPercent: 0, opacity: 1, clearProps: 'color,filter,textShadow' });
     gsap.set(['.status', sub, '.hero__actions', '.hero__facts li', '.hero__cue'], { opacity: 1 });
     measureChars();
   }
 
-  /* The hero is its own intro: WebGL scans the picture in (sky to street), the headline follows.
-     Longer on the first visit of the session, short after that, instant title when landing on a #section. */
+  /* First visit of the session: the P6 mark draws itself, a counter runs, then the curtain lifts onto the hero,
+     where the WebGL light sweeps the picture in and the headline ignites. Later visits skip straight to the hero. */
   function intro() {
-    var first = root.classList.contains('intro');
     var GL = window.P6HeroGL;
-    var wait = new Promise(function (r) { setTimeout(function () { r(false); }, 1600); });
-    var ok = GL ? Promise.race([GL.ready.catch(function () { return false; }), wait]) : Promise.resolve(false);
-    ok.then(function (gl) {
-      root.classList.remove('intro');
+    var el = $('div.intro');
+    var first = !!el && root.classList.contains('intro');
+    var later = function (ms) { return new Promise(function (r) { setTimeout(function () { r(false); }, ms); }); };
+    var glOk = GL ? Promise.race([GL.ready.catch(function () { return false; }), later(first ? 2600 : 1600)]) : Promise.resolve(false);
+    var start = function (gl, quick) {
       try { sessionStorage.setItem('p6-intro', '1'); } catch (e) { /* fine */ }
-      if (gl === true) {
-        GL.reveal(first ? 2.2 : 1.3);
-        gsap.delayedCall(first ? 0.85 : 0.35, function () { heroIn(true); });
-      } else {
-        if (GL) GL.abort();
-        root.classList.add('hero-img');
-        heroIn(false);
-      }
-    });
+      if (gl === true) { GL.reveal(quick ? 1.3 : 1.7); return heroIn(true, quick ? 0.35 : 0.5); }
+      if (GL) GL.abort();
+      root.classList.add('hero-img');
+      return heroIn(false, 0.05);
+    };
+    if (!first) {
+      if (el) el.remove();
+      glOk.then(function (gl) { root.classList.remove('intro'); start(gl, true); });
+      return;
+    }
+    var mark = $('.intro__mark', el);
+    var count = $('.intro__count', el);
+    $$('#p6 path').forEach(function (p) { mark.appendChild(p.cloneNode()); });
+    var paths = $$('path', mark);
+    el.style.animation = 'none';
+    gsap.set(el, { clipPath: 'inset(0% 0% 0% 0%)' });
+    root.classList.add('m-lock');
+    var n = { v: 0 };
+    gsap.timeline({ onComplete: function () { glOk.then(out); } })
+      .from(paths, { drawSVG: '0%', duration: 1.2, ease: 'power2.inOut', stagger: 0.14 }, 0.1)
+      .to(n, { v: 100, duration: 1.45, ease: 'power2.inOut', onUpdate: function () { count.textContent = ('00' + Math.round(n.v)).slice(-3); } }, 0)
+      .to('.intro__bar', { scaleX: 1, duration: 1.45, ease: 'power2.inOut' }, 0)
+      .to(paths, { fillOpacity: 1, strokeOpacity: 0, duration: 0.5, ease: 'power1.out' }, 1.1);
+
+    function out(gl) {
+      gsap.timeline({
+        onComplete: function () { el.remove(); root.classList.remove('intro', 'm-lock'); }
+      })
+        .to(mark, { scale: 0.82, opacity: 0, duration: 0.7, ease: 'power3.in' }, 0)
+        .to(['.intro__meta', '.intro__bar'], { opacity: 0, duration: 0.4 }, 0)
+        .to(el, { clipPath: 'inset(0% 0% 100% 0%)', duration: 1.15, ease: 'expo.inOut' }, 0.35)
+        .call(function () { start(gl, false); }, null, 0.45);
+    }
   }
 
   /* headline weight follows the cursor: Newsreader is a variable font (200 to 800), letters near the pointer grow bolder */

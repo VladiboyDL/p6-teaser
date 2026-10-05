@@ -139,6 +139,15 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-05 · hero: logo intro späť, nadpis po slovách, bez kurzívy · dev/teaser-motion · Filip + Claude
+- Úvod s kreslením loga P6 a počítadlom je späť (prvá návšteva v session), po ňom opona odhalí WebGL hero.
+- Nadpis sa skladá slovo po slove: písmená vystúpia z rozmazania s medenou žiarou, ktorá vychladne do finálnej farby,
+  posledné slovo príde po krátkej pauze s druhým zábleskom.
+- Všetka kurzíva je regular (`h1 em`, `h2 em`, `.steps__n` v `teaser.css`), font aj farba bez zmeny. Pozor: regular je širší,
+  na 1440 px sa nadpis v hero láme do troch riadkov.
+- Logo P6 v mape bolo posunuté hore doľava (vnorené SVG malo viewBox symbolu, `<use>` ho posunul o 100 jednotiek), teraz je v strede kruhu a o niečo menšie.
+- Krúžok kurzora nad tlačidlami a odkazmi zmizne, žiadna škvrna cez text tlačidla.
+
 ### 2026-10-04 · WebGL hero: oprava artefaktov · dev/teaser-motion · Filip + Claude
 - Filip videl v Safari čierne šmuhy na konári vpravo hore a svetlé obrysy pri hranách domu. Príčina: posun pixelov
   sa odhadoval len niekoľkými iteráciami a rozmazaná hĺbková mapa dávala hranám medzihodnotu.

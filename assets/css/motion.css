@@ -8,6 +8,24 @@
 html.motion { scroll-behavior: auto; }
 html.m-lock { overflow: hidden; }
 
+/* --- intro (first visit of the session) --------------------------------------- */
+div.intro { display: none; }
+.motion.intro div.intro {
+  display: grid; place-items: center; position: fixed; inset: 0; z-index: 100;
+  background: var(--ink); color: var(--text-inv);
+  animation: intro-failsafe .01s 5.5s forwards;
+}
+@keyframes intro-failsafe { to { visibility: hidden; opacity: 0; } }
+.intro__mark { width: clamp(96px, 13vw, 168px); height: auto; overflow: visible; }
+.intro__mark path { fill: var(--paper); fill-opacity: 0; stroke: var(--sand-2); stroke-width: 2.4; }
+.intro__meta {
+  position: absolute; left: var(--gut); right: var(--gut); bottom: clamp(26px, 6vh, 56px);
+  display: flex; justify-content: space-between; align-items: baseline;
+  font: 500 .7rem/1 var(--f-ui); letter-spacing: .24em; text-transform: uppercase; color: var(--text-inv-muted);
+}
+.intro__count { font: 300 clamp(1.4rem, 2.4vw, 2rem)/1 var(--f-display); letter-spacing: .02em; color: var(--text-inv); font-variant-numeric: tabular-nums; }
+.intro__bar { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--copper-2); transform: scaleX(0); transform-origin: left; }
+
 /* --- hero ------------------------------------------------------------------- */
 /* the picture is drawn by WebGL (hero-gl.js); the <img> shows only when WebGL is not available */
 .motion .hero__poster { animation: none; visibility: hidden; }
@@ -98,7 +116,6 @@ html.m-lock { overflow: hidden; }
 .m-cursor { position: fixed; left: 0; top: 0; z-index: 95; width: 0; height: 0; pointer-events: none; opacity: 0; transition: opacity .3s; mix-blend-mode: difference; }
 .m-cursor.is-on { opacity: 1; }
 .m-cursor span { position: absolute; left: -17px; top: -17px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid #fff; transition: transform .45s var(--ease), background .3s, border-color .3s; }
-.m-cursor.is-link span { transform: scale(1.65); background: #fff; border-color: transparent; }
-.m-cursor.is-link { opacity: .9; }
+.m-cursor.is-link { opacity: 0; } /* buttons and links keep the native pointer, no blob over the label */
 .m-cursor.is-media span { transform: scale(2.4); }
 .m-cursor.is-field { opacity: 0; }
