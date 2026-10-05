@@ -139,6 +139,15 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-05 · motion vrstva teasera ide naživo · dev/teaser-motion · Filip + Claude
+- **Vlad, toto je tvoja strana:** Filip schválil a vrstva pohybu na teaseri ide do `main` (bytyp6.sk). Všetky poznámky nižšie
+  od 2.10. do 5.10. (`dev/teaser-motion`) popisujú, čo pribudlo: logo intro, WebGL hero z hĺbkovej mapy, nadpisy, mapa, výhody, kroky.
+- Text, tvrdenia, formulár, tracking, `config.js`, CSP ani právne stránky sa nemenili. Jediná zmena v `teaser.css`: kurzíva je regular
+  a cache bust na `?v=16`. Nové súbory: `assets/js/motion-boot.js`, `motion.js`, `hero-gl.js`, `assets/css/motion.css`,
+  `assets/vendor/` (GSAP 3.15), `assets/img/hero-depth-1100.webp`, `hero-tall-depth-600.webp`.
+- Bezpečnostné poistky: `prefers-reduced-motion` = pôvodná stránka; ak sa `motion.js` nenačíta do 4 s, vráti sa pôvodná stránka;
+  bez WebGL ostáva obyčajný `<img>`. Dočasný náhľad thebiceps.github.io/p6-preview-b028df je samostatný repozitár, s týmto nesúvisí.
+
 ### 2026-10-05 · plynulý hover efekt nadpisu · dev/teaser-motion · Filip + Claude
 - Písmená pri kurzore už nemenia `font-weight` (každá zmena znamenala nové rozloženie celého nadpisu, v Safari trhané),
   ale dostanú jemný obrys vo vlastnej farbe (`-webkit-text-stroke`): len prekreslenie, žiadny layout, nadpis sa nikdy nezalomí inak.
