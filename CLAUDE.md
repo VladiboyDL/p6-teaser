@@ -139,6 +139,62 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-05 · motion vrstva teasera ide naživo · dev/teaser-motion · Filip + Claude
+- **Vlad, toto je tvoja strana:** Filip schválil a vrstva pohybu na teaseri ide do `main` (bytyp6.sk). Všetky poznámky nižšie
+  od 2.10. do 5.10. (`dev/teaser-motion`) popisujú, čo pribudlo: logo intro, WebGL hero z hĺbkovej mapy, nadpisy, mapa, výhody, kroky.
+- Text, tvrdenia, formulár, tracking, `config.js`, CSP ani právne stránky sa nemenili. Jediná zmena v `teaser.css`: kurzíva je regular
+  a cache bust na `?v=16`. Nové súbory: `assets/js/motion-boot.js`, `motion.js`, `hero-gl.js`, `assets/css/motion.css`,
+  `assets/vendor/` (GSAP 3.15), `assets/img/hero-depth-1100.webp`, `hero-tall-depth-600.webp`.
+- Bezpečnostné poistky: `prefers-reduced-motion` = pôvodná stránka; ak sa `motion.js` nenačíta do 4 s, vráti sa pôvodná stránka;
+  bez WebGL ostáva obyčajný `<img>`. Dočasný náhľad thebiceps.github.io/p6-preview-b028df je samostatný repozitár, s týmto nesúvisí.
+
+### 2026-10-05 · plynulý hover efekt nadpisu · dev/teaser-motion · Filip + Claude
+- Písmená pri kurzore už nemenia `font-weight` (každá zmena znamenala nové rozloženie celého nadpisu, v Safari trhané),
+  ale dostanú jemný obrys vo vlastnej farbe (`-webkit-text-stroke`): len prekreslenie, žiadny layout, nadpis sa nikdy nezalomí inak.
+- Odstránené vynútené prepočty štýlov: `quickTo` na `.hero__body` pri každom pohybe myši čítal štýly (122× za 2 s),
+  nahradený vlastnou slučkou, ktorá len zapisuje; rozmery hera a tlačidiel sa merajú len pri zmene okna alebo vstupe myši.
+- Opakované CSS animácie (radar v mape, žiara v registrácii) sa pozastavia, keď je sekcia mimo obrazovky.
+
+### 2026-10-05 · hero: logo intro späť, nadpis po slovách, bez kurzívy · dev/teaser-motion · Filip + Claude
+- Úvod s kreslením loga P6 a počítadlom je späť (prvá návšteva v session), po ňom opona odhalí WebGL hero.
+- Nadpis sa skladá slovo po slove: písmená vystúpia z rozmazania s medenou žiarou, ktorá vychladne do finálnej farby,
+  posledné slovo príde po krátkej pauze s druhým zábleskom.
+- Všetka kurzíva je regular (`h1 em`, `h2 em`, `.steps__n` v `teaser.css`), font aj farba bez zmeny. Pozor: regular je širší,
+  na 1440 px sa nadpis v hero láme do troch riadkov.
+- Logo P6 v mape bolo posunuté hore doľava (vnorené SVG malo viewBox symbolu, `<use>` ho posunul o 100 jednotiek), teraz je v strede kruhu a o niečo menšie.
+- Krúžok kurzora nad tlačidlami a odkazmi zmizne, žiadna škvrna cez text tlačidla.
+
+### 2026-10-04 · WebGL hero: oprava artefaktov · dev/teaser-motion · Filip + Claude
+- Filip videl v Safari čierne šmuhy na konári vpravo hore a svetlé obrysy pri hranách domu. Príčina: posun pixelov
+  sa odhadoval len niekoľkými iteráciami a rozmazaná hĺbková mapa dávala hranám medzihodnotu.
+- `hero-gl.js` teraz hľadá pre každý pixel prvý povrch pozdĺž lúča (parallax occlusion mapping, 16 krokov + 5 krokov
+  spresnenia), takže bližší objekt vždy vyhrá a hrany ostanú celé. Hĺbkové mapy (`?v=2`) majú ostré hrany a popredie mierne rozšírené.
+  Pohyb kamery je o tretinu menší, plátno max 1,5× (zdroj má 2200 px). GPU čas 0,5 ms na snímku.
+
+### 2026-10-04 · hero vo WebGL (2.5D z vizualizácie) · dev/teaser-motion · Filip + Claude
+- Stále len lokálna vetva, bez PR. Hero obrázok kreslí nový `assets/js/hero-gl.js` (vlastný WebGL, žiadna knižnica):
+  z architektovej vizualizácie je pomocou hĺbkovej mapy (`assets/img/hero-depth-1100.webp`, `hero-tall-depth-600.webp`,
+  odhad Depth Anything 3 cez Magnific, blízko = biela) jemná 3D parallaxa na myš, na Androide náklon telefónu,
+  pri scrolle priblíženie s hĺbkou ostrosti a pri načítaní svetlo, ktoré prejde od oblohy po ulicu. Do obrázka sa nič nepridáva, len sa hýbe.
+- Starý úvod s logom P6 je preč, úvodom je samotný hero. Písmená nadpisu pri kurzore pribrali na váhe (Newsreader je variabilný font),
+  riadok sa nikdy nezalomí inak.
+- Bez WebGL (alebo keď sa nenačíta do 1,6 s) ostáva bežný `<img>` ako doteraz; `prefers-reduced-motion` = pôvodná stránka.
+  Kreslí sa len keď je hero na obrazovke a karta je viditeľná.
+
+### 2026-10-02 · motion dizajn pre teaser (len dev, nie je v main) · dev/teaser-motion · Filip + Claude
+- **Vlad, toto je tvoja strana (teaser), preto zatiaľ len lokálna vetva, bez PR a bez merge.** Filip si to pozrie, potom sa dohodneme.
+- Nová vrstva pohybu, ktorá sa pridáva navrch a nemení text ani tvrdenia: `assets/css/motion.css`, `assets/js/motion-boot.js` (v `<head>`),
+  `assets/js/motion.js` (pred `teaser.js`, preberá `.reveal`). Knižnice sú lokálne v `assets/vendor/` (GSAP 3.15 so ScrollTrigger,
+  SplitText, DrawSVG, MotionPath, štandardná bezplatná licencia GSAP), takže CSP sa nemení. Scroll je zámerne natívny
+  (bez Lenis a podobných): JS scroller beží v Safari len na 60 fps a na 120 Hz displeji pôsobil trhane. Z rovnakého dôvodu
+  nie je zrnitý filter cez celú stránku ani orezávanie celých sekcií pri scrolle.
+- Čo robí: nadpisy po písmenách a riadkoch, hero s parallaxou,
+  obrázky sa otvárajú pri scrolle, na desktope sa sekcia Lokalita pri scrolle zastaví a zoznam vzdialeností postupne rozsvieti miesta na mape
+  s trasami (na mobile sa prepína sám), ikony výhod sa kreslia, kroky spája medená linka, v registrácii sa kreslí veľké P6.
+- `index.html`: 1 link na CSS, 1 skript v `<head>`, 6 skriptov pred `teaser.js`, `prefers-reduced-motion` = stránka
+  presne ako doteraz. Ak `motion.js` nenabehne do 4 s, stránka sa vráti do pôvodného stavu.
+- Po prepnutí jazyka sa text delí nanovo z čerstvého HTML z `i18n.js` (overené SK, EN, DE). Formulár, tracking a sticky CTA nedotknuté.
+
 ### 2026-10-02 · nové pôdorysy bytov E a H · feat/plans-e-h-refresh · Filip + Claude
 - `flat-1np-E.webp`, `flat-25np-E.webp`, `flat-25np-H.webp` nahradené novými rendermi od Filipa. **1.H zámerne
   nezmenený**, má iný pôdorys. Spracované rovnako ako `import_renders.py` (pozadie, trim, max 1500 px, WebP q86):
