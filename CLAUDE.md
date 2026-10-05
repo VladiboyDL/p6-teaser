@@ -139,6 +139,14 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-05 · logo intro pri prvom načítaní · fix/intro-first-load · Filip + Claude
+- Filip nevidel logo intro na bytyp6.sk. Dve príčiny: intro hralo len raz za session (`sessionStorage`), takže v tej istej karte
+  sa po prvom načítaní už neukázalo; a Safari načítava stránku vopred na pozadí (Preload Top Hit), kde animácie stoja, takže
+  intro „dobehlo“ v momente zobrazenia.
+- Teraz: intro hrá pri každej novej návšteve aj pri reloade; preskočí sa pri návrate z inej stránky webu (referrer bytyp6.sk),
+  pri Späť/Dopredu a pri odkaze na `#sekciu`. Spustí sa až keď je stránka naozaj viditeľná. `sessionStorage` sa už nepoužíva.
+  `motion-boot.js?v=2`, `motion.js?v=10`.
+
 ### 2026-10-05 · motion vrstva teasera ide naživo · dev/teaser-motion · Filip + Claude
 - **Vlad, toto je tvoja strana:** Filip schválil a vrstva pohybu na teaseri ide do `main` (bytyp6.sk). Všetky poznámky nižšie
   od 2.10. do 5.10. (`dev/teaser-motion`) popisujú, čo pribudlo: logo intro, WebGL hero z hĺbkovej mapy, nadpisy, mapa, výhody, kroky.
