@@ -165,7 +165,6 @@
     var later = function (ms) { return new Promise(function (r) { setTimeout(function () { r(false); }, ms); }); };
     var glOk = GL ? Promise.race([GL.ready.catch(function () { return false; }), later(first ? 2600 : 1600)]) : Promise.resolve(false);
     var start = function (gl, quick) {
-      try { sessionStorage.setItem('p6-intro', '1'); } catch (e) { /* fine */ }
       if (gl === true) { GL.reveal(quick ? 1.3 : 1.7); return heroIn(true, quick ? 0.35 : 0.5); }
       if (GL) GL.abort();
       root.classList.add('hero-img');
@@ -597,7 +596,22 @@
   /* --- go ------------------------------------------------------------------------------- */
   ScrollTrigger.sort();
   ScrollTrigger.refresh();
-  intro();
+  // Browsers preload pages unseen (Safari "Preload Top Hit", prerendering, background tabs). Animation frames are frozen
+  // there, so an intro started now would be over the moment the page is shown. Start it only once the page is visible.
+  var introEl = $('div.intro');
+  if (introEl) introEl.style.animation = 'none';                 // JS is alive: the CSS failsafe is not needed
+  (function whenVisible(fn) {
+    var hidden = function () { return document.hidden || document.prerendering; };
+    if (!hidden()) return fn();
+    var go = function () {
+      if (hidden()) return;
+      document.removeEventListener('visibilitychange', go);
+      document.removeEventListener('prerenderingchange', go);
+      fn();
+    };
+    document.addEventListener('visibilitychange', go);
+    document.addEventListener('prerenderingchange', go);
+  })(intro);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
   window.addEventListener('load', function () { ScrollTrigger.refresh(); });
 })();
