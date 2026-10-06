@@ -1,5 +1,5 @@
 /* P6 — cookie consent for the whole domain (the teaser in the root and the official site beside it).
-   Self-sufficient on purpose: its own texts in four languages and its own stylesheet (/assets/css/consent.css),
+   Self-sufficient on purpose: its own texts in five languages and its own stylesheet (/assets/css/consent.css),
    so a page only needs /assets/js/config.js and this file.
    Nothing that needs consent (§ 109 ods. 8 zákona č. 452/2021 Z. z., čl. 6 ods. 1 písm. a) GDPR)
    is loaded until the visitor opts in: Google Analytics / Google Ads / Meta Pixel are injected
@@ -63,6 +63,24 @@
       'ck.mkt': 'Marketing',
       'ck.mkt.d': 'Messung der Wirksamkeit unserer Werbung und deren Anzeige auf anderen Websites (Google Ads, Meta).',
       'ck.close': 'Schließen'
+    },
+    cs: {
+      'ck.title': 'Soubory cookies',
+      'ck.text': 'Nezbytné cookies zajišťují fungování stránky. S vaším souhlasem použijeme i analytické a marketingové cookies, abychom stránku zlepšovali a měřili reklamu. Souhlas můžete kdykoli změnit.',
+      'ck.more': 'Zásady používání cookies',
+      'ck.accept': 'Přijmout vše',
+      'ck.reject': 'Odmítnout',
+      'ck.settings': 'Nastavení',
+      'ck.save': 'Uložit výběr',
+      'ck.set.title': 'Nastavení cookies',
+      'ck.always': 'vždy aktivní',
+      'ck.nec': 'Nezbytné',
+      'ck.nec.d': 'Zapamatování vašeho výběru cookies a jazyka. Bez nich stránka nefunguje správně, proto je nelze vypnout.',
+      'ck.ana': 'Analytické',
+      'ck.ana.d': 'Anonymizované statistiky návštěvnosti, které nám pomáhají stránku zlepšovat (Google Analytics).',
+      'ck.mkt': 'Marketingové',
+      'ck.mkt.d': 'Měření účinnosti reklamy a její zobrazování na jiných stránkách (Google Ads, Meta).',
+      'ck.close': 'Zavřít'
     },
     uk: {
       'ck.title': 'Файли cookie',

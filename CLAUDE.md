@@ -139,6 +139,23 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-06 · čeština ako piaty jazyk (teaser + právne stránky) · feat/cs-mutacia · Vlad + Claude
+- Teaser a všetky štyri právne stránky majú českú verziu: prepínač je **SK / EN / DE / CZ / UA**,
+  `?lang=cs` (funguje aj `?lang=cz`), hreflang a sitemap doplnené, cookie lišta má piaty jazyk.
+- **Pozor na detekciu jazyka** (`lang-detect.js`): `Europe/Prague` už nie je automaticky slovenčina.
+  tzdata robí z `Europe/Bratislava` odkaz na `Europe/Prague`, takže niektoré prehliadače hlásia Prahu aj
+  na slovenskom zariadení — to pásmo preto rozhoduje podľa jazyka prehliadača a bez neho padá na slovenčinu.
+  Český prehliadač dostane češtinu aj na Slovensku (`czechBrowserLangs` v `config.js`, pôvodne bolo `cs` v `slovakBrowserLangs`).
+- V češtine sa dispozície zobrazujú po česku (2+kk / 2+1), ale **hodnoty, ktoré formulár odosiela, ostávajú slovenské**
+  (`1-izbový` …), inak by sa rozsypali filtre a report v CRM.
+- Právne stránky doplnil generátor na Vladovej strane (`teaser-build/add_cs_legal.py`, rovnako ako kedysi ukrajinčina);
+  ručne ich needitujte. Právo, dozorný orgán aj SOI ostávajú slovenské, rozhodujúce je slovenské znenie —
+  táto veta je teraz vo všetkých jazykoch doplnená o češtinu. **Český text ešte neprešiel právnikom.**
+- Cache busty: `teaser.css?v=17`, `config.js?v=20`, `lang-detect.js?v=15`, `i18n.js?v=17`, `consent.js?v=5` na všetkých piatich koreňových stránkach.
+- **Oficiálny web (`web/p6-site/`) je stále len po slovensky** a čeština tam nie je — nemá žiadnu jazykovú vrstvu
+  (`<html lang="sk">` natvrdo v `_build/build_pages.py`, PDF rovnako). Ak sa má mutovať aj on, je to samostatná robota
+  na Filipovej strane a vyriešila by zároveň EN/DE/UA. Zatiaľ platí: odkazy na právne stránky z neho môžu používať `?lang=cs`.
+
 ### 2026-10-05 · motion vrstva teasera ide naživo · dev/teaser-motion · Filip + Claude
 - **Vlad, toto je tvoja strana:** Filip schválil a vrstva pohybu na teaseri ide do `main` (bytyp6.sk). Všetky poznámky nižšie
   od 2.10. do 5.10. (`dev/teaser-motion`) popisujú, čo pribudlo: logo intro, WebGL hero z hĺbkovej mapy, nadpisy, mapa, výhody, kroky.
