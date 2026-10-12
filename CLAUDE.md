@@ -139,6 +139,13 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-12 · plynulé rolovanie kolieskom myši · fix/intro-first-load · Filip + Claude
+- Klasické koliesko myši na desktope skákalo po krokoch. `motion.js` teraz preberá **len udalosti kolieska myši** a plynule
+  dobehne k cieľu (časovo riadené, rovnaký pocit pri 60 aj 120 Hz). Trackpad a dotyk ostávajú natívne (tam JS scroller vadil, viď 2. 10.).
+- Rozpoznanie kolieska: `deltaMode` riadky/strany, `wheelDeltaY` násobok 120, alebo macOS krok 4,000244; dvojosový pohyb = trackpad.
+  Ctrl+koliesko (zoom), vnútorné rolovateľné boxy a uzamknutá stránka počas intra sa nechávajú tak. Klávesy, posuvník alebo odkaz plynutie zrušia.
+- Vetva obsahuje aj merge `main` (čeština od Vlada): zachované jeho cache busty `config.js?v=20`, `lang-detect.js?v=15`; `motion.js?v=11`.
+
 ### 2026-10-05 · logo intro pri prvom načítaní · fix/intro-first-load · Filip + Claude
 - Filip nevidel logo intro na bytyp6.sk. Dve príčiny: intro hralo len raz za session (`sessionStorage`), takže v tej istej karte
   sa po prvom načítaní už neukázalo; a Safari načítava stránku vopred na pozadí (Preload Top Hit), kde animácie stoja, takže
