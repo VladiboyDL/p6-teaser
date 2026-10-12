@@ -1,14 +1,15 @@
 /* P6 teaser — language decision. Runs in <head>, before first paint.
 
    Order of precedence:
-     1. ?lang=sk|en|de|uk in the URL (shareable, also what hreflang points to; ?lang=ua works too)
-     2. the visitor's own earlier choice from the SK / EN / DE / UA switcher
-     3. a browser set to Ukrainian -> uk, wherever the visitor is (the Ukrainian community in Bratislava)
-     4. location: Slovakia -> sk, German-speaking country -> de, Ukraine -> uk, anywhere else -> en
+     1. ?lang=sk|en|de|cs|uk in the URL (shareable, also what hreflang points to; ?lang=ua and ?lang=cz work too)
+     2. the visitor's own earlier choice from the SK / EN / DE / CZ / UA switcher
+     3. a browser set to Ukrainian -> uk or to Czech -> cs, wherever the visitor is
+        (the Ukrainian community in Bratislava, Czech buyers who may sit anywhere)
+     4. location: Slovakia -> sk, Czechia -> cs, German-speaking country -> de, Ukraine -> uk, anywhere else -> en
 
    Location is read from the device's time zone, so nothing leaves the browser and
    no third party sees an IP address before the visitor has consented to anything.
-   A visitor whose browser is set to Slovak (or Czech) gets Slovak even abroad.
+   A visitor whose browser is set to Slovak gets Slovak even abroad, one set to Czech gets Czech.
    If P6_CONFIG.geoEndpoint is set, i18n.js refines the guess with the IP country. */
 (function () {
   'use strict';
@@ -26,13 +27,15 @@
 
   root.classList.add('js');
 
-  var SUPPORTED = ['sk', 'en', 'de', 'uk'];
-  var ALIAS = { ua: 'uk' };            // people type ?lang=ua; the language code is uk
+  var SUPPORTED = ['sk', 'en', 'de', 'cs', 'uk'];
+  var ALIAS = { ua: 'uk', cz: 'cs' };  // people type ?lang=ua / ?lang=cz; the language codes are uk and cs
   var cfg = window.P6_CONFIG || {};
 
-  // IANA zones. Europe/Prague is here because older browsers canonicalise
-  // Europe/Bratislava to it, and Czech visitors read Slovak without effort.
-  var TZ_SK = ['Europe/Bratislava', 'Europe/Prague'];
+  // IANA zones. Europe/Prague is deliberately NOT Slovak and not Czech on its own: tzdata makes
+  // Europe/Bratislava a link to Europe/Prague, so some browsers report Prague for a Slovak device.
+  // That zone is decided by the browser language below, and falls back to Slovak.
+  var TZ_SK = ['Europe/Bratislava'];
+  var TZ_CS = ['Europe/Prague'];
   var TZ_DE = ['Europe/Berlin', 'Europe/Busingen', 'Europe/Vienna', 'Europe/Zurich', 'Europe/Vaduz'];
   var TZ_UK = ['Europe/Kyiv', 'Europe/Kiev', 'Europe/Uzhgorod', 'Europe/Zaporozhye'];
   var COUNTRY_DE = ['DE', 'AT', 'CH', 'LI'];
@@ -40,19 +43,22 @@
   function fromCountry(cc) {
     cc = String(cc || '').toUpperCase();
     if (cc === 'SK') return 'sk';
+    if (cc === 'CZ') return 'cs';
     if (COUNTRY_DE.indexOf(cc) > -1) return 'de';
     if (cc === 'UA') return 'uk';
     return cc ? 'en' : null;
   }
 
-  // the first of the visitor's browser languages that is Slovak/Czech or Ukrainian, if any
+  // the first of the visitor's browser languages that is Slovak, Czech or Ukrainian, if any
   function heritage() {
-    var sk = cfg.slovakBrowserLangs || ['sk', 'cs'];
+    var sk = cfg.slovakBrowserLangs || ['sk'];
+    var cs = cfg.czechBrowserLangs || ['cs'];
     var uk = cfg.ukrainianBrowserLangs || ['uk'];
     var list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
     for (var i = 0; i < list.length; i++) {
       var code = String(list[i]).toLowerCase().split('-')[0];
       if (sk.indexOf(code) > -1) return 'sk';
+      if (cs.indexOf(code) > -1) return 'cs';
       if (uk.indexOf(code) > -1) return 'uk';
     }
     return null;
@@ -71,7 +77,9 @@
     var h = heritage();
     if (h === 'uk') return 'uk';
     if (TZ_SK.indexOf(tz) > -1) return 'sk';
+    if (TZ_CS.indexOf(tz) > -1) return h === 'cs' ? 'cs' : 'sk';   // Prague may be a canonicalised Bratislava
     if (h === 'sk') return 'sk';
+    if (h === 'cs') return 'cs';
     if (TZ_DE.indexOf(tz) > -1) return 'de';
     if (TZ_UK.indexOf(tz) > -1) return 'uk';
     if (!tz) return 'sk';          // nothing to go on: the primary language

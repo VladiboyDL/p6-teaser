@@ -1,11 +1,13 @@
-/* P6 teaser — translations (EN, DE, UK) and the SK / EN / DE / UA switcher.
+/* P6 teaser — translations (EN, DE, CS, UK) and the SK / EN / DE / CZ / UA switcher.
    Slovak is the source language and lives in the HTML itself; this file only
    carries what replaces it. Keys match data-i18n / data-i18n-attr in the markup.
+   Czech shows flat sizes the Czech way (2+kk); the values the form submits stay Slovak,
+   because the CRM and the reports count on them.
    Strings are trusted HTML written by us, so they are applied with innerHTML. */
 (function () {
   'use strict';
 
-  var L = window.P6_LANG || { current: 'sk', source: 'location', supported: ['sk', 'en', 'de'] };
+  var L = window.P6_LANG || { current: 'sk', source: 'location', supported: ['sk', 'en', 'de', 'cs', 'uk'] };
   var cfg = window.P6_CONFIG || {};
   var root = document.documentElement;
 
@@ -70,6 +72,26 @@
       'done.mail.title': 'Noch ein Schritt',
       'done.mail.text': 'Wir haben Ihr E-Mail-Programm mit einer vorbereiteten Nachricht geöffnet. Senden Sie sie einfach ab und Sie stehen auf der Liste.',
       'cfg.missing': 'zu ergänzen'
+    },
+    cs: {
+      'meta.title': 'P6 | Připravujeme. Domov mezi Miletičkou a Downtownem',
+      'meta.desc': 'Připravujeme 44 bytů v bratislavském Ružinově, mezi Miletičkou a novým downtownem. Zaregistrujte se a získejte přístup k předprodeji prvních bytů za zaváděcí ceny.',
+      'err.first': 'Vyplňte, prosím, jméno.',
+      'err.last': 'Vyplňte, prosím, příjmení.',
+      'err.email': 'Zadejte platnou e-mailovou adresu.',
+      'err.phone': 'Zkontrolujte telefonní číslo.',
+      'err.consent': 'Bez souhlasu se zpracováním údajů vás nemůžeme kontaktovat.',
+      'err.send': 'Formulář se nepodařilo odeslat. Zkuste to, prosím, znovu nebo nám napište na {email}.',
+      'err.wait': 'Zkuste to, prosím, za pár sekund znovu.',
+      'err.limit': 'Z tohoto zařízení už přišlo více registrací. Pokud potřebujete něco doplnit, napište nám na {email}.',
+      'err.links': 'Zpráva nemůže obsahovat odkazy. Odstraňte je, prosím, a zkuste to znovu.',
+      'err.captcha': 'Potvrďte, prosím, že nejste robot.',
+      'sending': 'Odesílám…',
+      'done.title': 'Děkujeme, jste na seznamu',
+      'done.text': 'Ozveme se vám jako prvním, hned jak budou připravené půdorysy a ceník.',
+      'done.mail.title': 'Ještě jeden krok',
+      'done.mail.text': 'Otevřeli jsme váš e-mailový program s připravenou zprávou. Stačí ji odeslat a jste na seznamu.',
+      'cfg.missing': 'doplnit'
     },
     uk: {
       'meta.title': 'P6 | Незабаром. Дім між ринком Мілетічка і Downtown',
@@ -263,6 +285,90 @@
       'foot.disclaimer': 'Visualisierungen dienen der Illustration. Flächen, Zeiten und Entfernungen sind Richtwerte. Die Informationen auf dieser Website stellen weder ein Vertragsangebot noch eine Auslobung dar.',
       'sticky.text': 'Vorverkauf der ersten Wohnungen<span class="sticky__more"> zu Einführungspreisen</span>'
     },
+    cs: {
+      'skip': 'Přeskočit na obsah',
+      'nav.aria': 'Hlavní navigace',
+      'nav.project': 'Projekt', 'nav.location': 'Lokalita', 'nav.perks': 'Výhody', 'nav.steps': 'Jak to funguje',
+      'cta.interest': 'Mám zájem',
+      'hero.alt': 'Vizualizace bytového domu P6: pět podlaží se zelenými balkony a střešní terasou',
+      'hero.status': 'Připravujeme · Bratislava-Ružinov',
+      'hero.title': '<span class="line"><span>Domov mezi</span></span><span class="line"><span>Miletičkou a&nbsp;<em>Downtownem</em></span></span>',
+      'hero.sub': '44 bytů v&nbsp;bratislavském Ružinově. Trh, škola, práce, Nivy i&nbsp;nové centrum Bratislavy v&nbsp;přirozeném dosahu. Zaregistrujte se a&nbsp;získejte přístup k&nbsp;předprodeji prvních bytů za zaváděcí ceny.',
+      'hero.cta': 'Chci přístup k&nbsp;předprodeji', 'hero.cta2': 'Poznat projekt',
+      'hero.facts.aria': 'Projekt ve zkratce',
+      'fact.flats': 'bytů', 'fact.rooms.n': '1 až 3', 'fact.rooms': 'pokoje', 'fact.area.n': '30 až 78', 'fact.area': 'm² plochy',
+      'viz': 'Vizualizace', 'hero.cue': 'Pokračovat na projekt',
+      'about.eyebrow': 'O projektu',
+      'about.title': 'Klidný dům<br>v&nbsp;dynamické<br>části města',
+      'about.lede': 'P6 je městské bydlení v&nbsp;Ružinově, na rozhraní Miletičky a&nbsp;nového downtownu. Přináší 44 bytů, zelené balkony a&nbsp;střešní terasu pro všechny obyvatele.',
+      'about.p1': 'Jedno- až třípokojové byty o&nbsp;velikosti 30 až 78&nbsp;m², každý s&nbsp;vlastním balkonem. Velká okna, přehledné dispozice a&nbsp;soukromí tam, kde ho opravdu využijete.',
+      'about.p2': 'Bydlení pro lidi, kteří chtějí mít práci, školu, trh i&nbsp;centrum ve správné vzdálenosti. A&nbsp;trávit méně času na cestách a&nbsp;více tím, na čem jim záleží.',
+      'about.link': 'Získat přístup k&nbsp;předprodeji',
+      'about.alt': 'Vizualizace uliční fasády P6: pět podlaží, balkony se zelení, světlé panely a střešní terasa',
+      'about.cap': 'Vizualizace · uliční fasáda',
+      'fig.area': 'm² plochy bytů', 'fig.floors': 'nadzemních podlaží',
+      'loc.eyebrow': 'Lokalita',
+      'loc.title': 'Všechno podstatné<br>ve správné <em>vzdálenosti</em>',
+      'loc.lede': 'Mlynské nivy a&nbsp;jejich okolí tvoří hlavní business zónu Bratislavy. Tržiště Miletičova, škola, Nivy i&nbsp;nábřeží Dunaje jsou na dosah pěšky nebo na kole.',
+      'd1.n': '1 min', 'd1': 'pěšky do business zóny',
+      'd2.n': '2 min', 'd2': 'pěšky na zastávku MHD',
+      'd3.n': '7 min', 'd3': 'pěšky do školy a&nbsp;gymnázia',
+      'd4.n': '13 min', 'd4': 'pěšky na tržiště Miletičova',
+      'd5.n': 'do 1,5 km', 'd5': 'Nivy, Twin City, CBC, Sky Park',
+      'd6.n': '15 až 20 min', 'd6': 'autem na letiště Bratislava',
+      'map.aria': 'Mapa okolí P6 s okruhy 5, 10 a 15 minut pěšky: tržiště Miletičova, škola Novohradská, stanice Nivy, Sky Park, Eurovea a Dunaj',
+      'map.danube': 'DUNAJ', 'map.r5': '5 MIN PĚŠKY', 'map.r10': '10 MIN', 'map.r15': '15 MIN', 'map.oldtown': 'STARÉ MĚSTO',
+      'map.market': 'Tržiště Miletičova', 'map.school': 'Škola', 'map.nivy': 'Stanice Nivy',
+      'map.bridge': 'Most Apollo', 'map.lake': '↑ Štrkovecké jezero', 'map.airport': 'Letiště 16 min →', 'map.stadium': '↑ Zimní stadion',
+      'map.credit': 'Mapové podklady ©',
+      'map.cap': 'Poloha projektu je vyznačena orientačně. Okruhy ukazují přibližnou pěší dostupnost, časy v seznamu jsou měřené po reálných trasách.',
+      'perks.eyebrow': 'Výhody', 'perks.title': 'Co přinese P6?',
+      'perk.1': 'Balkon ke každému bytu',
+      'perk.2': 'Komunitní střešní terasa',
+      'perk.3': 'Parkování u&nbsp;domu',
+      'perk.4': 'Zastávka MHD 2&nbsp;minuty pěšky',
+      'perk.5': 'Škola a&nbsp;gymnázium 7&nbsp;minut pěšky',
+      'perk.6': 'Tržiště Miletičova 13&nbsp;minut pěšky',
+      'perk.7': 'Business zóna a&nbsp;Nivy v&nbsp;pěší vzdálenosti',
+      'perk.8': 'Letiště 15 až 20&nbsp;minut autem',
+      'perks.note': 'Projekt je v&nbsp;přípravě. Uvedené údaje jsou předběžné a&nbsp;mohou se změnit podle pravomocných povolení a&nbsp;finální projektové dokumentace. Standard provedení a&nbsp;vybavení společných prostor upřesníme před spuštěním prodeje.',
+      'gal.eyebrow': 'První vizualizace',
+      'gal.title': 'Domov nekončí<br>u&nbsp;vašich dveří',
+      'gal.lede': 'Světlé byty s&nbsp;balkonem orientovaným tam, kde ho využijete. A&nbsp;nad nimi společná terasa na rozhovor, odpočinek nebo klidný večer nad městem.',
+      'gal.alt1': 'Vizualizace obývacího pokoje otevřeného na balkon, světlý interiér s dřevěnou podlahou',
+      'gal.alt2': 'Vizualizace komunitní střešní terasy po západu slunce: pergoly, zeleň a sezení',
+      'gal.alt3': 'Vizualizace ložnice s oknem do podlahy a výhledem do zeleně',
+      'gal.cap1': 'Vizualizace · obývací pokoj', 'gal.cap2': 'Vizualizace · střešní terasa', 'gal.cap3': 'Vizualizace · ložnice',
+      'steps.eyebrow': 'Jak to funguje',
+      'steps.title': 'Tři kroky k&nbsp;bytu<br>za zaváděcí cenu',
+      'step1.t': 'Zaregistrujete se', 'step1.p': 'Vyplníte krátký formulář. Trvá to minutu a&nbsp;k&nbsp;ničemu vás nezavazuje.', 'step1.tag': 'Právě probíhá',
+      'step2.t': 'Ozveme se vám jako prvním', 'step2.p': 'Nabídku předprodeje s&nbsp;půdorysy a&nbsp;zaváděcími cenami dostanete dřív, než ji zveřejníme.', 'step2.tag': 'Před zveřejněním nabídky',
+      'step3.t': 'Vyberete si v&nbsp;předprodeji', 'step3.p': 'Na osobní konzultaci si vyberete z&nbsp;bytů uvolněných do předprodeje. Další byty půjdou do prodeje postupně.', 'step3.tag': 'Předprodej',
+      'reg.eyebrow': 'Registrace zájemců',
+      'reg.title': 'Předprodej prvních bytů <em>za zaváděcí ceny</em>',
+      'reg.lede': 'Byty uvolňujeme do prodeje postupně. Předprodej otevře limitovaný počet vybraných bytů za zaváděcí ceny a&nbsp;jako první se o&nbsp;něm dozvědí registrovaní zájemci. Ať hledáte vlastní bydlení, nebo investici, dejte nám vědět ve formuláři.',
+      'reg.t1': 'nabídka předprodeje dřív, než ji zveřejníme', 'reg.t2': 'zaváděcí ceny, které platí jen v&nbsp;předprodeji', 'reg.t3': 'osobní konzultace bez závazku',
+      'f.first': 'Jméno', 'f.first.ph': 'Vaše jméno', 'f.last': 'Příjmení', 'f.last.ph': 'Vaše příjmení',
+      'f.email': 'E-mail', 'f.email.ph': 'vy@email.cz', 'f.phone': 'Telefon <i>(nepovinné)</i>',
+      'f.type': 'O jaký byt máte zájem?', 'f.type1': '1+kk / 1+1', 'f.type2': '2+kk / 2+1', 'f.type3': '3+kk / 3+1', 'f.type0': 'Ještě nevím',
+      'f.purpose': 'Byt hledám na <i>(nepovinné)</i>', 'f.purpose1': 'Vlastní bydlení', 'f.purpose2': 'Investici',
+      'f.source': 'Odkud jste se o&nbsp;P6 dozvěděli? <i>(nepovinné)</i>',
+      'f.src0': 'Zvolte', 'f.src1': 'Vyhledávání Google', 'f.src2': 'Sociální sítě', 'f.src3': 'Online reklama', 'f.src4': 'Realitní portál',
+      'f.src5': 'Reklama na stavbě', 'f.src6': 'Doporučení od známých', 'f.src7': 'Jiné',
+      'f.msg': 'Zpráva <i>(nepovinné)</i>', 'f.msg.ph': 'Například preferované podlaží nebo orientace',
+      'f.consent1': 'Uděluji <a href="suhlas-so-spracovanim.html" target="_blank" rel="noopener">souhlas se zpracováním osobních údajů</a> za účelem kontaktování v&nbsp;souvislosti s&nbsp;projektem P6. Seznámil(a) jsem se s&nbsp;<a href="ochrana-osobnych-udajov.html" target="_blank" rel="noopener">informacemi o&nbsp;ochraně osobních údajů</a>.',
+      'f.consent2': 'Souhlasím se zasíláním novinek o&nbsp;projektu e-mailem. Souhlas mohu kdykoli odvolat. <i>(nepovinné)</i>',
+      'f.fine': 'Údaje použijeme jen ke kontaktování v&nbsp;souvislosti s&nbsp;projektem P6. Neposkytujeme je pro reklamní účely třetím stranám.',
+      'foot.about': 'Městské bydlení v&nbsp;bratislavském Ružinově. Miletička, škola, business zóna, Nivy i&nbsp;nové centrum Bratislavy v&nbsp;přirozeném dosahu.',
+      'foot.sales': 'Prodej', 'foot.hours': 'Po až Pá, 9:00 až 18:00', 'foot.page': 'Stránka', 'foot.reg': 'Registrace zájemců',
+      'foot.legal': 'Právní informace',
+      'legal.privacy': 'Ochrana osobních údajů', 'legal.cookies': 'Zásady používání cookies', 'legal.consent': 'Souhlas se zpracováním údajů',
+      'legal.terms': 'Podmínky používání a&nbsp;provozovatel', 'legal.cookieset': 'Nastavení cookies',
+      'legal.back': 'Zpět na hlavní stránku', 'legal.eyebrow': 'Právní informace',
+      'foot.rights': 'Všechna práva vyhrazena.',
+      'foot.disclaimer': 'Vizualizace jsou ilustrativní. Výměry, časy a vzdálenosti jsou orientační. Informace na stránce nejsou návrhem na uzavření smlouvy ani veřejným příslibem.',
+      'sticky.text': 'Předprodej prvních bytů<span class="sticky__more"> za zaváděcí ceny</span>'
+    },
     uk: {
       'skip': 'Перейти до вмісту',
       'nav.aria': 'Головна навігація',
@@ -349,8 +455,8 @@
     }
   };
 
-  var LOCALE = { sk: 'sk-SK', en: 'en-GB', de: 'de-DE', uk: 'uk-UA' };
-  var OG = { sk: 'sk_SK', en: 'en_GB', de: 'de_DE', uk: 'uk_UA' };
+  var LOCALE = { sk: 'sk-SK', en: 'en-GB', de: 'de-DE', cs: 'cs-CZ', uk: 'uk-UA' };
+  var OG = { sk: 'sk_SK', en: 'en_GB', de: 'de_DE', cs: 'cs_CZ', uk: 'uk_UA' };
 
   function t(key, vars) {
     var s = (JS[L.current] && JS[L.current][key]) || (PAGE[L.current] && PAGE[L.current][key]) || JS.sk[key] || '';
@@ -470,6 +576,7 @@
         var byIp = L.fromCountry(j.country);
         var h = L.heritage ? L.heritage() : null;
         if (h === 'uk') byIp = 'uk';
+        else if (h === 'cs') byIp = 'cs';                      // a Czech browser gets Czech wherever it sits
         else if (byIp !== 'sk' && h === 'sk') byIp = 'sk';
         if (byIp && byIp !== L.current) setLang(byIp, false);
       })

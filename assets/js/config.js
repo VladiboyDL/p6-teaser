@@ -1,5 +1,5 @@
 /* P6 teaser — jediné miesto, kde sa dopĺňajú údaje prevádzkovateľa a merania.
-   Všetky právne dokumenty (SK / EN / DE) si tieto hodnoty načítajú samy.
+   Všetky právne dokumenty (SK / EN / DE / CZ / UA) si tieto hodnoty načítajú samy.
    Prázdna hodnota sa v dokumentoch zobrazí ako žlto označené „[doplniť …]“. */
 window.P6_CONFIG = {
   legal: {
@@ -45,6 +45,7 @@ window.P6_CONFIG = {
      takže žiadna IP adresa neopúšťa prehliadač. Ak hosting vie vrátiť krajinu podľa IP
      (Cloudflare / Netlify / Vercel edge funkcia), sem patrí jej URL; má vrátiť JSON {"country":"AT"}. */
   geoEndpoint: '',
-  slovakBrowserLangs: ['sk', 'cs'],     // návštevník s týmto jazykom prehliadača dostane slovenčinu aj v zahraničí
+  slovakBrowserLangs: ['sk'],           // návštevník s týmto jazykom prehliadača dostane slovenčinu aj v zahraničí
+  czechBrowserLangs: ['cs'],            // návštevník s českým prehliadačom dostane češtinu aj na Slovensku
   ukrainianBrowserLangs: ['uk']         // návštevník s ukrajinským prehliadačom dostane ukrajinčinu aj na Slovensku
 };
