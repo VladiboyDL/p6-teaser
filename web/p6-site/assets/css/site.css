@@ -1878,6 +1878,7 @@ a.ucard:hover .ucard__go svg { opacity: 1; transform: translateX(3px); }
 .gallery > div { min-width: 0; }
 .gallery .photo { min-height: 240px; aspect-ratio: auto; height: 100%; }
 .gallery__wide { grid-column: span 2; }
+.gallery--dense { grid-auto-flow: dense; } /* wide tiles never leave a hole, at any column count */
 @media (max-width: 720px) { .gallery__wide { grid-column: span 1; } }
 
 /* --- photo tiles that carry a real image ---------------------------------- */
