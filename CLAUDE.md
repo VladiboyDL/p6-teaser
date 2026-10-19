@@ -139,6 +139,13 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-19 · 360° prehliadka 3-izbového bytu na /prehliadka/ · feat/prehliadka-360 · Filip + Claude
+- Nový priečinok `prehliadka/4d1586hy/`: samostatný balík 360° prehliadky (Vladov `tour_site.py`: vlastná CSP v `<meta>`,
+  `noindex, nofollow`, žiadne CDN, písma a knižnice v priečinku, 16 MB, 10 panorám 6144 px). Na Filipovu žiadosť,
+  na zdieľanie odkazom; v `sitemap.xml` ani v navigácii nie je, adresa je náhodná. Byt sa v ňom nemenuje.
+- Výhľady z okien sú Samkove fotky zo strechy (vyšší pohľad), inak model presne ako Vladova prehliadka.
+- Nič iné sa nemení. Ďalšie typy bytov pribudnú ako ďalšie priečinky v `prehliadka/`.
+
 ### 2026-10-06 · čeština ako piaty jazyk (teaser + právne stránky) · feat/cs-mutacia · Vlad + Claude
 - Teaser a všetky štyri právne stránky majú českú verziu: prepínač je **SK / EN / DE / CZ / UA**,
   `?lang=cs` (funguje aj `?lang=cz`), hreflang a sitemap doplnené, cookie lišta má piaty jazyk.
