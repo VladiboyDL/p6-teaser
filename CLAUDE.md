@@ -139,6 +139,10 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-20 · 360° prehliadka: opravené vankúše · feat/prehliadka-360-fix · Filip + Claude
+- `prehliadka/4d1586hy/`: nové panorámy. Vankúše na gauči zapadali do operadla a na lavici pri okne prechádzali
+  sklom; teraz jeden olivový vankúš na sedáku a vankúše na lavici bez kontaktu so sklom. Adresa sa nemení.
+
 ### 2026-10-19 · 360° prehliadka 3-izbového bytu na /prehliadka/ · feat/prehliadka-360 · Filip + Claude
 - Nový priečinok `prehliadka/4d1586hy/`: samostatný balík 360° prehliadky (Vladov `tour_site.py`: vlastná CSP v `<meta>`,
   `noindex, nofollow`, žiadne CDN, písma a knižnice v priečinku, 16 MB, 10 panorám 6144 px). Na Filipovu žiadosť,
