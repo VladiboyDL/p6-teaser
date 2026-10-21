@@ -36,6 +36,59 @@
   });
   gsap.ticker.lagSmoothing(0);
 
+  /* --- mouse wheel: smoothed; trackpads and touch stay native ------------------------------
+     A notched mouse wheel jumps the page in steps, which reads as stutter. Only those events are taken over and
+     eased towards a target; trackpad gestures (with their own momentum) and touch keep the browser's native scroll,
+     which runs at the screen's full refresh rate. Ctrl+wheel (zoom), horizontal wheels, scrollable inner boxes and
+     the locked page during the intro are left alone. */
+  (function () {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    var MAC_TICK = 4.000244140625;                               // macOS reports accelerated mouse wheels in multiples of this
+    var isMouseWheel = function (e) {
+      if (e.deltaMode === 1 || e.deltaMode === 2) return true;   // lines or pages: always a wheel (Firefox)
+      if (e.deltaX !== 0) return false;                          // two-axis movement: a trackpad
+      var w = e.wheelDeltaY;
+      if (w && w % 120 === 0) return true;                       // Chrome and Safari report wheel notches as multiples of 120
+      var d = Math.abs(e.deltaY), q = d / MAC_TICK;
+      return d >= MAC_TICK && Math.abs(q - Math.round(q)) < 1e-3;
+    };
+    var scrollsInside = function (el, dy) {                      // an inner box that can still scroll in that direction keeps the wheel
+      for (; el && el !== document.body && el !== root; el = el.parentElement) {
+        var cs = getComputedStyle(el);
+        if (/(auto|scroll)/.test(cs.overflowY) && el.scrollHeight > el.clientHeight + 1) {
+          if (dy < 0 ? el.scrollTop > 0 : el.scrollTop + el.clientHeight < el.scrollHeight - 1) return true;
+        }
+      }
+      return false;
+    };
+    var target = 0, pos = 0, raf = 0, last = 0, mine = -1, trackpadUntil = 0;
+    var max = function () { return root.scrollHeight - window.innerHeight; };
+    var step = function (now) {
+      var dt = Math.min(0.05, last ? (now - last) / 1000 : 0.016); last = now;
+      pos += (target - pos) * (1 - Math.exp(-dt * 10));          // time-based ease: the same feel at 60 and 120 Hz
+      if (Math.abs(target - pos) < 0.5) pos = target;
+      mine = Math.round(pos);
+      window.scrollTo(0, pos);
+      if (pos !== target) raf = requestAnimationFrame(step); else { raf = 0; last = 0; }
+    };
+    window.addEventListener('wheel', function (e) {
+      if (e.ctrlKey || e.defaultPrevented) return;
+      if (!isMouseWheel(e)) { trackpadUntil = e.timeStamp + 250; return; } // inside a trackpad gesture: stay native
+      if (e.timeStamp < trackpadUntil) return;
+      if (root.classList.contains('m-lock')) { e.preventDefault(); return; }
+      var dy = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY;
+      if (scrollsInside(e.target, dy)) return;
+      e.preventDefault();
+      if (!raf) { pos = window.scrollY; target = pos; }
+      target = Math.max(0, Math.min(max(), target + dy));
+      if (!raf) raf = requestAnimationFrame(step);
+    }, { passive: false });
+    // any other scroll (keys, scrollbar, links, find in page) cancels the glide, so the two never fight
+    window.addEventListener('scroll', function () {
+      if (raf && Math.abs(window.scrollY - mine) > 2) { cancelAnimationFrame(raf); raf = 0; last = 0; }
+    }, { passive: true });
+  })();
+
   /* --- take over the reveal system (teaser.js finds none left) ------------------------ */
   $$('.reveal').forEach(function (el) { el.classList.remove('reveal'); });
 
@@ -165,7 +218,6 @@
     var later = function (ms) { return new Promise(function (r) { setTimeout(function () { r(false); }, ms); }); };
     var glOk = GL ? Promise.race([GL.ready.catch(function () { return false; }), later(first ? 2600 : 1600)]) : Promise.resolve(false);
     var start = function (gl, quick) {
-      try { sessionStorage.setItem('p6-intro', '1'); } catch (e) { /* fine */ }
       if (gl === true) { GL.reveal(quick ? 1.3 : 1.7); return heroIn(true, quick ? 0.35 : 0.5); }
       if (GL) GL.abort();
       root.classList.add('hero-img');
@@ -597,7 +649,22 @@
   /* --- go ------------------------------------------------------------------------------- */
   ScrollTrigger.sort();
   ScrollTrigger.refresh();
-  intro();
+  // Browsers preload pages unseen (Safari "Preload Top Hit", prerendering, background tabs). Animation frames are frozen
+  // there, so an intro started now would be over the moment the page is shown. Start it only once the page is visible.
+  var introEl = $('div.intro');
+  if (introEl) introEl.style.animation = 'none';                 // JS is alive: the CSS failsafe is not needed
+  (function whenVisible(fn) {
+    var hidden = function () { return document.hidden || document.prerendering; };
+    if (!hidden()) return fn();
+    var go = function () {
+      if (hidden()) return;
+      document.removeEventListener('visibilitychange', go);
+      document.removeEventListener('prerenderingchange', go);
+      fn();
+    };
+    document.addEventListener('visibilitychange', go);
+    document.addEventListener('prerenderingchange', go);
+  })(intro);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
   window.addEventListener('load', function () { ScrollTrigger.refresh(); });
 })();

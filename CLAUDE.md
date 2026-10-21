@@ -139,6 +139,9 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-21 · logo intro + plynulé koliesko idú na produkciu · fix/intro-first-load (PR #16) · Filip + Claude
+- Filip schválil zlúčenie PR #16. Do vetvy zlúčený aktuálny `main` (360° prehliadky); konflikt bol len v týchto poznámkach.
+
 ### 2026-10-21 · Galéria: text o prehliadkach · fix/galeria-prehliadky · Filip + Claude
 - `galeria.html` (cez `build_pages.py`): sekcia „Virtuálne prehliadky bytov“ už nehovorí „pripravujeme“, odkazuje na
   360° prehliadku v detaile bytu, tlačidlo „Vybrať byt“ vedie na `byty.html` (predtým „Dať mi vedieť“ na kontakt).
@@ -163,6 +166,20 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 - Výhľady z okien sú Samkove fotky zo strechy (vyšší pohľad), inak model presne ako Vladova prehliadka.
 - Nič iné sa nemení. Ďalšie typy bytov pribudnú ako ďalšie priečinky v `prehliadka/`.
 
+### 2026-10-12 · plynulé rolovanie kolieskom myši · fix/intro-first-load · Filip + Claude
+- Klasické koliesko myši na desktope skákalo po krokoch. `motion.js` teraz preberá **len udalosti kolieska myši** a plynule
+  dobehne k cieľu (časovo riadené, rovnaký pocit pri 60 aj 120 Hz). Trackpad a dotyk ostávajú natívne (tam JS scroller vadil, viď 2. 10.).
+- Rozpoznanie kolieska: `deltaMode` riadky/strany, `wheelDeltaY` násobok 120, alebo macOS krok 4,000244; dvojosový pohyb = trackpad.
+  Ctrl+koliesko (zoom), vnútorné rolovateľné boxy a uzamknutá stránka počas intra sa nechávajú tak. Klávesy, posuvník alebo odkaz plynutie zrušia.
+- Vetva obsahuje aj merge `main` (čeština od Vlada): zachované jeho cache busty `config.js?v=20`, `lang-detect.js?v=15`; `motion.js?v=11`.
+
+### 2026-10-05 · logo intro pri prvom načítaní · fix/intro-first-load · Filip + Claude
+- Filip nevidel logo intro na bytyp6.sk. Dve príčiny: intro hralo len raz za session (`sessionStorage`), takže v tej istej karte
+  sa po prvom načítaní už neukázalo; a Safari načítava stránku vopred na pozadí (Preload Top Hit), kde animácie stoja, takže
+  intro „dobehlo“ v momente zobrazenia.
+- Teraz: intro hrá pri každej novej návšteve aj pri reloade; preskočí sa pri návrate z inej stránky webu (referrer bytyp6.sk),
+  pri Späť/Dopredu a pri odkaze na `#sekciu`. Spustí sa až keď je stránka naozaj viditeľná. `sessionStorage` sa už nepoužíva.
+  `motion-boot.js?v=2`, `motion.js?v=10`.
 ### 2026-10-06 · čeština ako piaty jazyk (teaser + právne stránky) · feat/cs-mutacia · Vlad + Claude
 - Teaser a všetky štyri právne stránky majú českú verziu: prepínač je **SK / EN / DE / CZ / UA**,
   `?lang=cs` (funguje aj `?lang=cz`), hreflang a sitemap doplnené, cookie lišta má piaty jazyk.
