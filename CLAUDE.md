@@ -139,6 +139,50 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-21 · fotky okolia v galérii idú na produkciu · feat/p6-site-okolie-photos (PR #18) · Filip + Claude
+- Filip schválil zlúčenie PR #18. Do vetvy zlúčený aktuálny `main`; `ASSET_V` 70 (vetva mala 68, main 69), stránky prestavané.
+
+### 2026-10-21 · logo intro + plynulé koliesko idú na produkciu · fix/intro-first-load (PR #16) · Filip + Claude
+- Filip schválil zlúčenie PR #16. Do vetvy zlúčený aktuálny `main` (360° prehliadky); konflikt bol len v týchto poznámkach.
+
+### 2026-10-21 · Galéria: text o prehliadkach · fix/galeria-prehliadky · Filip + Claude
+- `galeria.html` (cez `build_pages.py`): sekcia „Virtuálne prehliadky bytov“ už nehovorí „pripravujeme“, odkazuje na
+  360° prehliadku v detaile bytu, tlačidlo „Vybrať byt“ vedie na `byty.html` (predtým „Dať mi vedieť“ na kontakt).
+
+### 2026-10-21 · 360° prehliadky všetkých dispozícií + v detaile bytu · feat/prehliadky-vsetky · Filip + Claude
+- `prehliadka/<náhodný>/`: 360° prehliadka každej dispozície (Vladov `tour_site.py`, vlastná CSP, noindex, bez CDN),
+  modely z vektorových pôdorysov, výhľady zo Samkových fotiek zo strechy. Spolu 10 prehliadok, ~117 MB.
+  Mapovanie je v `web/p6-site/assets/js/tour.js` (`TOUR_360`, `TOUR_360_GROUND_H`): byty s rovnakou dispozíciou
+  zdieľajú prehliadku, 1.H na prízemí má vlastnú. Každá má `poster.jpg` (záber obývačky).
+- Detail bytu (`byt.html`, slot `data-tourslot`): panel „360° prehliadka“ s náhľadom; prehliadka sa načíta až po kliknutí
+  (iframe z tej istej domény), plus odkaz na celú obrazovku. Starý 3D prechod (`TOUR_FLATS`, prázdny) zostáva v kóde.
+- `ASSET_V` 69 (PR #18 má 68: pri zlučovaní nechať vyššie číslo). Stránky sú prestavané `build_pages.py`, PDF nie.
+
+### 2026-10-20 · 360° prehliadka: opravené vankúše · feat/prehliadka-360-fix · Filip + Claude
+- `prehliadka/4d1586hy/`: nové panorámy. Vankúše na gauči zapadali do operadla a na lavici pri okne prechádzali
+  sklom; teraz jeden olivový vankúš na sedáku a vankúše na lavici bez kontaktu so sklom. Adresa sa nemení.
+
+### 2026-10-19 · 360° prehliadka 3-izbového bytu na /prehliadka/ · feat/prehliadka-360 · Filip + Claude
+- Nový priečinok `prehliadka/4d1586hy/`: samostatný balík 360° prehliadky (Vladov `tour_site.py`: vlastná CSP v `<meta>`,
+  `noindex, nofollow`, žiadne CDN, písma a knižnice v priečinku, 16 MB, 10 panorám 6144 px). Na Filipovu žiadosť,
+  na zdieľanie odkazom; v `sitemap.xml` ani v navigácii nie je, adresa je náhodná. Byt sa v ňom nemenuje.
+- Výhľady z okien sú Samkove fotky zo strechy (vyšší pohľad), inak model presne ako Vladova prehliadka.
+- Nič iné sa nemení. Ďalšie typy bytov pribudnú ako ďalšie priečinky v `prehliadka/`.
+
+### 2026-10-12 · plynulé rolovanie kolieskom myši · fix/intro-first-load · Filip + Claude
+- Klasické koliesko myši na desktope skákalo po krokoch. `motion.js` teraz preberá **len udalosti kolieska myši** a plynule
+  dobehne k cieľu (časovo riadené, rovnaký pocit pri 60 aj 120 Hz). Trackpad a dotyk ostávajú natívne (tam JS scroller vadil, viď 2. 10.).
+- Rozpoznanie kolieska: `deltaMode` riadky/strany, `wheelDeltaY` násobok 120, alebo macOS krok 4,000244; dvojosový pohyb = trackpad.
+  Ctrl+koliesko (zoom), vnútorné rolovateľné boxy a uzamknutá stránka počas intra sa nechávajú tak. Klávesy, posuvník alebo odkaz plynutie zrušia.
+- Vetva obsahuje aj merge `main` (čeština od Vlada): zachované jeho cache busty `config.js?v=20`, `lang-detect.js?v=15`; `motion.js?v=11`.
+
+### 2026-10-05 · logo intro pri prvom načítaní · fix/intro-first-load · Filip + Claude
+- Filip nevidel logo intro na bytyp6.sk. Dve príčiny: intro hralo len raz za session (`sessionStorage`), takže v tej istej karte
+  sa po prvom načítaní už neukázalo; a Safari načítava stránku vopred na pozadí (Preload Top Hit), kde animácie stoja, takže
+  intro „dobehlo“ v momente zobrazenia.
+- Teraz: intro hrá pri každej novej návšteve aj pri reloade; preskočí sa pri návrate z inej stránky webu (referrer bytyp6.sk),
+  pri Späť/Dopredu a pri odkaze na `#sekciu`. Spustí sa až keď je stránka naozaj viditeľná. `sessionStorage` sa už nepoužíva.
+  `motion-boot.js?v=2`, `motion.js?v=10`.
 ### 2026-10-12 · galéria: skutočné fotky okolia · feat/p6-site-okolie-photos · Filip + Claude
 - Oficiálny web, `galeria.html`: nový blok „Okolie dnes“ s 9 skutočnými fotografiami okolia domu (Filip, október 2026),
   nad pôvodnou galériou, ktorá ostáva bez zmeny. Popisky sú neutrálne („Ulica pri projekte“, „Biznis zóna“ …), štítok „Fotografia“,

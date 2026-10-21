@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prehliadka P6 · 1 izba</title>
+<link rel="stylesheet" href="tour.css">
+</head>
+<body>
+<div id="viewer"></div>
+<div id="room" class="chip"><div class="name">&nbsp;</div><div class="sub">360° prehliadka</div></div>
+<div id="hint" class="chip">Ťahaním sa rozhliadni · klikni na podlahu alebo krúžok a presuň sa</div>
+<div id="legal" class="chip">Ilustračná vizualizácia</div>
+<div id="map" class="chip"><div class="wrap"><img id="plan" alt="Pôdorys"><svg id="mapsvg"></svg></div></div>
+
+<script src="data.js"></script>
+<script type="module" src="tour.js"></script>
+</body>
+</html>
