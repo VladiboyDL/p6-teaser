@@ -139,6 +139,10 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-21 · Galéria: text o prehliadkach · fix/galeria-prehliadky · Filip + Claude
+- `galeria.html` (cez `build_pages.py`): sekcia „Virtuálne prehliadky bytov“ už nehovorí „pripravujeme“, odkazuje na
+  360° prehliadku v detaile bytu, tlačidlo „Vybrať byt“ vedie na `byty.html` (predtým „Dať mi vedieť“ na kontakt).
+
 ### 2026-10-21 · 360° prehliadky všetkých dispozícií + v detaile bytu · feat/prehliadky-vsetky · Filip + Claude
 - `prehliadka/<náhodný>/`: 360° prehliadka každej dispozície (Vladov `tour_site.py`, vlastná CSP, noindex, bez CDN),
   modely z vektorových pôdorysov, výhľady zo Samkových fotiek zo strechy. Spolu 10 prehliadok, ~117 MB.
