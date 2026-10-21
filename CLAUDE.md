@@ -143,7 +143,12 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 - Filip: v sekcii Byty na úvodnej stránke chýbali byty. Namiesto šiestich najväčších ide všetkých 44, dva riadky na stranu a pod nimi stránkovanie (`.pager`, `data-featured-pager`).
 - Veľkosť strany = počet stĺpcov mriežky × 2 (číta `gridTemplateColumns`, prepočíta sa pri zmene šírky). Na mobile je to posuvný pás po 6 kartách a stránkovanie ukazuje len šípky a „2 / 8“.
 - Poradie: voľné byty prvé, keď CRM nejaké uvoľní, inak poradie v dome (1.A … 5.I). Predané zostávajú v zozname.
-- `ASSET_V` 72 (PR #23 má 71; kto ide druhý, prestaví stránky).
+- `ASSET_V` 72. Filip schválil zlúčenie PR #23 aj #24: #23 ide prvý, potom zlúčený `main` do tejto vetvy a stránky prestavané.
+
+### 2026-10-21 · detail bytu: fotky z vlastnej 360° prehliadky namiesto náhodných · feat/byt-vizualizacie · Filip + Claude
+- Filip: ilustračné obrázky na detaile bytu nesedeli s dispozíciou. Dve dlaždice (`byt-spalna.webp`, `interier.webp`) nahradené dvomi zábermi z panorám danej dispozície: obývačka + spálňa, pri garsónkach E, F, G izba + kúpeľňa.
+- Zábery ležia v balíku prehliadky `/prehliadka/<token>/foto-1.jpg`, `foto-2.jpg` (1400×1050, z `06_tour/pano/<uzol>.png` cez `view.py`). Vkladá ich `mountUnitShots()` v `tour.js` s rovnakým mapovaním ako prehliadka (1.H má vlastnú). Popis „…, ilustračná vizualizácia“.
+- `ASSET_V` 71, stránky prestavané.
 
 ### 2026-10-21 · fotky okolia v galérii idú na produkciu · feat/p6-site-okolie-photos (PR #18) · Filip + Claude
 - Filip schválil zlúčenie PR #18. Do vetvy zlúčený aktuálny `main`; `ASSET_V` 70 (vetva mala 68, main 69), stránky prestavané.

@@ -957,14 +957,8 @@ def byt_html():
 
         <div data-tourslot></div>
 
-        <div class="grid-2" style="gap:16px">
-          {photo("Fotografie bytu", "Doplníme po fotodokumentácii", "", "camera",
-                 src="assets/img/byt-spalna.webp", credit=DEMO_IMG,
-                 alt="Ilustračná spálňa: manželská posteľ, dubová podlaha, okno so záclonou")}
-          {photo("Vzorový interiér", "Doplníme po dokončení vzorového bytu", "", "sun",
-                 src="assets/img/interier.webp", credit=DEMO_IMG,
-                 alt="Ilustračná obývačka s jedálňou a balkónom")}
-        </div>
+        <!-- two stills from this layout's own 360 tour, filled by mountUnitShots() -->
+        <div class="grid-2" data-unitshots hidden style="gap:16px"></div>
 
         <div class="detail-nav" data-detailnav></div>
       </div>
