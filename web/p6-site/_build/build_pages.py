@@ -42,7 +42,7 @@ OPERATOR = ("Byty Prievozska6 s.r.o., Prievozská 6, 821 09 Bratislava-Ružinov 
 PREVIEW = True
 
 # Bump whenever CSS/JS changes — appended as ?v= to every asset link.
-ASSET_V = "69"
+ASSET_V = "70"
 
 # Mandated by the architect (Ing. arch. Martin Krajči) — must stay visible
 # wherever plans or areas are shown. Wording matches the teaser; the project is
@@ -1179,6 +1179,22 @@ def redirect_html(target, title):
 # ---------------------------------------------------------------- galéria
 
 def galeria_html():
+    # real photographs of the surroundings (October 2026); captions stay neutral: no claims about views from the flats
+    okolie = [  # order matters: every wide tile shares its row with a single one at 4, 3 and 2 columns
+        ("Ulica pri projekte", "photo--wide", "okolie-01"),
+        ("Panoráma mesta", "", "okolie-02"),
+        ("Biznis zóna", "", "okolie-03"),
+        ("Pohľad nad Ružinovom", "", "okolie-04"),
+        ("Mestská doprava v okolí", "", "okolie-05"),
+        ("Nad strechami", "photo--wide", "okolie-08"),
+        ("Veže biznis zóny", "", "okolie-06"),
+        ("Zástavba v okolí", "photo--wide", "okolie-09"),
+        ("Stromoradie na ulici", "", "okolie-07"),
+    ]
+    o = "".join(
+        f'<div class="{"gallery__wide" if c else ""}">'
+        f'{photo(t, "Fotografia okolia", c or "", src=f"assets/img/{img}.webp", alt=f"Fotografia okolia projektu P6: {t.lower()}", credit="Fotografia")}'
+        f'</div>' for t, c, img in okolie)
     tiles = [
         ("Miletička ráno", "photo--wide", "mileticka"),
         ("Cyklista na Prievozskej", "", "cyklista"),
@@ -1200,6 +1216,14 @@ def galeria_html():
     + nav("galeria.html")
     + f'''<main id="main">
 {page_head("Galéria", "Miesto, kde budete<br>bývať", "Fotografie okolia a vizualizácie domu. Miletička, cyklista, Nivy večer, cesta do školy a komunitná terasa dopĺňame priebežne.", "Galéria")}
+
+<section class="section section--tight">
+  <div class="shell shell-wide">
+    <p class="eyebrow">Fotografie</p>
+    <h2 style="margin-bottom:28px">Okolie dnes</h2>
+    <div class="gallery gallery--dense">{o}</div>
+  </div>
+</section>
 
 <section class="section section--tight">
   <div class="shell shell-wide">

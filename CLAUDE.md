@@ -139,6 +139,9 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-21 · fotky okolia v galérii idú na produkciu · feat/p6-site-okolie-photos (PR #18) · Filip + Claude
+- Filip schválil zlúčenie PR #18. Do vetvy zlúčený aktuálny `main`; `ASSET_V` 70 (vetva mala 68, main 69), stránky prestavané.
+
 ### 2026-10-21 · logo intro + plynulé koliesko idú na produkciu · fix/intro-first-load (PR #16) · Filip + Claude
 - Filip schválil zlúčenie PR #16. Do vetvy zlúčený aktuálny `main` (360° prehliadky); konflikt bol len v týchto poznámkach.
 
@@ -180,6 +183,14 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 - Teraz: intro hrá pri každej novej návšteve aj pri reloade; preskočí sa pri návrate z inej stránky webu (referrer bytyp6.sk),
   pri Späť/Dopredu a pri odkaze na `#sekciu`. Spustí sa až keď je stránka naozaj viditeľná. `sessionStorage` sa už nepoužíva.
   `motion-boot.js?v=2`, `motion.js?v=10`.
+### 2026-10-12 · galéria: skutočné fotky okolia · feat/p6-site-okolie-photos · Filip + Claude
+- Oficiálny web, `galeria.html`: nový blok „Okolie dnes“ s 9 skutočnými fotografiami okolia domu (Filip, október 2026),
+  nad pôvodnou galériou, ktorá ostáva bez zmeny. Popisky sú neutrálne („Ulica pri projekte“, „Biznis zóna“ …), štítok „Fotografia“,
+  nič o výhľadoch z bytov.
+- Súbory `web/p6-site/assets/img/okolie-01.webp` až `-09.webp` (1800 px, WebP q80, bez EXIF a GPS). Mriežka má
+  `grid-auto-flow: dense` (`.gallery--dense` v `site.css`), poradie je zvolené tak, aby pri 4, 3 aj 2 stĺpcoch nebola diera.
+- `ASSET_V` 67 → 68 (zmena `site.css`), stránky prebuildnuté; PDF netreba, ich obsah sa nemenil.
+
 ### 2026-10-06 · čeština ako piaty jazyk (teaser + právne stránky) · feat/cs-mutacia · Vlad + Claude
 - Teaser a všetky štyri právne stránky majú českú verziu: prepínač je **SK / EN / DE / CZ / UA**,
   `?lang=cs` (funguje aj `?lang=cz`), hreflang a sitemap doplnené, cookie lišta má piaty jazyk.
