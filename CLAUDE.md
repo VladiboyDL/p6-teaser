@@ -139,6 +139,12 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-21 · úvodná stránka: všetky byty so stránkovaním · feat/lp-vsetky-byty · Filip + Claude
+- Filip: v sekcii Byty na úvodnej stránke chýbali byty. Namiesto šiestich najväčších ide všetkých 44, dva riadky na stranu a pod nimi stránkovanie (`.pager`, `data-featured-pager`).
+- Veľkosť strany = počet stĺpcov mriežky × 2 (číta `gridTemplateColumns`, prepočíta sa pri zmene šírky). Na mobile je to posuvný pás po 6 kartách a stránkovanie ukazuje len šípky a „2 / 8“.
+- Poradie: voľné byty prvé, keď CRM nejaké uvoľní, inak poradie v dome (1.A … 5.I). Predané zostávajú v zozname.
+- `ASSET_V` 72 (PR #23 má 71; kto ide druhý, prestaví stránky).
+
 ### 2026-10-21 · fotky okolia v galérii idú na produkciu · feat/p6-site-okolie-photos (PR #18) · Filip + Claude
 - Filip schválil zlúčenie PR #18. Do vetvy zlúčený aktuálny `main`; `ASSET_V` 70 (vetva mala 68, main 69), stránky prestavané.
 

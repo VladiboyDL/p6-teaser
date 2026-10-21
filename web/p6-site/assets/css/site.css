@@ -1851,6 +1851,27 @@ a.ucard:hover .ucard__go svg { opacity: 1; transform: translateX(3px); }
   .ucards--rail .ucard { flex: 0 0 80%; scroll-snap-align: start; }
 }
 
+/* pager under the landing page's unit cards */
+.pager { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 22px; }
+.pager[hidden] { display: none; }
+.pager__btn {
+  min-width: 40px; height: 40px; padding: 0 10px; border-radius: 999px;
+  border: 1px solid var(--line); background: transparent; color: var(--ink);
+  font: inherit; font-size: .88rem; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.pager__btn:hover:not(:disabled) { border-color: var(--ink); }
+.pager__btn[aria-current="page"] { background: var(--ink); color: var(--text-inv); border-color: var(--ink); }
+.pager__btn:disabled { opacity: .3; cursor: default; }
+.pager__btn svg { width: 15px; height: 15px; }
+.pager__of { display: none; }
+@media (max-width: 599px) {
+  .pager__btn:not(.pager__btn--arrow):not([aria-current]) { display: none; }
+  .pager__btn[aria-current] { padding: 0 16px; }
+  .pager__of { display: inline; }
+}
+
 /* --- final block: three CTAs ------------------------------------------------------ */
 .final__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
 @media (max-width: 599px) { .final__actions { display: grid; } .final__actions .btn { width: 100%; } }

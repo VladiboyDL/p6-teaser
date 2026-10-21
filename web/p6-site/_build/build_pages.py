@@ -42,7 +42,7 @@ OPERATOR = ("Byty Prievozska6 s.r.o., Prievozská 6, 821 09 Bratislava-Ružinov 
 PREVIEW = True
 
 # Bump whenever CSS/JS changes — appended as ?v= to every asset link.
-ASSET_V = "70"
+ASSET_V = "72"
 
 # Mandated by the architect (Ing. arch. Martin Krajči) — must stay visible
 # wherever plans or areas are shown. Wording matches the teaser; the project is
@@ -768,6 +768,7 @@ def index_html():
     </div>
     <div class="ucards ucards--rail" data-featured></div>
     <p class="rail-hint">{svg("swipe")} Potiahnite pre ďalšie byty</p>
+    <nav class="pager" data-featured-pager aria-label="Stránky bytov" hidden></nav>
     <p class="form__note" style="margin-top:16px">{DISCLAIMER}</p>
   </div>
 </section>
@@ -776,16 +777,62 @@ def index_html():
 </main>
 ''' + FOOT
     + '''<script>
-/* §14: six units with plan thumbnails, largest first: the free ones once the CRM has released some, any six before that.
+/* §14: every unit as a plan card, two rows at a time with a pager below (Filip 2026-10-21:
+   the six picks left most of the house out). The free ones first once the CRM has released
+   some, otherwise in house order. A row is however many columns the grid fits right now,
+   so the page size follows the viewport; the phone rail shows six per page.
    This block sits above the script tags, so it waits for them (DOMContentLoaded) and then for the CRM feed. */
 document.addEventListener('DOMContentLoaded', function () {
   whenAvailabilityKnown(function () {
     var wrap = document.querySelector('[data-featured]');
+    var pager = document.querySelector('[data-featured-pager]');
     if (!wrap) return;
-    var free = APARTMENTS.filter(function (a) { return a.status === 'dostupny'; });
-    var picks = (SHOW_STATUS && free.length ? free : APARTMENTS.slice())
-      .sort(function (a, b) { return b.area - a.area; }).slice(0, 6);
-    wrap.innerHTML = picks.map(function (a) { return unitCardHTML(a); }).join('');
+    var units = APARTMENTS.slice();
+    if (SHOW_STATUS && units.some(function (a) { return a.status === 'dostupny'; })) {
+      units = units.filter(function (a) { return a.status === 'dostupny'; })
+        .concat(units.filter(function (a) { return a.status !== 'dostupny'; }));
+    }
+    var first = 0, size = 0;
+    function pageSize() {
+      if (getComputedStyle(wrap).display !== 'grid') return 6;
+      var cols = getComputedStyle(wrap).gridTemplateColumns.split(' ').filter(Boolean).length || 1;
+      return cols * 2;
+    }
+    function render(scroll) {
+      size = pageSize();
+      first = Math.floor(first / size) * size;
+      var page = first / size, pages = Math.ceil(units.length / size);
+      wrap.innerHTML = units.slice(first, first + size).map(function (a) { return unitCardHTML(a); }).join('');
+      wrap.scrollLeft = 0;
+      if (!pager) return;
+      pager.hidden = pages < 2;
+      var btn = function (i, label, extra) {
+        return '<button type="button" class="pager__btn' + (extra || '') + '" data-page="' + i + '"' +
+          (i === page && !extra ? ' aria-current="page"' : '') +
+          (i < 0 || i >= pages ? ' disabled' : '') + ' aria-label="' + label + '">';
+      };
+      var html = btn(page - 1, 'Predchádzajúca strana', ' pager__btn--arrow') + '<span style="display:inline-flex;transform:rotate(180deg)">' + icon.arrow + '</span></button>';
+      for (var i = 0; i < pages; i++) html += btn(i, 'Strana ' + (i + 1)) + (i + 1) +
+        (i === page ? '<span class="pager__of">&nbsp;/ ' + pages + '</span>' : '') + '</button>';
+      html += btn(page + 1, 'Ďalšia strana', ' pager__btn--arrow') + icon.arrow + '</button>';
+      pager.innerHTML = html;
+      if (scroll) {
+        var top = wrap.closest('section').getBoundingClientRect().top;
+        if (top < 0) wrap.closest('section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+    if (pager) pager.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-page]');
+      if (!b || b.disabled) return;
+      first = Number(b.getAttribute('data-page')) * size;
+      render(true);
+    });
+    var t;
+    window.addEventListener('resize', function () {
+      clearTimeout(t);
+      t = setTimeout(function () { if (pageSize() !== size) render(false); }, 150);
+    });
+    render(false);
   });
 });
 </script>
