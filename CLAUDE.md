@@ -139,6 +139,15 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-10-21 · 360° prehliadky všetkých dispozícií + v detaile bytu · feat/prehliadky-vsetky · Filip + Claude
+- `prehliadka/<náhodný>/`: 360° prehliadka každej dispozície (Vladov `tour_site.py`, vlastná CSP, noindex, bez CDN),
+  modely z vektorových pôdorysov, výhľady zo Samkových fotiek zo strechy. Spolu 10 prehliadok, ~117 MB.
+  Mapovanie je v `web/p6-site/assets/js/tour.js` (`TOUR_360`, `TOUR_360_GROUND_H`): byty s rovnakou dispozíciou
+  zdieľajú prehliadku, 1.H na prízemí má vlastnú. Každá má `poster.jpg` (záber obývačky).
+- Detail bytu (`byt.html`, slot `data-tourslot`): panel „360° prehliadka“ s náhľadom; prehliadka sa načíta až po kliknutí
+  (iframe z tej istej domény), plus odkaz na celú obrazovku. Starý 3D prechod (`TOUR_FLATS`, prázdny) zostáva v kóde.
+- `ASSET_V` 69 (PR #18 má 68: pri zlučovaní nechať vyššie číslo). Stránky sú prestavané `build_pages.py`, PDF nie.
+
 ### 2026-10-20 · 360° prehliadka: opravené vankúše · feat/prehliadka-360-fix · Filip + Claude
 - `prehliadka/4d1586hy/`: nové panorámy. Vankúše na gauči zapadali do operadla a na lavici pri okne prechádzali
   sklom; teraz jeden olivový vankúš na sedáku a vankúše na lavici bez kontaktu so sklom. Adresa sa nemení.

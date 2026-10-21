@@ -227,8 +227,53 @@ function buildTour(THREE, host, model) {
    back in this list only once the scene is actually dressed. */
 const TOUR_FLATS = [];
 
+/* --- 360 degree tours ----------------------------------------------------------
+   Rendered panoramas of the furnished flat (Vlad's Blender pipeline, the model built
+   from the architect's vector plans), one per layout. Each is a self-contained bundle
+   on this domain under /prehliadka/<random>/ (own CSP, noindex, nothing from a CDN).
+   Flats with the same layout share a tour; 1.H on the ground floor has its own plan.
+   Nothing loads until the visitor asks: the panel shows a still until then. */
+const TOUR_360 = { A: 'adgqi25d', B: 'd1enczbx', C: '5y2w5rdt', D: 'x9wykhhk', E: 'jqc69g17',
+                   F: 'cmqsl01s', G: 'skvps3nh', H: '4d1586hy', I: '5f4pyvl3' };
+const TOUR_360_GROUND_H = 'xo0jz63k';
+
+function tour360Path(unit) {
+  const id = Number(unit.floor) === 1 && unit.letter === 'H' ? TOUR_360_GROUND_H : TOUR_360[unit.letter];
+  return id ? `/prehliadka/${id}/` : null;
+}
+
+function mountTour360(host, unit) {
+  const path = tour360Path(unit);
+  if (!path) return false;
+  host.innerHTML = `
+    <div class="tour tour--360">
+      <div class="tour__head">
+        <p class="eyebrow" style="margin:0">360° prehliadka</p>
+        <span class="tour__badge">Ilustračná vizualizácia</span>
+      </div>
+      <div class="tour360__frame">
+        <button class="tour360__poster" type="button" data-tour360-start
+                style="background-image:url('${path}poster.jpg')" aria-label="Spustiť 360° prehliadku bytu">
+          <span class="btn btn--primary">Spustiť prehliadku</span>
+        </button>
+      </div>
+      <p class="form__note tour__note">
+        Prejdite sa zariadeným bytom tejto dispozície: ťahaním sa rozhliadnete, kliknutím na krúžok
+        na podlahe sa presuniete. Zariadenie, materiály a výhľady z okien sú ilustračné.
+        <a href="${path}" target="_blank" rel="noopener">Otvoriť na celú obrazovku</a>
+      </p>
+    </div>`;
+  const frame = host.querySelector('.tour360__frame');
+  host.querySelector('[data-tour360-start]').addEventListener('click', () => {
+    frame.innerHTML = `<iframe src="${path}" title="360° prehliadka bytu" allow="fullscreen" allowfullscreen></iframe>`;
+  });
+  return true;
+}
+
 function mountTour(host, unit) {
-  if (!host || !unit || !TOUR_FLATS.includes(unit.letter)) return;
+  if (!host || !unit) return;
+  if (mountTour360(host, unit)) return;
+  if (!TOUR_FLATS.includes(unit.letter)) return;
   const letter = unit.letter;
 
   host.innerHTML = `
