@@ -42,7 +42,7 @@ OPERATOR = ("Byty Prievozska6 s.r.o., Prievozská 6, 821 09 Bratislava-Ružinov 
 PREVIEW = True
 
 # Bump whenever CSS/JS changes — appended as ?v= to every asset link.
-ASSET_V = "70"
+ASSET_V = "71"
 
 # Mandated by the architect (Ing. arch. Martin Krajči) — must stay visible
 # wherever plans or areas are shown. Wording matches the teaser; the project is
@@ -910,14 +910,8 @@ def byt_html():
 
         <div data-tourslot></div>
 
-        <div class="grid-2" style="gap:16px">
-          {photo("Fotografie bytu", "Doplníme po fotodokumentácii", "", "camera",
-                 src="assets/img/byt-spalna.webp", credit=DEMO_IMG,
-                 alt="Ilustračná spálňa: manželská posteľ, dubová podlaha, okno so záclonou")}
-          {photo("Vzorový interiér", "Doplníme po dokončení vzorového bytu", "", "sun",
-                 src="assets/img/interier.webp", credit=DEMO_IMG,
-                 alt="Ilustračná obývačka s jedálňou a balkónom")}
-        </div>
+        <!-- two stills from this layout's own 360 tour, filled by mountUnitShots() -->
+        <div class="grid-2" data-unitshots hidden style="gap:16px"></div>
 
         <div class="detail-nav" data-detailnav></div>
       </div>
