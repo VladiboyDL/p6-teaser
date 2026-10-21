@@ -106,6 +106,7 @@ function initDetail() {
 
   /* the 360 tour of this layout (or the 3D walkthrough, where one is switched on) */
   mountTour(root.querySelector('[data-tourslot]'), a);
+  mountUnitShots(root.querySelector('[data-unitshots]'), a);
 
 
   /* hovering a room in the plan highlights its row in the table, and back.

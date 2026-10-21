@@ -270,6 +270,25 @@ function mountTour360(host, unit) {
   return true;
 }
 
+/* Two stills from the same tour under it, so the pictures on the page show this
+   layout and not a stock interior: the living room and the bedroom (studios: the room
+   and the shower room). Rendered from the tour's own panoramas into its bundle. */
+const TOUR_STUDIOS = ['E', 'F', 'G'];
+
+function mountUnitShots(host, unit) {
+  const path = host && unit && tour360Path(unit);
+  if (!path) return;
+  const names = TOUR_STUDIOS.includes(unit.letter) ? ['Izba', 'Kúpeľňa'] : ['Obývačka', 'Spálňa'];
+  host.innerHTML = names.map((n, i) => `
+    <figure class="photo">
+      <img class="photo__img" src="${path}foto-${i + 1}.jpg" alt="${n}, ilustračná vizualizácia tejto dispozície"
+           loading="lazy" decoding="async"
+           onload="this.closest('.photo').classList.add('has-img')" onerror="this.closest('.photo').remove()">
+      <figcaption class="photo__credit">${n}, ilustračná vizualizácia</figcaption>
+    </figure>`).join('');
+  host.hidden = false;
+}
+
 function mountTour(host, unit) {
   if (!host || !unit) return;
   if (mountTour360(host, unit)) return;
