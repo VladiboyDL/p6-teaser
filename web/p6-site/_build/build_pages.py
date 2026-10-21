@@ -42,7 +42,7 @@ OPERATOR = ("Byty Prievozska6 s.r.o., Prievozská 6, 821 09 Bratislava-Ružinov 
 PREVIEW = True
 
 # Bump whenever CSS/JS changes — appended as ?v= to every asset link.
-ASSET_V = "67"
+ASSET_V = "69"
 
 # Mandated by the architect (Ing. arch. Martin Krajči) — must stay visible
 # wherever plans or areas are shown. Wording matches the teaser; the project is
@@ -1209,10 +1209,10 @@ def galeria_html():
 
 <section class="section section--paper2">
   <div class="shell center" style="max-width:56ch">
-    <p class="eyebrow eyebrow--center">Pripravujeme</p>
+    <p class="eyebrow eyebrow--center">360° prehliadky</p>
     <h2>Virtuálne prehliadky bytov</h2>
-    <p class="lede" style="margin-top:18px">Po dokončení fotodokumentácie sprístupníme 3D prehliadku každej dispozície priamo v detaile bytu.</p>
-    <p style="margin-top:24px"><a class="btn btn--primary" href="kontakt.html">Dať mi vedieť {svg("arrow")}</a></p>
+    <p class="lede" style="margin-top:18px">Každú dispozíciu si môžete prejsť v 360° prehliadke priamo v detaile bytu. Vyberte si byt a prejdite sa ním, miestnosť po miestnosti.</p>
+    <p style="margin-top:24px"><a class="btn btn--primary" href="byty.html">Vybrať byt {svg("arrow")}</a></p>
   </div>
 </section>
 

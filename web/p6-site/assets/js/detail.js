@@ -104,7 +104,7 @@ function initDetail() {
      neighbour on the floor clickable, so browsing the storey is one hop */
   mountFloorPlan(root.querySelector('[data-floorplan]'), a.id);
 
-  /* the 3D walkthrough, where a reconstruction exists for this layout */
+  /* the 360 tour of this layout (or the 3D walkthrough, where one is switched on) */
   mountTour(root.querySelector('[data-tourslot]'), a);
 
 
