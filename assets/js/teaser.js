@@ -157,6 +157,7 @@
       put('Telefon', form.telefon.value);
       put('Typ bytu', raw.getAll('typ_bytu').join(', '));
       put('Byt na', raw.get('ucel'));
+      put('Doplnky', raw.getAll('doplnky').join(', '));
       put('Zdroj', form.zdroj.value);
       put('Odkaz', form.sprava.value);
       put('GDPR kontakt', form.suhlas_kontakt.checked ? 'áno' : 'nie');
@@ -247,6 +248,11 @@
         put('telefon', form.telefon.value);
         put('typ_bytu', raw.getAll('typ_bytu').join(', '));
         put('ucel', raw.get('ucel'));
+        /* the two tick boxes: only a tick travels. An empty box is "did not say", never a "no", so it must not
+           overwrite what the call centre already heard on the phone (the CRM keeps the three states apart). */
+        var doplnky = raw.getAll('doplnky');
+        put('parkovanie', doplnky.indexOf('Parkovacie státie') > -1 ? 'ano' : '');
+        put('pivnica', doplnky.indexOf('Pivničná kobka') > -1 ? 'ano' : '');
         put('zdroj', form.zdroj.value);
         put('sprava', form.sprava.value);
         put('suhlas_kontakt', form.suhlas_kontakt.checked ? 'ano' : 'nie');

@@ -32,6 +32,9 @@ function initForms() {
     const topicLabel = () => { const t = form.elements.topic; return t && t.selectedOptions[0] ? t.selectedOptions[0].textContent.trim() : ''; };
     /* the flat exactly as labelled in data.js ("4.C"); anything else the visitor typed stays in the message only */
     const flatId = () => { const m = val('unit').toUpperCase().replace(/\s+/g, '').match(/^([1-9])[.,]?([A-Z])$/); return m ? `${m[1]}.${m[2]}` : ''; };
+    /* the two optional ticks; only a tick travels to the CRM. An empty box means "did not say", never a "no",
+       so it never overwrites what the call centre heard on the phone. */
+    const extras = () => [...form.querySelectorAll('input[name=doplnky]:checked')].map((i) => i.value);
 
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -57,6 +60,7 @@ function initForms() {
       put(inbox, 'replyto', email);
       put(inbox, 'Meno', first); put(inbox, 'Priezvisko', last); put(inbox, 'email', email); put(inbox, 'Telefon', val('phone'));
       put(inbox, 'Byt', byt || val('unit')); put(inbox, 'Typ bytu', val('rooms')); put(inbox, 'Tema', topicLabel()); put(inbox, 'Odkaz', val('message'));
+      put(inbox, 'Doplnky', extras().join(', '));
       put(inbox, 'GDPR kontakt', 'áno'); put(inbox, 'GDPR newsletter', form.elements.suhlas_newsletter.checked ? 'áno' : 'nie');
       put(inbox, 'Kedy', new Date().toLocaleString('sk-SK', { timeZone: 'Europe/Bratislava' }) + ' (Bratislava)');
       put(inbox, 'Jazyk', 'slovenčina'); put(inbox, 'URL', url);
@@ -73,6 +77,8 @@ function initForms() {
             put(lead, 'token', 'p6-web-2026'); put(lead, 'email', email); put(lead, 'name', first); put(lead, 'priezvisko', last); put(lead, 'telefon', val('phone'));
             put(lead, 'typ_bytu', val('rooms')); put(lead, 'zdroj', `Web: ${topicLabel()}`.slice(0, 80)); put(lead, 'sprava', val('message')); put(lead, 'byt', byt);
             put(lead, 'suhlas_kontakt', 'ano'); put(lead, 'suhlas_newsletter', form.elements.suhlas_newsletter.checked ? 'ano' : 'nie');
+            put(lead, 'parkovanie', extras().includes('Parkovacie státie') ? 'ano' : '');
+            put(lead, 'pivnica', extras().includes('Pivničná kobka') ? 'ano' : '');
             put(lead, 'lang', 'sk'); put(lead, 'url', url);
             utm.forEach(k => put(lead, k, qs.get(k)));
             fetch(cfg.confirmWebhook, { method: 'POST', body: lead, mode: 'no-cors', keepalive: true }).catch(() => {});

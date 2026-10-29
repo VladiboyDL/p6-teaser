@@ -42,7 +42,7 @@ OPERATOR = ("Byty Prievozska6 s.r.o., Prievozská 6, 821 09 Bratislava-Ružinov 
 PREVIEW = True
 
 # Bump whenever CSS/JS changes — appended as ?v= to every asset link.
-ASSET_V = "72"
+ASSET_V = "73"
 
 # Mandated by the architect (Ing. arch. Martin Krajči) — must stay visible
 # wherever plans or areas are shown. Wording matches the teaser; the project is
@@ -1318,6 +1318,14 @@ def kontakt_html():
           <div><label for="c-topic">Čo potrebujete</label>
             <select id="c-topic" name="topic"><option value="konzultacia">Konzultáciu</option><option value="katalog">Katalóg</option><option value="obhliadka">Osobnú obhliadku</option><option value="ine">Iné</option></select></div>
         </div>
+        <fieldset class="extras">
+          <legend>Okrem bytu ma zaujíma</legend>
+          <div class="consent"><input id="c-parking" name="doplnky" type="checkbox" value="Parkovacie státie">
+            <label for="c-parking">Parkovacie státie</label></div>
+          <div class="consent"><input id="c-cellar" name="doplnky" type="checkbox" value="Pivničná kobka">
+            <label for="c-cellar">Pivničná kobka</label></div>
+          <p class="form__note">Záujem si poznačíme. Dostupnosť a cenu prejdeme osobne.</p>
+        </fieldset>
         <div><label for="c-msg">Správa</label><textarea id="c-msg" name="message" maxlength="4000" placeholder="Čo je pre vás dôležité? Výhľad, terasa, podlažie, termín…"></textarea></div>
         <label class="hp" aria-hidden="true">Nevypĺňajte<input type="text" name="p6_kontrola" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore></label>
         <div class="consent">

@@ -36,7 +36,7 @@
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/hero-1600.webp" imagesrcset="assets/img/hero-960.webp 960w, assets/img/hero-1600.webp 1600w, assets/img/hero-2200.webp 2200w" imagesizes="100vw" media="(min-aspect-ratio: 4/5)" fetchpriority="high">
 <link rel="preload" as="image" href="assets/img/hero-tall-1000.webp" media="(max-aspect-ratio: 4/5)" fetchpriority="high">
-<link rel="stylesheet" href="assets/css/teaser.css?v=17">
+<link rel="stylesheet" href="assets/css/teaser.css?v=18">
 <link rel="stylesheet" href="assets/css/motion.css?v=6">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ApartmentComplex","name":"P6",
@@ -374,6 +374,13 @@
             <label><input type="radio" name="ucel" value="Investícia"><span data-i18n="f.purpose2">Investíciu</span></label>
           </fieldset>
 
+          <fieldset class="chips">
+            <legend data-i18n="f.extras">Okrem bytu ma zaujíma <i>(nepovinné)</i></legend>
+            <label><input type="checkbox" name="doplnky" value="Parkovacie státie"><span data-i18n="f.extras1">Parkovacie státie</span></label>
+            <label><input type="checkbox" name="doplnky" value="Pivničná kobka"><span data-i18n="f.extras2">Pivničná kobka</span></label>
+          </fieldset>
+          <p class="chips__note" data-i18n="f.extras.note">Záujem si poznačíme. Dostupnosť a cenu prejdeme osobne.</p>
+
           <label class="field"><span data-i18n="f.source">Odkiaľ ste sa o&nbsp;P6 dozvedeli? <i>(nepovinné)</i></span>
             <select name="zdroj">
               <option value="" data-i18n="f.src0">Zvoľte</option>
@@ -465,7 +472,7 @@
   </div>
 </div>
 
-<script src="assets/js/i18n.js?v=17" defer></script>
+<script src="assets/js/i18n.js?v=18" defer></script>
 <script src="assets/js/consent.js?v=5" defer></script>
 <script src="assets/vendor/gsap.min.js?v=3.15.0" defer></script>
 <script src="assets/vendor/ScrollTrigger.min.js?v=3.15.0" defer></script>
@@ -474,6 +481,6 @@
 <script src="assets/vendor/MotionPathPlugin.min.js?v=3.15.0" defer></script>
 <script src="assets/js/hero-gl.js?v=8" defer></script>
 <script src="assets/js/motion.js?v=11" defer></script>
-<script src="assets/js/teaser.js?v=18" defer></script>
+<script src="assets/js/teaser.js?v=19" defer></script>
 </body>
 </html>
