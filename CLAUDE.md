@@ -73,12 +73,14 @@ be added there on all five root pages.
 ### Forms (D1, done 2026-09-21 in `web/p6-site/assets/js/forms.js`): the one lead flow
 A form on either site does two posts, both from the browser, field **names in plain ASCII** (Web3Forms garbles accented names):
 1. `POST https://api.web3forms.com/submit` (multipart; `access_key` as in the root `index.html`, it is public by design) → e-mail to info@bytyp6.sk.
-   Fields: `subject`, `from_name`, `replyto`, `Meno`, `Priezvisko`, `email`, `Telefon`, `Typ bytu`, `Byt na`, `Zdroj`, `Odkaz`, `GDPR kontakt`,
+   Fields: `subject`, `from_name`, `replyto`, `Meno`, `Priezvisko`, `email`, `Telefon`, `Typ bytu`, `Byt na`, `Doplnky`, `Zdroj`, `Odkaz`, `GDPR kontakt`,
    `GDPR newsletter`, `Kedy`, `Jazyk`, `URL`, `utm_*`; add `Byt` for a specific flat.
 2. After success, `POST P6_CONFIG.confirmWebhook` (multipart, `mode: "no-cors"`, `keepalive`) → n8n sends the confirmation e-mail and files the lead in the CRM.
    Fields: `token=p6-web-2026`, `email`, `name`, `priezvisko`, `telefon`, `typ_bytu`, `ucel`, `zdroj`, `sprava`, `suhlas_kontakt` (`ano`, mandatory:
    without it n8n drops the lead), `suhlas_newsletter` (`ano`/`nie`), `lang`, `url`, `utm_source|medium|campaign|content|term`,
    and **`byt`** = the flat id exactly as in `data.js` (`4.C`); n8n and the CRM attach that flat to the lead (live since 2026-09-21).
+   Optional **`parkovanie`** and **`pivnica`** (`ano`, from the two tick boxes `name="doplnky"`): only a tick is sent. An unticked box means
+   "did not say", not "no", so it never overwrites the answer the call centre recorded on the phone.
    The honeypot field is `p6_kontrola` and must stay empty.
    n8n only accepts requests whose Origin or Referer is https://bytyp6.sk, so the flow cannot be tested from localhost or a github.io preview.
 Reuse the bot protection from `/assets/js/teaser.js` (honeypot, 4 s minimum, a real pointer or key event, 3 sends per hour, no links in the message).
@@ -138,6 +140,21 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 ```
 
 ## Dev notes
+
+### 2026-10-29 · formulár: parkovacie státie a pivničná kobka · feat/formular-doplnky · Vlad + Claude
+- Oba formuláre (teaser v roote aj `web/p6-site/kontakt.html`) majú dve nepovinné zaškrtávacie políčka
+  `name="doplnky"`: *Parkovacie státie* a *Pivničná kobka*. Hodnoty ostávajú slovenské, preklady sú v `i18n.js`
+  (`f.extras*`, 5 jazykov). Pod nimi je veta „Záujem si poznačíme. Dostupnosť a cenu prejdeme osobne.“ —
+  **nič nesľubujeme**, projekt je pred povolením a počet státí ani kobiek nie je potvrdený. Ak by to klient
+  nechcel takto, stačí zmeniť ten jeden riadok (`f.extras.note`, resp. `form__note` v generátore).
+- Do e-mailu z Web3Forms pribudlo pole `Doplnky`, do n8n `parkovanie` / `pivnica` (`ano`, len keď je
+  zaškrtnuté). V CRM sa z toho stane odpoveď *áno* pri danej otázke na karte záujemcu; prázdne políčko
+  neznamená *nie* a neprepíše to, čo zistilo call centrum telefonicky.
+- `kontakt.html` je generovaný — zmena je v `_build/build_pages.py`, stránky sú pregenerované. `ASSET_V` 72 → 73
+  (nové pravidlo `.form .extras` v `site.css`), v roote `teaser.css?v=18`, `i18n.js?v=18`, `teaser.js?v=19`.
+  Právne stránky generuje Vladova strana, tie ostali na `v=17` — nič z novej CSS nepotrebujú.
+- Čaká: nasadiť upravený Code node v n8n (`teaser-build/n8n/crm-lead.js`, mimo tohto repa), inak sa zaškrtnutie
+  do CRM nedostane. CRM časť je hotová a otestovaná.
 
 ### 2026-10-21 · úvodná stránka: všetky byty so stránkovaním · feat/lp-vsetky-byty · Filip + Claude
 - Filip: v sekcii Byty na úvodnej stránke chýbali byty. Namiesto šiestich najväčších ide všetkých 44, dva riadky na stranu a pod nimi stránkovanie (`.pager`, `data-featured-pager`).

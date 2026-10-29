@@ -380,6 +380,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .chips input:checked + span { background: var(--paper); color: var(--ink); border-color: var(--paper); }
 .chips input:focus-visible + span { outline: 2px solid var(--sand); outline-offset: 3px; }
 
+/* a line of small print under a chips fieldset; the grid gap above it is pulled back so it reads as part of that question */
+.chips__note { margin: -14px 0 0; font-size: .78rem; line-height: 1.5; color: rgba(247, 244, 239, .5); }
+
 .check { display: grid; grid-template-columns: 22px 1fr; gap: 14px; align-items: start; font-size: .86rem; line-height: 1.5; color: var(--text-inv-muted); cursor: pointer; }
 .check input { appearance: none; -webkit-appearance: none; width: 22px; height: 22px; margin: 1px 0 0; border: 1px solid rgba(247, 244, 239, .4); border-radius: 3px; background: rgba(20, 18, 15, .45); cursor: pointer; display: grid; place-content: center; transition: background .2s, border-color .2s; }
 .check input::after { content: ""; width: 11px; height: 6px; border-left: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: translateY(-1px) rotate(-45deg) scale(0); transition: transform .2s var(--ease); }

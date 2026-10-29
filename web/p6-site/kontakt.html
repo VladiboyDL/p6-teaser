@@ -17,7 +17,7 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="preload" href="assets/fonts/newsreader-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/site.css?v=72">
+<link rel="stylesheet" href="assets/css/site.css?v=73">
 </head>
 <body>
 <a class="skip-link" href="#main">Preskočiť na obsah</a>
@@ -79,6 +79,14 @@
           <div><label for="c-topic">Čo potrebujete</label>
             <select id="c-topic" name="topic"><option value="konzultacia">Konzultáciu</option><option value="katalog">Katalóg</option><option value="obhliadka">Osobnú obhliadku</option><option value="ine">Iné</option></select></div>
         </div>
+        <fieldset class="extras">
+          <legend>Okrem bytu ma zaujíma</legend>
+          <div class="consent"><input id="c-parking" name="doplnky" type="checkbox" value="Parkovacie státie">
+            <label for="c-parking">Parkovacie státie</label></div>
+          <div class="consent"><input id="c-cellar" name="doplnky" type="checkbox" value="Pivničná kobka">
+            <label for="c-cellar">Pivničná kobka</label></div>
+          <p class="form__note">Záujem si poznačíme. Dostupnosť a cenu prejdeme osobne.</p>
+        </fieldset>
         <div><label for="c-msg">Správa</label><textarea id="c-msg" name="message" maxlength="4000" placeholder="Čo je pre vás dôležité? Výhľad, terasa, podlažie, termín…"></textarea></div>
         <label class="hp" aria-hidden="true">Nevypĺňajte<input type="text" name="p6_kontrola" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore></label>
         <div class="consent">
@@ -183,10 +191,10 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 <script src="/assets/js/config.js"></script>
 <script src="/assets/js/consent.js" defer></script>
-<script src="assets/js/data.js?v=72"></script>
-<script src="assets/js/availability.js?v=72"></script>
-<script src="assets/js/site.js?v=72"></script>
-<script src="assets/js/motion.js?v=72"></script>
-<script src="assets/js/forms.js?v=72"></script>
+<script src="assets/js/data.js?v=73"></script>
+<script src="assets/js/availability.js?v=73"></script>
+<script src="assets/js/site.js?v=73"></script>
+<script src="assets/js/motion.js?v=73"></script>
+<script src="assets/js/forms.js?v=73"></script>
 </body>
 </html>
