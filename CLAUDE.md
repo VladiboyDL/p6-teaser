@@ -141,6 +141,14 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-11-10 · kontaktný formulár bez „Osobnej obhliadky“ · fix/kontakt-bez-obhliadky · Vlad + Claude
+- Z výberu „Čo potrebujete“ na `web/p6-site/kontakt.html` zmizla možnosť **Osobnú obhliadku**. Ukazovať zatiaľ
+  nie je čo (búracie práce pôvodného objektu ešte nezačali), tak ju neponúkame nikde — ani na webe, ani v listoch.
+  Osobná konzultácia nad pôdorysmi a cenami ostáva. Vrátiť ju, až bude čo ukázať.
+- Zmena je v `_build/build_pages.py`, pregenerovaný je len `kontakt.html` (CSS ani JS sa nemenili, `ASSET_V` ostáva 73).
+- Doplnenie k poznámke z 29. 10.: Code node v n8n je nasadený odvtedy, zaškrtnutie parkovania / pivnice
+  z formulára chodí do CRM.
+
 ### 2026-10-29 · formulár: parkovacie státie a pivničná kobka · feat/formular-doplnky · Vlad + Claude
 - Oba formuláre (teaser v roote aj `web/p6-site/kontakt.html`) majú dve nepovinné zaškrtávacie políčka
   `name="doplnky"`: *Parkovacie státie* a *Pivničná kobka*. Hodnoty ostávajú slovenské, preklady sú v `i18n.js`

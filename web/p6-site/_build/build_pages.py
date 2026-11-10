@@ -1316,7 +1316,7 @@ def kontakt_html():
           <div><label for="c-rooms">Preferovaná dispozícia</label>
             <select id="c-rooms" name="rooms"><option value="">Nezáleží</option><option>1-izbový</option><option>2-izbový</option><option>3-izbový</option></select></div>
           <div><label for="c-topic">Čo potrebujete</label>
-            <select id="c-topic" name="topic"><option value="konzultacia">Konzultáciu</option><option value="katalog">Katalóg</option><option value="obhliadka">Osobnú obhliadku</option><option value="ine">Iné</option></select></div>
+            <select id="c-topic" name="topic"><option value="konzultacia">Konzultáciu</option><option value="katalog">Katalóg</option><option value="ine">Iné</option></select></div>
         </div>
         <fieldset class="extras">
           <legend>Okrem bytu ma zaujíma</legend>
