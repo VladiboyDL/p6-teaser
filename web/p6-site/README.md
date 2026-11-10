@@ -17,8 +17,8 @@ python3 -m http.server 8123 --directory rezidencia
 
 ## Etapa 2 — what changed on 21. 9. 2026
 
-Done, from Vlad's `ETAPA2-ZMENY-PRE-KOLEGU.md` (the project is before its
-building permit, so nothing may describe the works or promise a specification):
+Done, from Vlad's `ETAPA2-ZMENY-PRE-KOLEGU.md` (nothing may describe the works
+or promise an unconfirmed specification):
 
 - **The Štandard section is off** (`SHOW_STANDARD = False`). Triple glazing,
   underfloor heating, large-format tiling, wooden floors, chip entry and EV
@@ -161,9 +161,8 @@ courtyard side: **G, F, E**. See `_build/plans/README.md`.
 
 `DISCLAIMER` in `_build/build_pages.py` carries the architect's required
 wording and appears under every plan, the unit list and the parameters. It must
-stay: the building is an existing skeleton being reconstructed, tolerances of
-roughly ±5–10 cm are expected, balcony areas are not confirmed by the city, and
-the project is being pre-sold without final permits.
+stay: tolerances of roughly ±5–10 cm are expected and balcony areas are not
+final yet.
 
 ## Interaction
 
@@ -370,8 +369,8 @@ confirmed. Its engine went with `building.js`.)
 - **Which way the flat looks.** The plan carries Sever / Juh / Východ / Západ
   on its four edges. The client's material still does not state the
   orientation, so it is derived rather than guessed: OpenStreetMap has the
-  building at Prievozská 6 (Bratislava Business Center III, the skeleton being
-  reconstructed) as a 43.2 x 13.7 m block with its long axis at 70.3°, so the
+  building at Prievozská 6 (Bratislava Business Center III)
+  as a 43.2 x 13.7 m block with its long axis at 70.3°, so the
   long facades face 340.3° (NNW) and 160.3° (SSE); Prievozská runs along the
   NNW side; and the entrance stair on the 1.NP drawing sits bottom left, on the
   street. Bottom of the plan is therefore the street and the north side, top is

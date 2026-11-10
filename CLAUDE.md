@@ -57,7 +57,7 @@ the walking times and places shown on the teaser map · "predpredaj vybraných b
 
 Not to be stated anywhere (pages, PDFs, meta tags, alt texts, public JS comments, ads): a number of parking spaces · fitness · heating, cooling,
 glazing, floors or any other technical specification · dates of construction, completion or handover · prices, until an administrator enters them
-in the CRM · yield, appreciation or any financial promise · "novostavba" · the reconstructed skeleton · that all 44 flats are available, which flats
+in the CRM · yield, appreciation or any financial promise · "novostavba" · the reconstructed skeleton · that the project lacks a building permit or is "before its permit" (the permit is issued) · that all 44 flats are available, which flats
 are offered first or how many. Visualisations carry "ilustračná vizualizácia" / "Ilustračný obrázok".
 
 ### One set of legal pages, consent and tracking for the whole domain (in place since 2026-09-21)
@@ -141,11 +141,18 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-11-10 · stavebné povolenie: odstránené nepravdivé vety · docs/povolenie-formulacie · Vlad + Claude
+- Projekt **má vydané stavebné povolenie**. Z poznámok a komentárov vypadli staré vety, ktoré tvrdili opak:
+  dev note z 2026-10-29 tu v `CLAUDE.md`, dva odseky vo `web/p6-site/README.md` a komentár pri `DISCLAIMER`
+  vo `web/p6-site/_build/build_pages.py`. Z README zároveň vypadla zmienka o skelete.
+- Do zoznamu „Not to be stated anywhere“ pribudlo: že projekt nemá stavebné povolenie alebo je „pred povolením“.
+- Na webe sa nič nemení: `.md` a `.py` sa na bytyp6.sk nenasadzujú a text `DISCLAIMER` ostal rovnaký.
+
 ### 2026-10-29 · formulár: parkovacie státie a pivničná kobka · feat/formular-doplnky · Vlad + Claude
 - Oba formuláre (teaser v roote aj `web/p6-site/kontakt.html`) majú dve nepovinné zaškrtávacie políčka
   `name="doplnky"`: *Parkovacie státie* a *Pivničná kobka*. Hodnoty ostávajú slovenské, preklady sú v `i18n.js`
   (`f.extras*`, 5 jazykov). Pod nimi je veta „Záujem si poznačíme. Dostupnosť a cenu prejdeme osobne.“ —
-  **nič nesľubujeme**, projekt je pred povolením a počet státí ani kobiek nie je potvrdený. Ak by to klient
+  **nič nesľubujeme**, počet státí ani kobiek nie je potvrdený. Ak by to klient
   nechcel takto, stačí zmeniť ten jeden riadok (`f.extras.note`, resp. `form__note` v generátore).
 - Do e-mailu z Web3Forms pribudlo pole `Doplnky`, do n8n `parkovanie` / `pivnica` (`ano`, len keď je
   zaškrtnuté). V CRM sa z toho stane odpoveď *áno* pri danej otázke na karte záujemcu; prázdne políčko
