@@ -141,6 +141,20 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-11-11 · kampaň „Kľúče k vlastnej budúcnosti“ (17. – 23. 11.) · feat/kampan-selektor · Vlad + Claude
+- **Oficiálny web (selektor):** počas kampane feed z CRM označí kampaňové byty (`campaign: true`, `campaignPrice`) a pridá
+  `campaign { id, name, until }`. Web ukáže cenu kampane pod štítkom „Akciová cena“ (tip na pôdoryse, zoznam, detail
+  „len do 23. 11. 2026“), na pôdoryse podlažia ich vyznačí medenou a nad selektorom `#vyber-bytu` napíše, ktoré byty to sú.
+  Keď kampaň skončí, feed to prestane posielať a web sa vráti sám. `ASSET_V` 73 → 74.
+- Kto príde z odkazu kampane (`utm_*`), nesie si ho po interných odkazoch (nič sa neukladá), takže dopyt z detailu bytu
+  dorazí do CRM s kampaňou.
+- **Teaser (root):** `assets/js/kampan.js` ukáže kampaňový pás pod hero, medenú výzvu v hero, prepne sticky lištu a vetu
+  pri formulári — len 17. 11. 00:00 až 23. 11. 23:59 bratislavského času, inak s `?kampan=nahlad`. Tlačidlá „Vyber si byt“
+  vedú na formulár a doplnia do adresy `utm_campaign=p6_17nov_2026`, ak tam ešte nie je, aby registrácia z webu mala
+  rovnaký nárok ako z reklamy. Texty v 5 jazykoch (`kampan.*` v `i18n.js`). `teaser.css?v=19`, `i18n.js?v=19`, `kampan.js?v=1`.
+- CRM po registrácii z kampane samo pošle e-mail so zoznamom akciových bytov a odkazom na `#vyber-bytu`.
+- Po kampani zmazať `kampan.js`, pás v `index.html` a kľúče `kampan.*` (zobrazovať sa už nebudú ani tak).
+
 ### 2026-11-10 · kontaktný formulár bez „Osobnej obhliadky“ · fix/kontakt-bez-obhliadky · Vlad + Claude
 - Z výberu „Čo potrebujete“ na `web/p6-site/kontakt.html` zmizla možnosť **Osobnú obhliadku**. Ukazovať zatiaľ
   nie je čo (búracie práce pôvodného objektu ešte nezačali), tak ju neponúkame nikde — ani na webe, ani v listoch.
