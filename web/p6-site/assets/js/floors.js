@@ -562,7 +562,7 @@ function initFloors() {
         <div class="tip__row"><dt>Interiér</dt><dd>${fmtArea(a.area)} m²</dd></div>
         <div class="tip__row"><dt>${a.extKind}</dt><dd>${fmtArea(a.ext)} m²</dd></div>
         <div class="tip__row tip__row--total"><dt>Spolu</dt><dd>${fmtArea(a.total)} m²</dd></div>
-        <div class="tip__row"><dt>${isCampaign(a) ? 'Akciová cena' : 'Cena'}</dt><dd>${a.status === 'predany' ? 'Predané' : fmtPrice(a.price, a.status)}</dd></div>
+        <div class="tip__row"><dt>${isCampaign(a) ? 'Zvýhodnená cena' : 'Cena'}</dt><dd>${a.status === 'predany' ? 'Predané' : fmtPrice(a.price, a.status)}</dd></div>
       </dl>
       <div class="tip__cta">Kliknite pre detail bytu</div>
       <div class="tip__actions">

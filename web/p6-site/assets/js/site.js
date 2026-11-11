@@ -46,8 +46,8 @@ function fmtPrice(price, status) {
    The PDF template loads no availability.js, so the campaign may not exist at all there. */
 const campaignNow = () => (typeof P6_CAMPAIGN !== 'undefined' ? P6_CAMPAIGN : null);
 const isCampaign = a => !!(a && a.campaign && campaignNow() && a.status !== 'predany');
-const campaignPill = a => (isCampaign(a) ? '<span class="pill pill--akcia">Akciová cena</span>' : '');
-const priceLabel = a => (isCampaign(a) ? 'Akciová cena vrátane DPH' : 'Cena vrátane DPH');
+const campaignPill = a => (isCampaign(a) ? '<span class="pill pill--akcia">Zvýhodnená cena</span>' : '');
+const priceLabel = a => (isCampaign(a) ? 'Zvýhodnená cena vrátane DPH' : 'Cena vrátane DPH');
 /** The campaign's last day, "23. 11. 2026" (it ends at midnight Bratislava time). */
 function campaignLastDay() {
   const c = campaignNow();
@@ -151,8 +151,8 @@ document.addEventListener('click', e => {
 function initCampaignNote() {
   const head = document.querySelector('.picker-sec__head');
   if (!head || !campaignNow() || document.querySelector('.picker-sec__akcia')) return;
-  head.insertAdjacentHTML('afterend', `<p class="picker-sec__akcia"><span class="pill pill--akcia">Akciová cena</span>
-    Byty a apartmány so štítkom Akciová cena sú v novembrovej ponuke za zvýhodnenú cenu, len do ${campaignLastDay()}.
+  head.insertAdjacentHTML('afterend', `<p class="picker-sec__akcia"><span class="pill pill--akcia">Zvýhodnená cena</span>
+    Byty a apartmány s týmto štítkom sú v novembrovej ponuke za zvýhodnenú cenu, len do ${campaignLastDay()}.
     Na pôdoryse podlažia sú vyznačené medenou farbou.</p>`);
 }
 

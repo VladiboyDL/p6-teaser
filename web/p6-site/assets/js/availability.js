@@ -19,7 +19,7 @@
  * Everything that draws flats waits for P6_AVAILABILITY (see whenAvailabilityKnown in site.js).
  *
  * A campaign: while the CRM runs one, the feed carries `campaign: { id, name, until }` and marks its flats with
- * `campaign: true` and `campaignPrice`. Such a flat shows the campaign price under the label "Akciová cena"
+ * `campaign: true` and `campaignPrice`. Such a flat shows the campaign price under the label "Zvýhodnená cena"
  * (site.js) and is marked on the floor plan; P6_CAMPAIGN holds the campaign. When it ends, the feed simply stops
  * saying so and everything goes back by itself.
  * The PDF template does not load this file, so the apartment PDFs always stay neutral.

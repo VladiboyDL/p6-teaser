@@ -113,7 +113,7 @@ function floorPlanHTML(floor, { activeId = null, titles = true, lazy = false } =
     const on = u.id === activeId;
     const [cx, cy] = polyCentre(pts);
     const title = `Byt ${u.id} · ${u.type} · ${fmtArea(u.area)} m²`
-                + (on ? ' · tento byt' : ` · ${statusText(u.status)}`) + (isCampaign(u) ? ' · akciová cena' : '');
+                + (on ? ' · tento byt' : ` · ${statusText(u.status)}`) + (isCampaign(u) ? ' · zvýhodnená cena' : '');
     /* the active flat is not a link — you are already on its page */
     const tag = on ? 'g' : 'a';
     const href = on ? '' : ` href="byt.html?id=${encodeURIComponent(u.id)}"`;
