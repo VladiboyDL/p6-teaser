@@ -42,6 +42,20 @@ function fmtPrice(price, status) {
   return nfPrice.format(price) + ' €';
 }
 
+/* A flat in the running campaign (availability.js): its price is the campaign price, under its own label.
+   The PDF template loads no availability.js, so the campaign may not exist at all there. */
+const campaignNow = () => (typeof P6_CAMPAIGN !== 'undefined' ? P6_CAMPAIGN : null);
+const isCampaign = a => !!(a && a.campaign && campaignNow() && a.status !== 'predany');
+const campaignPill = a => (isCampaign(a) ? '<span class="pill pill--akcia">Akciová cena</span>' : '');
+const priceLabel = a => (isCampaign(a) ? 'Akciová cena vrátane DPH' : 'Cena vrátane DPH');
+/** The campaign's last day, "23. 11. 2026" (it ends at midnight Bratislava time). */
+function campaignLastDay() {
+  const c = campaignNow();
+  if (!c || !c.until) return '';
+  const last = new Date(new Date(c.until).getTime() - 1);
+  return new Intl.DateTimeFormat('sk-SK', { timeZone: 'Europe/Bratislava', day: 'numeric', month: 'numeric', year: 'numeric' }).format(last);
+}
+
 /** Slovak 1 / 2-4 / 5+ plural. */
 function plural(n, one, few, many) {
   if (n === 1) return one;
@@ -119,12 +133,36 @@ function initChrome() {
   });
 }
 
+/* A visitor who came through a campaign link (utm_*) keeps it while browsing, so an enquiry sent from any page
+   still counts for the campaign in the CRM. Nothing is stored: the parameters ride along on internal links,
+   added at the moment such a link is clicked. */
+document.addEventListener('click', e => {
+  const link = e.target.closest && e.target.closest('a[href]');
+  if (!link || link.hasAttribute('download')) return;
+  const keep = [...new URLSearchParams(location.search)].filter(([k]) => k.startsWith('utm_') || k === 'lang');
+  if (!keep.length) return;
+  const url = new URL(link.getAttribute('href'), location.href);
+  if (url.origin !== location.origin || !/\.html$|\/$/.test(url.pathname)) return;
+  keep.forEach(([k, v]) => { if (!url.searchParams.has(k)) url.searchParams.set(k, v); });
+  link.href = url.toString();
+}, true);
+
+/* While a campaign runs, the picker says which flats carry its price and until when. */
+function initCampaignNote() {
+  const head = document.querySelector('.picker-sec__head');
+  if (!head || !campaignNow() || document.querySelector('.picker-sec__akcia')) return;
+  head.insertAdjacentHTML('afterend', `<p class="picker-sec__akcia"><span class="pill pill--akcia">Akciová cena</span>
+    Byty a apartmány so štítkom Akciová cena sú v novembrovej ponuke za zvýhodnenú cenu, len do ${campaignLastDay()}.
+    Na pôdoryse podlažia sú vyznačené medenou farbou.</p>`);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
   if (typeof initForms === 'function') initForms();
 });
 whenAvailabilityKnown(() => {
   initChrome();
+  initCampaignNote();
   if (typeof initList === 'function') initList();
   if (typeof initDetail === 'function') initDetail();
 });

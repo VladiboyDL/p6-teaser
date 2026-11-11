@@ -113,11 +113,11 @@ function floorPlanHTML(floor, { activeId = null, titles = true, lazy = false } =
     const on = u.id === activeId;
     const [cx, cy] = polyCentre(pts);
     const title = `Byt ${u.id} · ${u.type} · ${fmtArea(u.area)} m²`
-                + (on ? ' · tento byt' : ` · ${statusText(u.status)}`);
+                + (on ? ' · tento byt' : ` · ${statusText(u.status)}`) + (isCampaign(u) ? ' · akciová cena' : '');
     /* the active flat is not a link — you are already on its page */
     const tag = on ? 'g' : 'a';
     const href = on ? '' : ` href="byt.html?id=${encodeURIComponent(u.id)}"`;
-    return `<${tag}${href} class="fplan__unit${on ? ' is-active' : ''}"
+    return `<${tag}${href} class="fplan__unit${on ? ' is-active' : ''}${isCampaign(u) ? ' is-akcia' : ''}"
               data-status="${statusKind(u.status)}" data-id="${u.id}"
               ${on ? 'aria-current="page"' : ''} aria-label="${title}">
               ${titles ? `<title>${title}</title>` : ''}
