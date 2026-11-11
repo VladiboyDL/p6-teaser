@@ -482,6 +482,15 @@ body[data-locked="true"] { overflow: hidden; }
 .pill--predany { background: var(--off-bg); color: var(--off); }
 /* the neutral state while the staged sale is unannounced (SHOW_STATUS in data.js) */
 .pill--tbd { background: var(--paper-3); color: var(--text-muted); }
+/* the running campaign (availability.js): its label, and its flats marked on the floor plan in copper */
+.pill--akcia { background: var(--copper); color: #fff; }
+.ucard__pills { display: inline-flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.tip__head .pill + .pill { margin-left: 6px; }
+.fplan__unit.is-akcia polygon { stroke: var(--copper); }
+.fplan__unit.is-akcia .fplan__tag circle { fill: var(--copper); stroke: var(--copper); }
+.fplan__unit.is-akcia .fplan__tag text { fill: var(--paper); }
+.picker-sec__akcia { margin: 0 0 18px; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; font-size: .95rem; max-width: 80ch; }
+.aside__akcia { margin: 8px 0 0; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: .85rem; color: var(--text-muted); }
 .fplan__unit[data-status="tbd"] .fplan__tag circle { stroke: rgba(20, 18, 15, .2); }
 
 /* ===========================================================================
@@ -2316,6 +2325,7 @@ a, button, summary, label, [role="button"] { -webkit-tap-highlight-color: rgba(1
 @media (max-width: 899px) {
   .picker-sec .shell { display: flex; flex-direction: column; }
   .picker-sec__head { order: 1; }
+  .picker-sec__akcia { order: 1; }
   .bldg { order: 2; }
   .floorstrip-wrap { order: 3; margin-top: 18px !important; }
   .picker-sec__foot { order: 4; margin-top: 18px; }

@@ -555,14 +555,14 @@ function initFloors() {
     unitTip.innerHTML = `
       <div class="tip__head">
         <span class="tip__id">${a.id}</span>
-        <span class="pill pill--${statusKind(a.status)}">${statusText(a.status)}</span>
+        <span class="pill pill--${statusKind(a.status)}">${statusText(a.status)}</span>${campaignPill(a)}
       </div>
       <div class="tip__type">${a.type} · ${a.floor}. nadzemné podlažie</div>
       <dl class="tip__rows">
         <div class="tip__row"><dt>Interiér</dt><dd>${fmtArea(a.area)} m²</dd></div>
         <div class="tip__row"><dt>${a.extKind}</dt><dd>${fmtArea(a.ext)} m²</dd></div>
         <div class="tip__row tip__row--total"><dt>Spolu</dt><dd>${fmtArea(a.total)} m²</dd></div>
-        <div class="tip__row"><dt>Cena</dt><dd>${a.status === 'predany' ? 'Predané' : fmtPrice(a.price, a.status)}</dd></div>
+        <div class="tip__row"><dt>${isCampaign(a) ? 'Zvýhodnená cena' : 'Cena'}</dt><dd>${a.status === 'predany' ? 'Predané' : fmtPrice(a.price, a.status)}</dd></div>
       </dl>
       <div class="tip__cta">Kliknite pre detail bytu</div>
       <div class="tip__actions">

@@ -17,21 +17,30 @@
  * still "Pripravujeme": the sale runs in stages and the site does not announce how many go first.
  *
  * Everything that draws flats waits for P6_AVAILABILITY (see whenAvailabilityKnown in site.js).
+ *
+ * A campaign: while the CRM runs one, the feed carries `campaign: { id, name, until }` and marks its flats with
+ * `campaign: true` and `campaignPrice`. Such a flat shows the campaign price under the label "Zvýhodnená cena"
+ * (site.js) and is marked on the floor plan; P6_CAMPAIGN holds the campaign. When it ends, the feed simply stops
+ * saying so and everything goes back by itself.
  * The PDF template does not load this file, so the apartment PDFs always stay neutral.
  * ------------------------------------------------------------------------ */
+
+let P6_CAMPAIGN = null;   // the campaign running now, from the feed: { id, name, until }
 
 const P6_AVAILABILITY = (function () {
   const FROM_CRM = { available: 'dostupny', reserved: 'rezervovany', sold: 'predany' };
   const TIMEOUT_MS = 2500;
 
-  function apply(units) {
+  function apply(units, campaign) {
     const onOffer = new Map(units.filter(u => u && FROM_CRM[u.status]).map(u => [u.id, u]));
     if (!onOffer.size) return;                                   // nothing released yet: stay neutral
     APARTMENTS.forEach(a => {
       const u = onOffer.get(a.id);
       a.status = u ? FROM_CRM[u.status] : 'pripravujeme';
-      a.price = u && typeof u.price === 'number' && u.price > 0 ? u.price : null;
+      a.campaign = !!(campaign && u && u.campaign && typeof u.campaignPrice === 'number' && u.campaignPrice > 0);
+      a.price = a.campaign ? u.campaignPrice : u && typeof u.price === 'number' && u.price > 0 ? u.price : null;
     });
+    P6_CAMPAIGN = campaign && APARTMENTS.some(a => a.campaign) ? campaign : null;
     SHOW_STATUS = true;
     SHOW_COUNTS = APARTMENTS.every(a => a.status !== 'pripravujeme');
   }
@@ -41,7 +50,7 @@ const P6_AVAILABILITY = (function () {
   const timer = setTimeout(() => ctrl && ctrl.abort(), TIMEOUT_MS);
   return fetch(LIVE_STATUS_URL, { signal: ctrl ? ctrl.signal : undefined, credentials: 'omit' })
     .then(r => (r.ok ? r.json() : Promise.reject(new Error('feed ' + r.status))))
-    .then(feed => apply(Array.isArray(feed.units) ? feed.units : []))
+    .then(feed => apply(Array.isArray(feed.units) ? feed.units : [], feed.campaign && feed.campaign.id ? feed.campaign : null))
     .catch(() => { /* unreachable CRM: better neutral than stale or invented availability */ })
     .then(() => clearTimeout(timer));
 })();

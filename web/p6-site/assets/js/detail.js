@@ -75,8 +75,9 @@ function initDetail() {
 
   root.querySelector('[data-aside]').innerHTML = `
     <div class="aside__box">
-      <p class="eyebrow" style="margin-bottom:4px">${soldOut(a.status) ? 'Stav bytu' : 'Cena vrátane DPH'}</p>
+      <p class="eyebrow" style="margin-bottom:4px">${soldOut(a.status) ? 'Stav bytu' : priceLabel(a)}</p>
       <div class="aside__price">${soldOut(a.status) ? 'Predané' : fmtPrice(a.price, a.status)}</div>
+      ${isCampaign(a) ? `<p class="aside__akcia">${campaignPill(a)} Novembrová ponuka, len do ${campaignLastDay()}</p>` : ''}
       ${ppm && !soldOut(a.status) && SHOW_PRICES
         ? `<div class="aside__ppm">${nfPrice.format(ppm)} € / m² interiéru</div>` : ''}
       <div class="aside__actions">
@@ -134,7 +135,7 @@ function initDetail() {
     const sold = soldOut(a.status);
     bar.innerHTML = `
       <div class="sticky-cta__price">
-        <span class="sticky-cta__label">${sold ? 'Byt ' + a.id : 'Cena vrátane DPH'}</span>
+        <span class="sticky-cta__label">${sold ? 'Byt ' + a.id : priceLabel(a)}</span>
         <span class="sticky-cta__value">${sold ? 'Predané' : fmtPrice(a.price, a.status)}</span>
       </div>
       ${sold

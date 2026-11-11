@@ -18,7 +18,7 @@ function unitCardHTML(a, opts) {
           <div class="ucard__id">${a.id}</div>
           <div class="ucard__type">${a.type} · ${a.floor}. NP</div>
         </div>
-        <span class="pill pill--${statusKind(a.status)}">${statusText(a.status)}</span>
+        <span class="ucard__pills"><span class="pill pill--${statusKind(a.status)}">${statusText(a.status)}</span>${campaignPill(a)}</span>
       </div>
       <dl class="ucard__rows">
         <div><dt>Izby</dt><dd>${a.rooms}</dd></div>

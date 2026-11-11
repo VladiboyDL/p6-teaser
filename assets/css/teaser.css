@@ -483,3 +483,20 @@ html[lang="sk"] .legal [data-lang="sk"], html[lang="en"] .legal [data-lang="en"]
 
 /* optional captcha slot in the registration form */
 .form__captcha { min-height: 78px; display: flex; justify-content: center; }
+
+/* --- November campaign (kampan.js adds .is-kampan to <html> only in that week, or with ?kampan=nahlad) --- */
+html:not(.is-kampan) [data-kampan-on] { display: none; }
+.is-kampan [data-kampan-off] { display: none; }
+.kampan { background: var(--ink); color: var(--text-inv); border-top: 1px solid var(--line-inv); padding: clamp(28px, 4.5vw, 52px) 0; }
+.kampan__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px 48px; }
+.kampan__eyebrow { margin: 0 0 10px; font-size: .78rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--copper-2); }
+.kampan__title { margin: 0; font: 300 clamp(2rem, 4vw, 3.2rem)/1.04 var(--f-display); max-width: none; }
+.kampan__units { margin: 14px 0 0; font-size: 1.02rem; max-width: none; }
+.kampan__dates { margin: 4px 0 0; font-size: .95rem; color: var(--text-inv-muted); max-width: none; }
+.reg__kampan { margin: 0 0 14px; padding: 10px 14px; border-left: 2px solid var(--copper-2); color: var(--text-inv); font-size: .98rem; }
+.hero__kampan { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; margin: 0 0 18px; padding: 9px 16px; border-radius: 100px;
+  background: var(--copper); color: #fff; font-size: .92rem; text-decoration: none; box-shadow: 0 6px 24px rgba(20, 18, 15, .25); }
+.hero__kampan b { font-weight: 600; }
+.hero__kampan svg { width: 16px; height: 16px; }
+.hero__kampan:hover { background: #a3642a; }
+
