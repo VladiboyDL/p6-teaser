@@ -45,8 +45,8 @@ PREVIEW = True
 ASSET_V = "73"
 
 # Mandated by the architect (Ing. arch. Martin Krajči) — must stay visible
-# wherever plans or areas are shown. Wording matches the teaser; the project is
-# before its building permit, so nothing here describes the works.
+# wherever plans or areas are shown. Wording matches the teaser; nothing here
+# describes the works.
 DISCLAIMER = ("Výmery, dispozície a počty sú orientačné a vychádzajú z podkladov "
               "architekta. Možné sú odchýlky a zmeny. Výmery balkónov nie sú "
               "definitívne potvrdené.")

@@ -148,12 +148,15 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 - Zmena je v `_build/build_pages.py`, pregenerovaný je len `kontakt.html` (CSS ani JS sa nemenili, `ASSET_V` ostáva 73).
 - Doplnenie k poznámke z 29. 10.: Code node v n8n je nasadený odvtedy, zaškrtnutie parkovania / pivnice
   z formulára chodí do CRM.
+- Z poznámok a komentárov v repe (táto poznámka z 29. 10., `web/p6-site/README.md`, komentár v `build_pages.py`)
+  som odstránil nepresné vety o stave projektu. Do poznámok, komentárov ani textov nepíšte nič o stave povolení
+  ani o tom, čo sa so stavbou deje; keď treba výhradu, stačí, že výmery a dispozície sú orientačné.
 
 ### 2026-10-29 · formulár: parkovacie státie a pivničná kobka · feat/formular-doplnky · Vlad + Claude
 - Oba formuláre (teaser v roote aj `web/p6-site/kontakt.html`) majú dve nepovinné zaškrtávacie políčka
   `name="doplnky"`: *Parkovacie státie* a *Pivničná kobka*. Hodnoty ostávajú slovenské, preklady sú v `i18n.js`
   (`f.extras*`, 5 jazykov). Pod nimi je veta „Záujem si poznačíme. Dostupnosť a cenu prejdeme osobne.“ —
-  **nič nesľubujeme**, projekt je pred povolením a počet státí ani kobiek nie je potvrdený. Ak by to klient
+  **nič nesľubujeme**, počet státí ani kobiek nie je potvrdený. Ak by to klient
   nechcel takto, stačí zmeniť ten jeden riadok (`f.extras.note`, resp. `form__note` v generátore).
 - Do e-mailu z Web3Forms pribudlo pole `Doplnky`, do n8n `parkovanie` / `pivnica` (`ano`, len keď je
   zaškrtnuté). V CRM sa z toho stane odpoveď *áno* pri danej otázke na karte záujemcu; prázdne políčko
