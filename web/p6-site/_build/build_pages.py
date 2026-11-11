@@ -45,8 +45,8 @@ PREVIEW = True
 ASSET_V = "73"
 
 # Mandated by the architect (Ing. arch. Martin Krajči) — must stay visible
-# wherever plans or areas are shown. Wording matches the teaser; the project is
-# before its building permit, so nothing here describes the works.
+# wherever plans or areas are shown. Wording matches the teaser; nothing here
+# describes the works.
 DISCLAIMER = ("Výmery, dispozície a počty sú orientačné a vychádzajú z podkladov "
               "architekta. Možné sú odchýlky a zmeny. Výmery balkónov nie sú "
               "definitívne potvrdené.")
@@ -1316,7 +1316,7 @@ def kontakt_html():
           <div><label for="c-rooms">Preferovaná dispozícia</label>
             <select id="c-rooms" name="rooms"><option value="">Nezáleží</option><option>1-izbový</option><option>2-izbový</option><option>3-izbový</option></select></div>
           <div><label for="c-topic">Čo potrebujete</label>
-            <select id="c-topic" name="topic"><option value="konzultacia">Konzultáciu</option><option value="katalog">Katalóg</option><option value="obhliadka">Osobnú obhliadku</option><option value="ine">Iné</option></select></div>
+            <select id="c-topic" name="topic"><option value="konzultacia">Konzultáciu</option><option value="katalog">Katalóg</option><option value="ine">Iné</option></select></div>
         </div>
         <fieldset class="extras">
           <legend>Okrem bytu ma zaujíma</legend>
