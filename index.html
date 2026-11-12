@@ -36,7 +36,7 @@
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/hero-1600.webp" imagesrcset="assets/img/hero-960.webp 960w, assets/img/hero-1600.webp 1600w, assets/img/hero-2200.webp 2200w" imagesizes="100vw" media="(min-aspect-ratio: 4/5)" fetchpriority="high">
 <link rel="preload" as="image" href="assets/img/hero-tall-1000.webp" media="(max-aspect-ratio: 4/5)" fetchpriority="high">
-<link rel="stylesheet" href="assets/css/teaser.css?v=19">
+<link rel="stylesheet" href="assets/css/teaser.css?v=20">
 <link rel="stylesheet" href="assets/css/motion.css?v=6">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ApartmentComplex","name":"P6",
@@ -100,7 +100,7 @@
 
   <div class="hero__body shell">
     <div class="hero__copy">
-      <a class="hero__kampan" href="#registracia" data-kampan-on data-kampan-cta><span data-i18n="kampan.hero">17. – 23. novembra: 17 bytov a&nbsp;apartmánov za zvýhodnené ceny</span> <b data-i18n="kampan.cta">Vyber si byt</b> <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+      <a class="hero__kampan" href="#registracia" data-kampan-on data-kampan-cta><span class="status__dot" aria-hidden="true"></span><span data-i18n="kampan.hero">17. – 23. novembra: 17 bytov a&nbsp;apartmánov za zvýhodnené ceny</span> <b data-i18n="kampan.cta">Vyber si byt</b> <svg aria-hidden="true"><use href="#arrow"/></svg></a>
       <p class="status"><span class="status__dot" aria-hidden="true"></span><span data-i18n="hero.status">Pripravujeme · Bratislava-Ružinov</span></p>
       <h1 class="hero__title" data-i18n="hero.title">
         <span class="line"><span>Domov medzi</span></span>
@@ -108,7 +108,8 @@
       </h1>
       <p class="hero__sub" data-i18n="hero.sub">44 bytov v&nbsp;bratislavskom Ružinove. Trh, škola, práca, Nivy aj nové centrum Bratislavy v&nbsp;prirodzenom dosahu. Zaregistrujte sa a&nbsp;získajte prístup k&nbsp;predpredaju prvých bytov za úvodné ceny.</p>
       <div class="hero__actions">
-        <a class="btn btn--light" href="#registracia"><span data-i18n="hero.cta">Chcem prístup k&nbsp;predpredaju</span> <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+        <a class="btn btn--light" href="#registracia" data-kampan-off><span data-i18n="hero.cta">Chcem prístup k&nbsp;predpredaju</span> <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+        <a class="btn btn--kampan" href="#registracia" data-kampan-on data-kampan-cta><span data-i18n="kampan.cta">Vyber si byt</span> <svg aria-hidden="true"><use href="#arrow"/></svg></a>
         <a class="btn btn--ghost-inv" href="#projekt" data-i18n="hero.cta2">Spoznať projekt</a>
       </div>
     </div>
@@ -124,14 +125,30 @@
 
 <!-- Novembrová kampaň (17.–23. 11. 2026): kampan.js ju ukáže len v tom týždni, alebo s ?kampan=nahlad -->
 <section class="kampan" id="kampan" data-kampan hidden aria-labelledby="kampan-title">
+  <span class="kampan__big" aria-hidden="true">17</span>
   <div class="shell kampan__inner">
     <div class="kampan__copy">
-      <p class="kampan__eyebrow" data-i18n="kampan.eyebrow">17. november · 17 príležitostí</p>
+      <p class="kampan__eyebrow"><span class="status__dot" aria-hidden="true"></span><span data-i18n="kampan.eyebrow">17. november · 17 príležitostí</span></p>
       <h2 class="kampan__title" id="kampan-title" data-i18n="kampan.title">Kľúče k&nbsp;vlastnej budúcnosti</h2>
-      <p class="kampan__units" data-i18n="kampan.units">7 dvojizbových bytov · 7 trojizbových bytov · 3 jednoizbové apartmány</p>
       <p class="kampan__dates" data-i18n="kampan.dates">Zvýhodnené ceny len od 17. do 23. novembra 2026.</p>
     </div>
-    <a class="btn btn--light" href="#registracia" data-kampan-cta><span data-i18n="kampan.cta">Vyber si byt</span> <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+    <ul class="kampan__units">
+      <li><b>7</b><span data-i18n="kampan.u2">dvojizbových bytov</span></li>
+      <li><b>7</b><span data-i18n="kampan.u3">trojizbových bytov</span></li>
+      <li><b>3</b><span data-i18n="kampan.u1">jednoizbové apartmány</span></li>
+    </ul>
+    <div class="kampan__foot">
+      <div class="kampan__clock" data-kampan-clock hidden>
+        <p class="kampan__clock-label" data-i18n="kampan.left">Do konca ponuky zostáva</p>
+        <p class="kampan__cd" role="timer" aria-live="off">
+          <span><b data-cd="d">0</b><i data-i18n="kampan.cd.d">dní</i></span>
+          <span><b data-cd="h">00</b><i data-i18n="kampan.cd.h">hod.</i></span>
+          <span><b data-cd="m">00</b><i data-i18n="kampan.cd.m">min.</i></span>
+          <span><b data-cd="s">00</b><i data-i18n="kampan.cd.s">sek.</i></span>
+        </p>
+      </div>
+      <a class="btn btn--ink btn--xl" href="#registracia" data-kampan-cta><span data-i18n="kampan.cta">Vyber si byt</span> <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+    </div>
   </div>
 </section>
 
@@ -487,8 +504,8 @@
   </div>
 </div>
 
-<script src="assets/js/i18n.js?v=19" defer></script>
-<script src="assets/js/kampan.js?v=1" defer></script>
+<script src="assets/js/i18n.js?v=20" defer></script>
+<script src="assets/js/kampan.js?v=2" defer></script>
 <script src="assets/js/consent.js?v=5" defer></script>
 <script src="assets/vendor/gsap.min.js?v=3.15.0" defer></script>
 <script src="assets/vendor/ScrollTrigger.min.js?v=3.15.0" defer></script>
