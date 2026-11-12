@@ -141,6 +141,17 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-11-12 · kampaňový banner väčší, s odpočtom · feat/kampan-banner-vacsi · Vlad + Claude
+
+- Vlad chcel banner kampane väčší, „nech bije do očí“. Pás pod hero je teraz medený (#95571F, svetlý text ≥ 4,5 : 1),
+  veľký nadpis, tri veľké čísla (7 / 7 / 3 – nové kľúče `kampan.u2`, `kampan.u3`, `kampan.u1`, starý `kampan.units` zrušený),
+  odpočet do konca ponuky (23. 11. 23:59:59, `kampan.js` → `[data-kampan-clock]`, kľúče `kampan.left`, `kampan.cd.*`)
+  a veľké tmavé tlačidlo „Vyber si byt“. Za tým jemné veľké „17“ (dekorácia, `aria-hidden`).
+- V hero je pilulka väčšia (copper-2 s tmavým textom) a hlavné tlačidlo sa počas kampane mení na medené „Vyber si byt“
+  (`data-kampan-off` / `data-kampan-on`); sticky lišta má počas kampane medené tlačidlo. Všetky tieto tlačidlá majú
+  `data-kampan-cta`, takže registrácia nesie UTM kampane ako doteraz.
+- Náhľad kedykoľvek: `/?kampan=nahlad`. teaser.css?v=20, i18n.js?v=20, kampan.js?v=2.
+
 ### 2026-11-11 · kampaň „Kľúče k vlastnej budúcnosti“ (17. – 23. 11.) · feat/kampan-selektor · Vlad + Claude
 - **Oficiálny web (selektor):** počas kampane feed z CRM označí kampaňové byty (`campaign: true`, `campaignPrice`) a pridá
   `campaign { id, name, until }`. Web ukáže cenu kampane pod štítkom „Zvýhodnená cena“ (tip na pôdoryse, zoznam, detail
