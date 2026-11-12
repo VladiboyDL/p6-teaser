@@ -141,6 +141,13 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-11-12 · druhý Meta Pixel · feat/meta-pixel-sk · Filip + Claude
+- `config.js`: `tracking.metaPixel` teraz berie viac ID oddelených čiarkou; pridaný pixel `1130761629864245`
+  (dataset reklamného účtu P6 Byty SK). Pôvodný `1799799647800061` ostáva. `consent.js` inicializuje každé ID,
+  takže PageView aj Lead idú do oboch. Stále až po súhlase (marketing), nič iné sa nemení.
+- Cache: `index.html` má `config.js?v=21`, `consent.js?v=6`. Štyri právne stránky som ručne neupravoval:
+  **Vlad, pri ďalšom bake prosím zvýš verzie tam tiež** (do 10 min to aj tak dobehne cez cache GitHub Pages).
+
 ### 2026-11-11 · kampaň „Kľúče k vlastnej budúcnosti“ (17. – 23. 11.) · feat/kampan-selektor · Vlad + Claude
 - **Oficiálny web (selektor):** počas kampane feed z CRM označí kampaňové byty (`campaign: true`, `campaignPrice`) a pridá
   `campaign { id, name, until }`. Web ukáže cenu kampane pod štítkom „Zvýhodnená cena“ (tip na pôdoryse, zoznam, detail
