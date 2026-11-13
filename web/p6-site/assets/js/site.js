@@ -152,7 +152,7 @@ function initCampaignNote() {
   const head = document.querySelector('.picker-sec__head');
   if (!head || !campaignNow() || document.querySelector('.picker-sec__akcia')) return;
   head.insertAdjacentHTML('afterend', `<p class="picker-sec__akcia"><span class="pill pill--akcia">Zvýhodnená cena</span>
-    Byty a apartmány s týmto štítkom sú v novembrovej ponuke za zvýhodnenú cenu, len do ${campaignLastDay()}.
+    Byty a apartmány s týmto štítkom majú zvýhodnenú cenu, ale len pre tých, ktorí sa zaregistrujú počas novembrovej ponuky, do ${campaignLastDay()}.
     Na pôdoryse podlažia sú vyznačené medenou farbou.</p>`);
 }
 

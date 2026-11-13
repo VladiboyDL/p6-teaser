@@ -141,6 +141,15 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-11-13 · kampaň: zvýhodnená cena len pre registrácie počas kampane · feat/kampan-banner-vacsi · Vlad + Claude
+
+- Vlad: musí byť jasné, že zvýhodnená cena platí len pre tých, ktorí sa zaregistrovali počas kampane. Poznámka nad
+  výberom bytov (`site.js` → `initCampaignNote`) a riadok pri cene na detaile bytu (`detail.js`) to teraz hovoria
+  výslovne („len pre tých, ktorí sa zaregistrujú počas novembrovej ponuky, do …“). ASSET_V 74 → 75, stránky pregenerované.
+- Súvisí s CRM (súkromné repo): byt má teraz tri ceny — štandardnú, F&F a zvýhodnenú kampane. Verejný zdroj
+  `/api/public/units` posiela v poli `price` **len štandardnú cenu**; voľný byt bez štandardnej ceny v zdroji nie je,
+  takže ho web ukáže ako „Pripravujeme“. Na strane webu sa nič meniť nemusí.
+
 ### 2026-11-12 · kampaňový banner väčší, s odpočtom · feat/kampan-banner-vacsi · Vlad + Claude
 
 - Vlad chcel banner kampane väčší, „nech bije do očí“. Pás pod hero je teraz medený (#95571F, svetlý text ≥ 4,5 : 1),
