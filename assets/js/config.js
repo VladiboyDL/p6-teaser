@@ -24,7 +24,7 @@ window.P6_CONFIG = {
     ga4:       'G-4683MB2PDY',          // Google Analytics 4, napr. 'G-XXXXXXXXXX'
     googleAds: 'AW-18465429250',        // Google Ads, napr. 'AW-XXXXXXXXX'
     googleAdsLeadLabel: 'FkOUCNWQmoEdEIKugOVE',  // označenie konverzie „registrácia“ z Google Ads (časť za lomkou v AW-XXXXXXXXX/AbCdEfGh)
-    metaPixel: '1799799647800061'       // Meta (Facebook) Pixel ID
+    metaPixel: '1799799647800061,1130761629864245'  // Meta (Facebook) Pixel ID; viac ID oddeliť čiarkou (2. = pixel reklamného účtu P6 Byty SK)
   },
 
   /* Potvrdzovací e-mail záujemcovi po registrácii posiela n8n workflow „P6 · potvrdenie registrácie“

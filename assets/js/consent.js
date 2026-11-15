@@ -169,7 +169,7 @@
         if (!f._fbq) f._fbq = n; n.push = n; n.loaded = true; n.version = '2.0'; n.queue = [];
         s = b.createElement(e); s.async = true; s.src = v; r = b.getElementsByTagName(e)[0]; r.parentNode.insertBefore(s, r);
       })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-      window.fbq('init', tr.metaPixel);
+      String(tr.metaPixel).split(',').forEach(function (id) { id = id.trim(); if (id) window.fbq('init', id); });
       window.fbq('track', 'PageView');
     }
   }
