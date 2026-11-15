@@ -141,6 +141,13 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-11-15 · kampaňový byt bez zvýhodnenej ceny: štítok ostáva, cena „Na vyžiadanie“ · feat/kampan-banner-vacsi · Vlad + Claude
+
+- Vlad: 4.A je v kampani, zvýhodnenú cenu dodá neskôr, dovtedy „cena na vyžiadanie“. CRM ho preto posiela vo feede
+  s `campaign: true` a `campaignPrice: null`. `availability.js` už takýto byt nevyhadzuje z kampane: má štítok
+  „Zvýhodnená cena“ a namiesto ceny „Na vyžiadanie“; bežnú cenu nikdy. Kampaň má tak 17 bytov (7 / 7 / 3), ako
+  hovorí banner. ASSET_V 75 → 76, stránky pregenerované.
+
 ### 2026-11-13 · kampaň: zvýhodnená cena len pre registrácie počas kampane · feat/kampan-banner-vacsi · Vlad + Claude
 
 - Vlad: musí byť jasné, že zvýhodnená cena platí len pre tých, ktorí sa zaregistrovali počas kampane. Poznámka nad

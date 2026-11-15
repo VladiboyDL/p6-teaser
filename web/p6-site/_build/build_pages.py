@@ -42,7 +42,7 @@ OPERATOR = ("Byty Prievozska6 s.r.o., Prievozská 6, 821 09 Bratislava-Ružinov 
 PREVIEW = True
 
 # Bump whenever CSS/JS changes — appended as ?v= to every asset link.
-ASSET_V = "75"
+ASSET_V = "76"
 
 # Mandated by the architect (Ing. arch. Martin Krajči) — must stay visible
 # wherever plans or areas are shown. Wording matches the teaser; nothing here

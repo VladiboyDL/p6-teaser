@@ -20,7 +20,8 @@
  *
  * A campaign: while the CRM runs one, the feed carries `campaign: { id, name, until }` and marks its flats with
  * `campaign: true` and `campaignPrice`. Such a flat shows the campaign price under the label "Zvýhodnená cena"
- * (site.js) and is marked on the floor plan; P6_CAMPAIGN holds the campaign. When it ends, the feed simply stops
+ * (site.js) and is marked on the floor plan; a campaign flat whose price is still to come keeps the label and says
+ * "Na vyžiadanie", never the usual price (Vlad 15. 11., 4.A). P6_CAMPAIGN holds the campaign. When it ends, the feed simply stops
  * saying so and everything goes back by itself.
  * The PDF template does not load this file, so the apartment PDFs always stay neutral.
  * ------------------------------------------------------------------------ */
@@ -37,8 +38,9 @@ const P6_AVAILABILITY = (function () {
     APARTMENTS.forEach(a => {
       const u = onOffer.get(a.id);
       a.status = u ? FROM_CRM[u.status] : 'pripravujeme';
-      a.campaign = !!(campaign && u && u.campaign && typeof u.campaignPrice === 'number' && u.campaignPrice > 0);
-      a.price = a.campaign ? u.campaignPrice : u && typeof u.price === 'number' && u.price > 0 ? u.price : null;
+      const priced = v => (typeof v === 'number' && v > 0 ? v : null);
+      a.campaign = !!(campaign && u && u.campaign);
+      a.price = !u ? null : a.campaign ? priced(u.campaignPrice) : priced(u.price);
     });
     P6_CAMPAIGN = campaign && APARTMENTS.some(a => a.campaign) ? campaign : null;
     SHOW_STATUS = true;
