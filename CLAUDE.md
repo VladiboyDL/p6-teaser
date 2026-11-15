@@ -147,8 +147,9 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
   výberom bytov (`site.js` → `initCampaignNote`) a riadok pri cene na detaile bytu (`detail.js`) to teraz hovoria
   výslovne („len pre tých, ktorí sa zaregistrujú počas novembrovej ponuky, do …“). ASSET_V 74 → 75, stránky pregenerované.
 - Súvisí s CRM (súkromné repo): byt má teraz tri ceny — štandardnú, F&F a zvýhodnenú kampane. Verejný zdroj
-  `/api/public/units` posiela v poli `price` **len štandardnú cenu**; voľný byt bez štandardnej ceny v zdroji nie je,
-  takže ho web ukáže ako „Pripravujeme“. Na strane webu sa nič meniť nemusí.
+  `/api/public/units` posiela v poli `price` **len štandardnú cenu**, a to len tam, kde ju admin zverejní; inak `null`,
+  teda „cena na vyžiadanie“ (aj pri byte bez štandardnej ceny — Vlad 15. 11.). Kým cenník nie je verejný, nezverejní
+  sa žiadna; počas kampane jej byty nesú `campaignPrice`. Na strane webu sa nič meniť nemusí.
 
 ### 2026-11-12 · kampaňový banner väčší, s odpočtom · feat/kampan-banner-vacsi · Vlad + Claude
 
