@@ -487,16 +487,50 @@ html[lang="sk"] .legal [data-lang="sk"], html[lang="en"] .legal [data-lang="en"]
 /* --- November campaign (kampan.js adds .is-kampan to <html> only in that week, or with ?kampan=nahlad) --- */
 html:not(.is-kampan) [data-kampan-on] { display: none; }
 .is-kampan [data-kampan-off] { display: none; }
-.kampan { background: var(--ink); color: var(--text-inv); border-top: 1px solid var(--line-inv); padding: clamp(28px, 4.5vw, 52px) 0; }
-.kampan__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px 48px; }
-.kampan__eyebrow { margin: 0 0 10px; font-size: .78rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--copper-2); }
-.kampan__title { margin: 0; font: 300 clamp(2rem, 4vw, 3.2rem)/1.04 var(--f-display); max-width: none; }
-.kampan__units { margin: 14px 0 0; font-size: 1.02rem; max-width: none; }
-.kampan__dates { margin: 4px 0 0; font-size: .95rem; color: var(--text-inv-muted); max-width: none; }
-.reg__kampan { margin: 0 0 14px; padding: 10px 14px; border-left: 2px solid var(--copper-2); color: var(--text-inv); font-size: .98rem; }
-.hero__kampan { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; margin: 0 0 18px; padding: 9px 16px; border-radius: 100px;
-  background: var(--copper); color: #fff; font-size: .92rem; text-decoration: none; box-shadow: 0 6px 24px rgba(20, 18, 15, .25); }
-.hero__kampan b { font-weight: 600; }
-.hero__kampan svg { width: 16px; height: 16px; }
-.hero__kampan:hover { background: #a3642a; }
+/* the band: copper, loud on purpose. Its base is dark enough for the small light text (≥ 4.5 : 1); the light
+   corner top right only carries the large title. */
+.kampan { position: relative; isolation: isolate; overflow: hidden; background: #95571F; color: var(--text-inv); padding: clamp(56px, 6.4vw, 96px) 0 clamp(52px, 6vw, 88px); }
+.kampan::before { content: ""; position: absolute; inset: 0; z-index: -2; background:
+  radial-gradient(ellipse 65% 85% at 100% 0%, rgba(217, 148, 91, .5), rgba(217, 148, 91, 0) 70%),
+  radial-gradient(ellipse 55% 75% at 0% 100%, rgba(20, 18, 15, .32), rgba(20, 18, 15, 0) 72%); }
+.kampan__big { position: absolute; z-index: -1; right: -.06em; bottom: -.24em; font: 300 clamp(16rem, 42vw, 40rem)/1 var(--f-display); letter-spacing: -.05em; color: rgba(247, 244, 239, .09); pointer-events: none; user-select: none; }
+.kampan__inner { position: relative; display: grid; gap: clamp(28px, 3.4vw, 48px); }
+.kampan__eyebrow { display: inline-flex; align-items: center; gap: 12px; margin: 0; font-size: clamp(.78rem, 1vw, .9rem); font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--paper); max-width: none; }
+.kampan .status__dot, .kampan .status__dot::after { background: var(--paper); border-color: var(--paper); }
+.kampan__title { margin: 16px 0 0; font: 300 clamp(2.9rem, 6.2vw, 6.2rem)/.98 var(--f-display); letter-spacing: -.025em; max-width: none; text-wrap: balance; }
+.kampan__dates { margin: clamp(16px, 2vw, 24px) 0 0; font-size: clamp(1.05rem, 1.5vw, 1.35rem); line-height: 1.45; max-width: none; }
+.kampan__units { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid rgba(247, 244, 239, .32); border-bottom: 1px solid rgba(247, 244, 239, .32); }
+.kampan__units li { display: grid; align-content: start; gap: 8px; padding: clamp(18px, 2.4vw, 30px) clamp(12px, 2.4vw, 32px); border-left: 1px solid rgba(247, 244, 239, .32); }
+.kampan__units li:first-child { padding-left: 0; border-left: 0; }
+.kampan__units b { font: 300 clamp(2.8rem, 6.4vw, 5.8rem)/.9 var(--f-display); letter-spacing: -.02em; }
+.kampan__units span { font-size: clamp(.8rem, 1.15vw, 1.02rem); line-height: 1.35; }
+.kampan__foot { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 26px 48px; }
+.kampan__clock-label { margin: 0 0 12px; font-size: .78rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; max-width: none; }
+.kampan__cd { display: flex; gap: clamp(8px, 1.2vw, 14px); margin: 0; max-width: none; }
+.kampan__cd span { display: grid; justify-items: center; gap: 6px; min-width: clamp(66px, 7.4vw, 100px); padding: clamp(12px, 1.4vw, 18px) 8px clamp(10px, 1.2vw, 14px); border-radius: var(--r-md); background: rgba(20, 18, 15, .3); }
+.kampan__cd b { font: 300 clamp(2rem, 3.8vw, 3.4rem)/1 var(--f-display); font-variant-numeric: tabular-nums lining-nums; }
+.kampan__cd i { font-style: normal; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; }
+.btn--xl { min-height: 68px; padding: 0 40px; font-size: 1.08rem; }
+.btn--xl svg { width: 22px; height: 22px; }
+.btn--ink { background: var(--ink); color: var(--paper); box-shadow: 0 14px 40px rgba(20, 18, 15, .35); }
+.btn--ink:hover { background: var(--ink-2); }
+@media (max-width: 640px) {
+  .kampan__units li { padding-left: 10px; padding-right: 6px; }
+  .kampan__foot, .kampan__clock { width: 100%; }
+  .kampan__cd span { flex: 1; min-width: 0; }
+  .kampan__foot .btn { width: 100%; }
+}
+
+/* the hero: a bigger copper pill above the title, and the main button turns into "Vyber si byt" */
+.hero__kampan { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; margin: 0 0 clamp(18px, 2.4vw, 28px); padding: 13px 22px 13px 18px; border-radius: 100px;
+  background: var(--copper-2); color: var(--ink); font-size: clamp(.95rem, 1.25vw, 1.12rem); font-weight: 500; line-height: 1.35; text-decoration: none; box-shadow: 0 12px 36px rgba(20, 18, 15, .4); }
+.hero__kampan .status__dot, .hero__kampan .status__dot::after { background: var(--ink); border-color: var(--ink); }
+.hero__kampan b { font-weight: 700; }
+.hero__kampan svg { width: 18px; height: 18px; transition: transform .3s var(--ease); }
+.hero__kampan:hover { background: #E4A775; }
+.hero__kampan:hover svg { transform: translateX(4px); }
+.btn--kampan { background: var(--copper-2); color: var(--ink); font-weight: 600; }
+.btn--kampan:hover { background: #E4A775; }
+.is-kampan .sticky [data-kampan-cta] { background: var(--copper-2); color: var(--ink); font-weight: 600; }
+.is-kampan .sticky [data-kampan-cta]:hover { background: #E4A775; }
 

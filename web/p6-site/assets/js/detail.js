@@ -77,7 +77,7 @@ function initDetail() {
     <div class="aside__box">
       <p class="eyebrow" style="margin-bottom:4px">${soldOut(a.status) ? 'Stav bytu' : priceLabel(a)}</p>
       <div class="aside__price">${soldOut(a.status) ? 'Predané' : fmtPrice(a.price, a.status)}</div>
-      ${isCampaign(a) ? `<p class="aside__akcia">${campaignPill(a)} Novembrová ponuka, len do ${campaignLastDay()}</p>` : ''}
+      ${isCampaign(a) ? `<p class="aside__akcia">${campaignPill(a)} Platí len pre registrácie počas novembrovej ponuky, do ${campaignLastDay()}</p>` : ''}
       ${ppm && !soldOut(a.status) && SHOW_PRICES
         ? `<div class="aside__ppm">${nfPrice.format(ppm)} € / m² interiéru</div>` : ''}
       <div class="aside__actions">

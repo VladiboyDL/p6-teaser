@@ -141,6 +141,34 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-11-15 · kampaňový byt bez zvýhodnenej ceny: štítok ostáva, cena „Na vyžiadanie“ · feat/kampan-banner-vacsi · Vlad + Claude
+
+- Vlad: 4.A je v kampani, zvýhodnenú cenu dodá neskôr, dovtedy „cena na vyžiadanie“. CRM ho preto posiela vo feede
+  s `campaign: true` a `campaignPrice: null`. `availability.js` už takýto byt nevyhadzuje z kampane: má štítok
+  „Zvýhodnená cena“ a namiesto ceny „Na vyžiadanie“; bežnú cenu nikdy. Kampaň má tak 17 bytov (7 / 7 / 3), ako
+  hovorí banner. ASSET_V 75 → 76, stránky pregenerované.
+
+### 2026-11-13 · kampaň: zvýhodnená cena len pre registrácie počas kampane · feat/kampan-banner-vacsi · Vlad + Claude
+
+- Vlad: musí byť jasné, že zvýhodnená cena platí len pre tých, ktorí sa zaregistrovali počas kampane. Poznámka nad
+  výberom bytov (`site.js` → `initCampaignNote`) a riadok pri cene na detaile bytu (`detail.js`) to teraz hovoria
+  výslovne („len pre tých, ktorí sa zaregistrujú počas novembrovej ponuky, do …“). ASSET_V 74 → 75, stránky pregenerované.
+- Súvisí s CRM (súkromné repo): byt má teraz tri ceny — štandardnú, F&F a zvýhodnenú kampane. Verejný zdroj
+  `/api/public/units` posiela v poli `price` **len štandardnú cenu**, a to len tam, kde ju admin zverejní; inak `null`,
+  teda „cena na vyžiadanie“ (aj pri byte bez štandardnej ceny — Vlad 15. 11.). Kým cenník nie je verejný, nezverejní
+  sa žiadna; počas kampane jej byty nesú `campaignPrice`. Na strane webu sa nič meniť nemusí.
+
+### 2026-11-12 · kampaňový banner väčší, s odpočtom · feat/kampan-banner-vacsi · Vlad + Claude
+
+- Vlad chcel banner kampane väčší, „nech bije do očí“. Pás pod hero je teraz medený (#95571F, svetlý text ≥ 4,5 : 1),
+  veľký nadpis, tri veľké čísla (7 / 7 / 3 – nové kľúče `kampan.u2`, `kampan.u3`, `kampan.u1`, starý `kampan.units` zrušený),
+  odpočet do konca ponuky (23. 11. 23:59:59, `kampan.js` → `[data-kampan-clock]`, kľúče `kampan.left`, `kampan.cd.*`)
+  a veľké tmavé tlačidlo „Vyber si byt“. Za tým jemné veľké „17“ (dekorácia, `aria-hidden`).
+- V hero je pilulka väčšia (copper-2 s tmavým textom) a hlavné tlačidlo sa počas kampane mení na medené „Vyber si byt“
+  (`data-kampan-off` / `data-kampan-on`); sticky lišta má počas kampane medené tlačidlo. Všetky tieto tlačidlá majú
+  `data-kampan-cta`, takže registrácia nesie UTM kampane ako doteraz.
+- Náhľad kedykoľvek: `/?kampan=nahlad`. teaser.css?v=20, i18n.js?v=20, kampan.js?v=2.
+
 ### 2026-11-12 · druhý Meta Pixel · feat/meta-pixel-sk · Filip + Claude
 - `config.js`: `tracking.metaPixel` teraz berie viac ID oddelených čiarkou; pridaný pixel `1130761629864245`
   (dataset reklamného účtu P6 Byty SK). Pôvodný `1799799647800061` ostáva. `consent.js` inicializuje každé ID,
