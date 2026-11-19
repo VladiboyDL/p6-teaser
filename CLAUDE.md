@@ -142,6 +142,12 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-11-19 · hodiny predajnej linky: Po až Pi, 8:00 až 16:00 · fix/hodiny-linky · Vlad + Claude
+
+- Vlad: hodiny linky sú **zatiaľ** 8:00 až 16:00, pondelok až piatok. Pätička teasera („Predaj“, kľúč `foot.hours`) to hovorí
+  vo všetkých piatich jazykoch; predtým tam bolo 9:00 až 18:00, čo nikto nepotvrdil. Inde na webe hodiny nie sú.
+  `i18n.js?v=22`. Keď sa hodiny zmenia, je to tento jeden riadok v `index.html` a štyri v `i18n.js`.
+
 ### 2026-11-19 · predajná linka na teaseri · feat/predajna-linka · Vlad + Claude
 
 - Vlad má číslo call centra pre prichádzajúce hovory: **+421 2 3224 2750** (`tel:+421232242750`). Na teaseri je na troch
@@ -152,7 +158,7 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 - Klik na číslo posiela `click_to_call` do GA4 a `Contact` do Meta — rovnaké pravidlo ako pri registrácii, teda až po súhlase.
 - Je to **predajná linka**, nie telefón prevádzkovateľa; ten ostáva len v právnych informáciách (*Source of truth* je upravený).
   `config.js` ani právne stránky som nemenil. `teaser.css?v=21`, `i18n.js?v=21` (kľúč `tel.aria`), `teaser.js?v=20`.
-- Hodiny v pätičke („Po až Pi, 9:00 až 18:00“) tam boli už predtým; či platia aj pre linku, overuje Vlad.
+- Hodiny v pätičke („Po až Pi, 9:00 až 18:00“) tam boli už predtým; Vlad ich ešte v ten deň zmenil, pozri poznámku vyššie.
 - **Filip:** oficiálny web (`web/p6-site/`: kontakt, pätička, PDF) číslo zatiaľ nemá. Ak ho tam chcete, je to tento jeden údaj.
 
 ### 2026-11-15 · kampaňový byt bez zvýhodnenej ceny: štítok ostáva, cena „Na vyžiadanie“ · feat/kampan-banner-vacsi · Vlad + Claude
