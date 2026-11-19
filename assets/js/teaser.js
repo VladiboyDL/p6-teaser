@@ -329,6 +329,18 @@
     else if (narrow.addListener) narrow.addListener(setVB);
   }
 
+  /* --- sales line: a tap on the number is a contact worth counting -------------------------- */
+  /* Same rule as the registration (trackLead): these calls reach Google or Meta only when the visitor has consented,
+     because consent.js loads the libraries after opt-in; otherwise they go nowhere. No personal data is sent. */
+  $$('a[href^="tel:"]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      try {
+        if (window.gtag) window.gtag('event', 'click_to_call', { link_location: a.getAttribute('data-tel') || '', page_language: document.documentElement.lang || 'sk' });
+        if (window.fbq) window.fbq('track', 'Contact');
+      } catch (err) { /* measuring must never get in the way of the call */ }
+    });
+  });
+
   /* --- misc ------------------------------------------------------------------------------- */
   $$('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 })();

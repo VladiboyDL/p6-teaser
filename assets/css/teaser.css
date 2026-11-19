@@ -174,6 +174,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .nav__links a:hover { opacity: 1; }
 .nav__links a:hover::after { transform: scaleX(1); }
 .nav__cta { min-height: 42px; padding: 0 20px; font-size: .84rem; }
+/* the sales line: handset and number on a wide screen, the handset alone (a tap dials) where the number does not fit */
+.nav__tel { flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 42px; font: 500 .86rem/1 var(--f-ui); letter-spacing: .02em; text-decoration: none; white-space: nowrap; opacity: .9; transition: opacity .2s, border-color .2s; }
+.nav__tel:hover { opacity: 1; }
+.nav__tel svg { width: 17px; height: 17px; flex: none; }
 .langs { display: flex; align-items: center; gap: 2px; }
 .langs button { appearance: none; background: none; border: 0; min-height: 40px; padding: 10px 9px; cursor: pointer; color: inherit; opacity: .55; font: 500 .74rem/1 var(--f-ui); letter-spacing: .14em; transition: opacity .2s; }
 .langs button + button { position: relative; }
@@ -185,6 +189,18 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* four languages plus a long German CTA do not fit a phone: the hero and the sticky bar carry the CTA there */
 @media (max-width: 560px) { .nav__cta { display: none; } .nav__inner { gap: 14px; } }
 @media (max-width: 520px) { .brand__sub { display: none; } :root { --nav-h: 64px; } }
+/* the sales line, by how much room the bar has (measured in all five languages, Ukrainian and German are the widest):
+   number beside the handset from 1360 px; the handset alone from 1200 px, paid for by slightly tighter gaps; nothing from
+   521 to 1199 px, where the bar is full already and the handset would break the brand line in two (the number is in the
+   registration section and the footer); the handset again on a phone, where a tap dials */
+@media (max-width: 1359px) {
+  .nav__tel { width: 42px; border: 1px solid var(--line-inv); border-radius: 50%; }
+  .nav__tel:hover { border-color: var(--sand-2); }
+  .nav__tel span { display: none; }
+}
+@media (max-width: 1359px) and (min-width: 1200px) { .nav__inner { gap: 24px; } .nav__links { gap: 22px; } }
+@media (max-width: 1199px) and (min-width: 521px) { .nav__tel { display: none; } }
+@media (max-width: 350px) { .nav__inner { gap: 10px; } .nav__tel { width: 38px; min-height: 38px; } .langs button { padding-inline: 6px; } }
 
 /* --- hero ---------------------------------------------------------------------- */
 .hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: flex-end; color: var(--text-inv); background: var(--ink); overflow: hidden; isolation: isolate; }

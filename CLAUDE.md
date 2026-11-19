@@ -47,7 +47,8 @@ the generators of the legal pages and of the teaser map, and the campaign materi
   IČO 54 793 360, DIČ 2121785754, IČ DPH SK2121785754, OR Mestského súdu Bratislava III, oddiel Sro, vložka č. 162817/B.
   An earlier draft named a different company (Byty Jegeho2); that was wrong and is gone everywhere.
 - **Processor** (runs the website, CRM and marketing, has access to the data): BIO - SERV, a.s. (avatarAI), IČO 31 442 072. Named in the privacy policy.
-- **Contact:** info@bytyp6.sk only. There is **no sales phone number**. The operator's number appears once, as plain text in the imprint
+- **Contact:** info@bytyp6.sk and, since 2026-11-19, the **sales line +421 2 3224 2750** (`tel:+421232242750`; the call centre's number
+  for incoming calls). The operator's own number is a different one and stays out of sight: it appears once, as plain text in the imprint
   (`pravne-informacie.html`), because the law asks for it; never as a `tel:` link and never as a contact for buyers.
 - Domain: bytyp6.sk (`prievozska6.sk` was a placeholder and is not ours).
 
@@ -140,6 +141,19 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 ```
 
 ## Dev notes
+
+### 2026-11-19 · predajná linka na teaseri · feat/predajna-linka · Vlad + Claude
+
+- Vlad má číslo call centra pre prichádzajúce hovory: **+421 2 3224 2750** (`tel:+421232242750`). Na teaseri je na troch
+  miestach: v hlavičke (`.nav__tel`), pri e-maile v registrácii a v pätičke pod „Predaj“. Do JSON-LD pribudlo `telephone`.
+- Hlavička podľa miesta v lište (premerané v piatich jazykoch): číslo so slúchadlom od 1360 px, len slúchadlo od 1200 px
+  (medzery v lište sú tam o niečo užšie), nič od 521 do 1199 px (lišta je plná, slúchadlo by zalomilo „Bratislava · Ružinov“),
+  slúchadlo znova na telefóne do 520 px, kde ťuknutie vytočí číslo.
+- Klik na číslo posiela `click_to_call` do GA4 a `Contact` do Meta — rovnaké pravidlo ako pri registrácii, teda až po súhlase.
+- Je to **predajná linka**, nie telefón prevádzkovateľa; ten ostáva len v právnych informáciách (*Source of truth* je upravený).
+  `config.js` ani právne stránky som nemenil. `teaser.css?v=21`, `i18n.js?v=21` (kľúč `tel.aria`), `teaser.js?v=20`.
+- Hodiny v pätičke („Po až Pi, 9:00 až 18:00“) tam boli už predtým; či platia aj pre linku, overuje Vlad.
+- **Filip:** oficiálny web (`web/p6-site/`: kontakt, pätička, PDF) číslo zatiaľ nemá. Ak ho tam chcete, je to tento jeden údaj.
 
 ### 2026-11-15 · kampaňový byt bez zvýhodnenej ceny: štítok ostáva, cena „Na vyžiadanie“ · feat/kampan-banner-vacsi · Vlad + Claude
 
