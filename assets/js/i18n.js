@@ -119,7 +119,7 @@
   var PAGE = {
     en: {
       'skip': 'Skip to content',
-      'nav.aria': 'Main navigation',
+      'nav.aria': 'Main navigation', 'tel.aria': 'Call us: +421 2 3224 2750',
       'nav.project': 'Project', 'nav.location': 'Location', 'nav.perks': 'Benefits', 'nav.steps': 'How it works',
       'cta.interest': 'I’m interested',
       'hero.alt': 'Visualisation of the P6 apartment building: five storeys with green balconies and a roof terrace',
@@ -211,7 +211,7 @@
     },
     de: {
       'skip': 'Zum Inhalt springen',
-      'nav.aria': 'Hauptnavigation',
+      'nav.aria': 'Hauptnavigation', 'tel.aria': 'Rufen Sie uns an: +421 2 3224 2750',
       'nav.project': 'Projekt', 'nav.location': 'Lage', 'nav.perks': 'Vorteile', 'nav.steps': 'So funktioniert es',
       'cta.interest': 'Ich bin interessiert',
       'hero.alt': 'Visualisierung des Wohnhauses P6: fünf Geschosse mit begrünten Balkonen und Dachterrasse',
@@ -303,7 +303,7 @@
     },
     cs: {
       'skip': 'Přeskočit na obsah',
-      'nav.aria': 'Hlavní navigace',
+      'nav.aria': 'Hlavní navigace', 'tel.aria': 'Zavolejte nám: +421 2 3224 2750',
       'nav.project': 'Projekt', 'nav.location': 'Lokalita', 'nav.perks': 'Výhody', 'nav.steps': 'Jak to funguje',
       'cta.interest': 'Mám zájem',
       'hero.alt': 'Vizualizace bytového domu P6: pět podlaží se zelenými balkony a střešní terasou',
@@ -395,7 +395,7 @@
     },
     uk: {
       'skip': 'Перейти до вмісту',
-      'nav.aria': 'Головна навігація',
+      'nav.aria': 'Головна навігація', 'tel.aria': 'Зателефонуйте нам: +421 2 3224 2750',
       'nav.project': 'Проєкт', 'nav.location': 'Розташування', 'nav.perks': 'Переваги', 'nav.steps': 'Як це працює',
       'cta.interest': 'Мені цікаво',
       'hero.alt': 'Візуалізація житлового будинку P6: п’ять поверхів із зеленими балконами та терасою на даху',
