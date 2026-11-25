@@ -142,6 +142,12 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-11-25 · vizualizácia z dvora: nové schodiskové pole · feat/vizualizacia-dvor-v2 · Vlad + Claude
+
+- `vizualizacia/eagcamgx/`: obrázok vymenený za druhú verziu. Mení sa len pole nad zadným vchodom: je celé presklené,
+  bez svetlých panelov, v strede presklená výťahová šachta, schody po jej stranách a podesta medzi nimi. Zvyšok obrázka
+  je rovnaký. Adresa aj názvy súborov ostávajú; stránka ich načítava s `?v=2`, priamy odkaz na `.jpg` dobehne cez cache.
+
 ### 2026-11-25 · neverejná stránka s vizualizáciou domu z dvora · feat/vizualizacia-dvor · Vlad + Claude
 
 - Nový priečinok `vizualizacia/eagcamgx/`: jedna stránka s vizualizáciou dvorovej strany domu (čelný pohľad, pár k uličnej
