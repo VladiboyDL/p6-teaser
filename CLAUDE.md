@@ -142,6 +142,17 @@ node _build/pdf/build_pdfs.mjs      # all 44 PDFs carry the same texts
 
 ## Dev notes
 
+### 2026-11-25 · neverejná stránka s vizualizáciou domu z dvora · feat/vizualizacia-dvor · Vlad + Claude
+
+- Nový priečinok `vizualizacia/eagcamgx/`: jedna stránka s vizualizáciou dvorovej strany domu (čelný pohľad, pár k uličnej
+  `p6-fasada`), na zdieľanie odkazom. Rovnaký spôsob ako `prehliadka/<náhodný>/`: náhodná adresa, vlastná CSP v `<meta>`
+  (žiadny skript), `noindex, nofollow, noarchive, noimageindex`, nie je v `sitemap.xml`, v navigácii ani v `robots.txt`,
+  písma z `/assets/fonts/`. Popis „Ilustračná vizualizácia vrátane okolia domu.“
+- Obrázok `p6-pohlad-z-dvora-2560.jpg` a `-1280.jpg` (bez EXIF). Fasáda vychádza z architektovho modelu dvorovej strany
+  (5 podlaží, 7 polí, schodisko so zadným vchodom), okolie a rozloženie parkoviska sú ilustračné; počet státí obrázok netvrdí.
+- Inak sa nič nemení: teaser, oficiálny web ani `config.js`. Ďalšie takéto obrázky môžu pribudnúť ako ďalšie priečinky
+  vo `vizualizacia/`. Repo je verejné, adresa teda nie je tajná, len nezverejnená.
+
 ### 2026-11-19 · hodiny predajnej linky: Po až Pi, 8:00 až 16:00 · fix/hodiny-linky · Vlad + Claude
 
 - Vlad: hodiny linky sú **zatiaľ** 8:00 až 16:00, pondelok až piatok. Pätička teasera („Predaj“, kľúč `foot.hours`) to hovorí
